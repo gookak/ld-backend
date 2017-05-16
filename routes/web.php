@@ -37,6 +37,9 @@ Route::get('/apigetfileupload', 'ApiController@apigetfileupload');
 
 //Admin Login
 Route::GET('admin/home', 'AdminController@index');
+
+Route::GET('admin/employee', 'EmployeeController@index');
+
 Route::GET('admin', 'Admin\LoginController@showLoginForm')->name('admin.login');
 Route::POST('admin', 'Admin\LoginController@login');
 // Route::POST('logout', 'AdminLoginController@logout');
