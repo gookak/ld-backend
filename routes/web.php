@@ -60,6 +60,8 @@ Route::post('/fileupload/{id}', 'FileuploadController@destroy');
 
 Route::get('/apigetfileupload', 'ApiController@apigetfileupload');
 
+Route::resource('adminuser', 'AdminUserController');
+
 
 
 // //Admin Login

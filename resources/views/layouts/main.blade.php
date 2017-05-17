@@ -177,6 +177,14 @@
 
           <b class="arrow"></b>
         </li>
+        <li class="">
+          <a href="/adminuser">
+            <i class="menu-icon fa fa-tachometer"></i>
+            <span class="menu-text"> ข้อมูลผู้ใช้งาน </span>
+          </a>
+
+          <b class="arrow"></b>
+        </li>
        {{--  <li class="">
           <a href="/report">
             <i class="menu-icon fa fa-tachometer"></i>
@@ -186,7 +194,7 @@
           <b class="arrow"></b>
         </li> --}}
 
-        <li class="">
+        {{-- <li class="">
           <a href="#" class="dropdown-toggle">
             <i class="menu-icon fa fa-list"></i>
             <span class="menu-text"> Admin </span>
@@ -198,7 +206,7 @@
 
           <ul class="submenu">
             <li class="">
-              <a href="tables.html">
+              <a href="/adminuser">
                 <i class="menu-icon fa fa-caret-right"></i>
                 ข้อมูลผู้ใช้งาน
               </a>
@@ -206,16 +214,16 @@
               <b class="arrow"></b>
             </li>
 
-            {{-- <li class="">
+            <li class="">
               <a href="jqgrid.html">
                 <i class="menu-icon fa fa-caret-right"></i>
                 logfile
               </a>
 
               <b class="arrow"></b>
-            </li> --}}
+            </li>
           </ul>
-        </li>
+        </li> --}}
 
       </ul><!-- /.nav-list -->
 

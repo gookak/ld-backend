@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-// use Illuminate\Database\Eloquent\Model;
-// use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Admin extends Authenticatable
 {
@@ -21,7 +20,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-    'name', 'email', 'password',
+    'name', 'email', 'password', 'role_id',
     ];
 
     /**
