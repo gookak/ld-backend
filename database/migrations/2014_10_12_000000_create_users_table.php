@@ -18,11 +18,13 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->string('name', 200)->comment('ชื่อ');
+            //$table->string('name', 200)->comment('ชื่อ');
             $table->string('firstname', 200)->comment('ชื่อ');
             $table->string('lastname', 200)->comment('นามสกุล');
             $table->string('tel', 100)->comment('เบอร์ติดต่อ');
             $table->string('avatar', 100)->comment('รูปภาพ');
+            $table->boolean('use')->default(true)->comment('สถานะการใช้งาน (true=ใช้)');
+            $table->timestamp('login_at')->nullable()->comment('วันที่เข้าระบบฯ ครั้งล่าสุด');
             $table->timestamps();
         });
     }

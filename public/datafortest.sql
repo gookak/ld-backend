@@ -1,4 +1,7 @@
 
+INSERT INTO `users` (`id`, `email`, `password`, `remember_token`, `firstname`, `lastname`, `tel`, `avatar`, `use`, `login_at`, `created_at`, `updated_at`) VALUES
+(1, 'cust1@test.com', '$2y$10$Mv2i330PhJ.7iOIRoZURaO4y8S4IrB6OxWxr1ybU4qw3N/8ZveEhi', NULL, 'สมจิตร', 'คิดร้าย', '010000', '', 1, '2017-05-16 23:30:00', NULL, NULL);
+
 INSERT INTO `roles` (`id`, `name`, `detail`, `created_at`, `updated_at`) VALUES
 (1, 'admin', NULL, NULL, NULL),
 (2, 'employee', NULL, NULL, NULL);

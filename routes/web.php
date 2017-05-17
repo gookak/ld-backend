@@ -62,6 +62,8 @@ Route::get('/apigetfileupload', 'ApiController@apigetfileupload');
 
 Route::resource('adminuser', 'AdminUserController');
 
+Route::resource('user', 'UserController');
+
 
 
 // //Admin Login

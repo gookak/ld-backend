@@ -162,7 +162,7 @@
           <b class="arrow"></b>
         </li>
         <li class="">
-          <a href="/customer">
+          <a href="/user">
             <i class="menu-icon fa fa-tachometer"></i>
             <span class="menu-text"> ข้อมูลลูกค้า </span>
           </a>
