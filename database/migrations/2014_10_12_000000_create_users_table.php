@@ -19,10 +19,10 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('name', 200)->comment('ชื่อ');
-            // $table->string('firstname', 200)->comment('ชื่อ');
-            // $table->string('lastname', 200)->comment('นามสกุล');
-            // $table->string('tel', 100)->comment('เบอร์ติดต่อ');
-            // $table->string('avatar', 100)->comment('รูปภาพ');
+            $table->string('firstname', 200)->comment('ชื่อ');
+            $table->string('lastname', 200)->comment('นามสกุล');
+            $table->string('tel', 100)->comment('เบอร์ติดต่อ');
+            $table->string('avatar', 100)->comment('รูปภาพ');
             $table->timestamps();
         });
     }

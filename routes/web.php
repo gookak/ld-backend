@@ -11,23 +11,48 @@
 |
 */
 
+
+// Route::get('/', function () {
+// 	return view('welcome');
+// });
+
+// Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+
+// Route::get('/admin', 'AdminController@index')->name('admin');
+
+
+
+
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+// Route::get('/', function () {
+// 	return view('welcome');
+// });
 
-Route::get('/admin', 'AdminController@index');
-
-Route::get('/', function(){
-	return view('index');
+Route::get('/', function () {
+	return Redirect::action('Auth\LoginController@showLoginForm');
 });
+
+Route::get('/error500', function(){
+	return view('otherpage.error500');
+});
+
+Route::get('/error404', function(){
+	return view('otherpage.error404');
+});
+
+Route::get('/dashboard', 'DashboardController@index');
 
 Route::resource('category', 'CategoryController');
 
 Route::resource('product', 'ProductController');
 
-Route::get('/fileupload', 'FileuploadController@index');
+// // Route::get('/show', 'FileuploadController@show');
 
-// Route::get('/show', 'FileuploadController@show');
+Route::get('/fileupload', 'FileuploadController@index');
 
 Route::post('/fileupload', 'FileuploadController@upload');
 

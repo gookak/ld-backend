@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>L&D Commerce</title>
+  <title>{{ config('app.name') }}</title>
 
   <!-- bootstrap & fontawesome -->
   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap.min.css') }}" />
@@ -55,7 +55,7 @@
         <a href="/" class="navbar-brand">
           <small>
             <i class="fa fa-leaf"></i>
-            L&D COMMERCE
+            {{ config('app.name') }}
           </small>
         </a>
       </div>
@@ -64,18 +64,24 @@
         <ul class="nav ace-nav">
 
           <li class="light-blue dropdown-modal">
+
+            <!-- Authentication Links -->
+            @if (Auth::guest())
+            <li><a href="{{ route('login') }}">Login</a></li>
+            {{-- <li><a href="{{ route('register') }}">Register</a></li> --}}
+            @else
             <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-              <img class="nav-user-photo" src="{{ asset('themes/ace-master/assets/images/avatars/user.jpg') }}" alt="Jason's Photo" />
+              {{-- <img class="nav-user-photo" src="{{ asset('themes/ace-master/assets/images/avatars/user.jpg') }}" alt="Jason's Photo" /> --}}
               <span class="user-info">
-                <small>Welcome,</small>
-                Jason
+                {{-- <small>Welcome,</small> --}}
+                {{ Auth::user()->name }} <br/>
+                Role : {{ Auth::user()->role->name }}
               </span>
 
               <i class="ace-icon fa fa-caret-down"></i>
             </a>
-
             <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-              <li>
+              {{-- <li>
                 <a href="#">
                   <i class="ace-icon fa fa-cog"></i>
                   Settings
@@ -89,15 +95,20 @@
                 </a>
               </li>
 
-              <li class="divider"></li>
+              <li class="divider"></li> --}}
 
               <li>
-                <a href="#">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <i class="ace-icon fa fa-power-off"></i>
                   Logout
                 </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                  {{ csrf_field() }}
+                </form>
               </li>
             </ul>
+            @endif
           </li>
         </ul>
       </div>
@@ -119,7 +130,7 @@
 
       <ul class="nav nav-list">
         <li class="">
-          <a href="/">
+          <a href="/dashboard">
             <i class="menu-icon fa fa-tachometer"></i>
             <span class="menu-text"> Dashboard </span>
           </a>
