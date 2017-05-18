@@ -2,17 +2,19 @@
 
 namespace App;
 
-class User extends Model
+class OrderDetail extends Model
 {
-	protected $table = 'users';
-
-    public function address() {
-        return $this->hasMany(Address::class);
-    }
+	protected $table = 'order_detail';
 
     public function order() {
-        return $this->hasMany(Order::class);
+        return $this->belongsTo(Order::class);
     }
+
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
+
+
 
     // protected $fillable = [
     //     'name', 'email', 'password'//, 'firstname', 'lasname', 'tel', 'avatar',

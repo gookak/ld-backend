@@ -138,6 +138,14 @@
           <b class="arrow"></b>
         </li>
         <li class="">
+          <a href="/adminuser">
+            <i class="menu-icon fa fa-tachometer"></i>
+            <span class="menu-text"> ข้อมูลผู้ใช้งาน </span>
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        <li class="">
           <a href="/category">
             <i class="menu-icon fa fa-tachometer"></i>
             <span class="menu-text"> ประเภทสินค้า </span>
@@ -173,14 +181,6 @@
           <a href="/order">
             <i class="menu-icon fa fa-tachometer"></i>
             <span class="menu-text"> ข้อมูลรายการสั่งซื้อ </span>
-          </a>
-
-          <b class="arrow"></b>
-        </li>
-        <li class="">
-          <a href="/adminuser">
-            <i class="menu-icon fa fa-tachometer"></i>
-            <span class="menu-text"> ข้อมูลผู้ใช้งาน </span>
           </a>
 
           <b class="arrow"></b>

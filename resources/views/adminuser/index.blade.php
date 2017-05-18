@@ -44,11 +44,11 @@
                     <tr>
                         <td class="center">
                             <div class="btn-group">
-                                <a class="btn btn-xs btn-info" href="/adminuser/{{ $adminuser->id }}/edit" >
-                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                </a>
                                 <a class="btn btn-xs btn-danger btn-del" data-id="{{ $adminuser->id }}">
                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                </a>
+                                <a class="btn btn-xs btn-warning" href="/adminuser/{{ $adminuser->id }}/edit" >
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
                                 </a>
                             </div>
                         </td>

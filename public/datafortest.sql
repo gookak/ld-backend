@@ -1,10 +1,13 @@
 
 INSERT INTO `users` (`id`, `email`, `password`, `remember_token`, `firstname`, `lastname`, `tel`, `avatar`, `use`, `login_at`, `created_at`, `updated_at`) VALUES
-(1, 'cust1@test.com', '$2y$10$Mv2i330PhJ.7iOIRoZURaO4y8S4IrB6OxWxr1ybU4qw3N/8ZveEhi', NULL, 'สมจิตร', 'คิดร้าย', '010000', '', 1, '2017-05-16 23:30:00', NULL, NULL);
+(1, 'cust1@test.com', '$2y$10$Mv2i330PhJ.7iOIRoZURaO4y8S4IrB6OxWxr1ybU4qw3N/8ZveEhi', NULL, 'สมจิตร', 'คิดร้าย', '09-00000000', '', 1, '2017-05-16 16:30:00', NULL, NULL),
+(2, 'cust2@test.com', '$2y$10$Mv2i330PhJ.7iOIRoZURaO4y8S4IrB6OxWxr1ybU4qw3N/8ZveEhi', NULL, 'สมหมาย', 'ใจดี', '085-1234567', '', 1, '2017-05-18 02:30:00', NULL, NULL),
+(3, 'cust3@test.com', '$2y$10$Mv2i330PhJ.7iOIRoZURaO4y8S4IrB6OxWxr1ybU4qw3N/8ZveEhi', NULL, 'สมปอง', 'คนองเดช', '085-4545454', '', 1, '2017-05-18 03:30:00', NULL, NULL);
 
-INSERT INTO `roles` (`id`, `name`, `detail`, `created_at`, `updated_at`) VALUES
-(1, 'admin', NULL, NULL, NULL),
-(2, 'employee', NULL, NULL, NULL);
+INSERT INTO `address` (`id`, `user_id`, `fullname`, `detail`, `postcode`, `tel`, `created_at`, `updated_at`) VALUES
+(1, 1, 'สมจิตร คิดร้าย', '123 ถนนพระราม 3 แขวงบางโคล่ เขตบางคอแหลม กรุงเทพมหานคร', '10120', '09-00000000', NULL, NULL),
+(2, 1, 'สมจิตร คิดร้าย', '111 ซอยประดู่ 1 ถนนเจริญกรุง แขวงบางคอแหลม เขตบางคอแหลม กรุงเทพมหานคร', '10120', '09-00000000', NULL, NULL),
+(3, 2, 'สมหมาย ใจดี', '222 ซอยประดู่ 1 ถนนเจริญกรุง แขวงบางคอแหลม เขตบางคอแหลม กรุงเทพมหานคร', '10120', '085-1234567', NULL, NULL);
 
 INSERT INTO `admins` (`id`, `role_id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 1, 'admin1', 'admin1@test.com', '$2y$10$Mv2i330PhJ.7iOIRoZURaO4y8S4IrB6OxWxr1ybU4qw3N/8ZveEhi', 'muKS60waMOcPdoexqa4vylWfjGG3EYKlfCYavmRSrppfpzYnzGap5mssB5g8', NULL, NULL),
@@ -31,6 +34,18 @@ INSERT INTO `fileupload` (`id`, `filename`, `created_at`, `updated_at`) VALUES
 (6, 'lC0mTY5KZwt69KkJw559HQBr7ZCfck17TjYhtccg.png', '2017-05-14 23:13:54', '2017-05-14 23:13:54'),
 (7, 'gOSw4m55lPDhmofGuSANTzlusRNDLFw5xvHFx4el.jpeg', '2017-05-14 23:13:54', '2017-05-14 23:13:54');
 
+INSERT INTO `order` (`id`, `transportstatus_id`, `user_id`, `code`, `sumnumber`, `sumprice`, `fee`, `promotion`, `totalprice`, `emscode`, `address`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, '1122334455', 2, '13081.00', '40.00', '0.00', '13121.00', NULL, 'สมจิตร คิดร้าย\r\n123 ถนนพระราม 3 แขวงบางโคล่ เขตบางคอแหลม กรุงเทพมหานคร\r\n10120\r\n09-00000000', NULL, NULL),
+(2, 1, 1, 'AABBCCDDEE', 3, '16294.00', '40.00', '500.00', '15834.00', NULL, 'สมจิตร คิดร้าย\r\n123 ถนนพระราม 3 แขวงบางโคล่ เขตบางคอแหลม กรุงเทพมหานคร\r\n10120\r\n09-00000000', NULL, NULL),
+(3, 2, 2, '11223344AA', 2, '7218.00', '0.00', '0.00', '7218.00', '123456', 'สมจิตร คิดร้าย\r\n111 ซอยประดู่ 1 ถนนเจริญกรุง แขวงบางคอแหลม เขตบางคอแหลม กรุงเทพมหานคร\r\n10120\r\n09-00000000', NULL, NULL);
+
+INSERT INTO `order_detail` (`id`, `order_id`, `product_id`, `number`, `price`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, '5814.00', NULL, NULL),
+(2, 1, 2, 1, '7267.00', NULL, NULL),
+(3, 2, 5, 2, '5748.00', NULL, NULL),
+(4, 2, 8, 1, '4798.00', NULL, NULL),
+(5, 3, 7, 2, '3609.00', NULL, NULL);
+
 INSERT INTO `product` (`id`, `category_id`, `code`, `name`, `price`, `balance`, `detail`, `html`, `created_at`, `updated_at`) VALUES
 (1, 1, 'ttOA8yWx2B', 'สินค้า 1', '5814.00', 2, 'รายละเอียดสินค้า 1', NULL, '2017-05-14 22:47:49', '2017-05-14 22:47:49'),
 (2, 1, '8WZzwtJ3Sl', 'สินค้า 2', '7267.00', 27, 'รายละเอียดสินค้า 2', NULL, '2017-05-14 22:47:49', '2017-05-14 22:47:49'),
@@ -49,7 +64,12 @@ INSERT INTO `product_image` (`id`, `product_id`, `fileupload_id`, `sort`, `statu
 (3, 2, 4, 1, 1, '2017-05-14 23:14:54', '2017-05-14 23:14:54'),
 (4, 2, 7, 2, 0, '2017-05-14 23:14:54', '2017-05-14 23:14:54');
 
+INSERT INTO `roles` (`id`, `name`, `detail`, `created_at`, `updated_at`) VALUES
+(1, 'admin', NULL, NULL, NULL),
+(2, 'employee', NULL, NULL, NULL);
 
-
-
+INSERT INTO `transport_status` (`id`, `name`, `detail`, `created_at`, `updated_at`) VALUES
+(1, 'ongoing', 'กำลังดำเนินการ', NULL, NULL),
+(2, 'sending', 'กำลังจัดส่ง', NULL, NULL),
+(3, 'completed', 'ส่งสินค้าแล้ว', NULL, NULL);
 

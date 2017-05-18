@@ -64,6 +64,8 @@ Route::resource('adminuser', 'AdminUserController');
 
 Route::resource('user', 'UserController');
 
+Route::resource('order', 'OrderController');
+
 
 
 // //Admin Login

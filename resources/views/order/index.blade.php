@@ -4,7 +4,7 @@
 
 <div class="page-header">
     <h1>
-        ข้อมูลลูกค้า
+        ข้อมูลรายการสั่งซื้อ
         {{-- <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             Static &amp; Dynamic Tables
@@ -30,33 +30,49 @@
 
         <!-- div.dataTables_borderWrap -->
         <div class="table-responsive">
-            <table id="tb-user" class="table table-striped table-bordered table-hover">
+            <table id="tb-order" class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>ชื่อ-นามสกุล</th>
-                        <th>อีเมล์</th>
-                        <th>สถานะใช้งาน</th>
-                        <th>เข้าระบบฯครั้งล่าสุด</th>
+                        <th>หมายเลขของคำสั่งซื้อ</th>
+                        <th>สั่งเมื่อวันที่</th>
+                        <th>ยอดสุทธิ</th>
+                        <th>สถานะจัดส่ง</th>
+                        <th>รหัสพัสดุ</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($users as $user)
+                    @foreach($orders as $order)
                     <tr>
                         <td class="center">
-                        <div class="btn-group">
-                                <a class="btn btn-xs btn-danger btn-del" data-id="{{ $user->id }}">
-                                    <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                            <div class="btn-group">
+                                <a class="btn btn-xs btn-warning" href="/order/{{ $order->id }}/edit" >
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
                                 </a>
-                                <a class="btn btn-xs btn-info" href="/user/{{ $user->id }}" >
+                                {{-- <a class="btn btn-xs btn-info" href="/order/{{ $order->id }}" >
                                     <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                </a>
+                                </a> --}}
+                                {{-- <a class="btn btn-xs btn-warning btn-edit" data-id="{{ $order->id }}">
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                </a> --}}
                             </div>
                         </td>
-                        <td>{{ $user->firstname }} {{ $user->lastname }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->use }}</td>
-                        <td>{{ $user->login_at }}</td>
+                        <td>
+                            {{-- <a href="/order/{{ $order->id }}">{{ $order->code }}</a> --}}
+                            {{ $order->code }}
+                        </td>
+                        <td>{{ $order->created_at }}</td>
+                        <td>{{ $order->totalprice }}</td>
+                        <td>
+                            @if($order->transportstatus->name == 'ongoing')
+                            <span class="text-primary ">{{ $order->transportstatus->detail }}</span>
+                            @elseif($order->transportstatus->name == 'sending')
+                            <span class="text-warning orange">{{ $order->transportstatus->detail }}</span>
+                            @elseif($order->transportstatus->name == 'completed')
+                            <span class="text-success green">{{ $order->transportstatus->detail }}</span>
+                            @endif
+                        </td>
+                        <td>{{ $order->emscode }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -75,13 +91,13 @@
 
         //checkBoxAllMutiTablePerPage("#checkAll", ".check");
 
-        var tb_user = $('#tb-user')
+        var tb_order = $('#tb-order')
                 //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                 .dataTable({
                     //"bAutoWidth": true,
                     "aoColumns": [
                     {"bSortable": false, "width": "10%", "targets": 0},
-                    null, null, null, null,
+                    null, null, null, null, null
                     ],
                     "aaSorting": [],
                     //"sScrollY": "200px",
