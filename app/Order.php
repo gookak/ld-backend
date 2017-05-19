@@ -6,9 +6,16 @@ class Order extends Model
 {
 	protected $table = 'order';
 
-	public function user() {
-		return $this->belongsTo(User::class);
-	}
+    protected $dates = [
+    'send_at',
+    'complete_at',
+    'created_at',
+    'updated_at'
+    ];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 
     public function transportstatus() {
         return $this->belongsTo(TransportStatus::class);
@@ -25,4 +32,5 @@ class Order extends Model
     // protected $hidden = [
     // 'password', 'remember_token',
     // ];
+
 }

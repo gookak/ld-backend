@@ -23,9 +23,6 @@
 // Route::get('/admin', 'AdminController@index')->name('admin');
 
 
-
-
-
 Auth::routes();
 
 // Route::get('/', function () {
@@ -65,6 +62,7 @@ Route::resource('adminuser', 'AdminUserController');
 Route::resource('user', 'UserController');
 
 Route::resource('order', 'OrderController');
+
 
 
 

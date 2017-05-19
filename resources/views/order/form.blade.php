@@ -48,7 +48,31 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">รหัสพัสดุ</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control" name="code" placeholder="" value="{{ $order->emscode }}" />
+                                    <input type="text" class="form-control" name="emscode" placeholder="" value="{{ $order->emscode }}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">วันที่ส่งสินค้า</label>
+                                <div class="col-sm-5">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control date-timepicker1" name="send_at" placeholder="" value="{{ $order->send_at }}" />
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-clock-o bigger-110"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">วันที่เสร็จ</label>
+                                <div class="col-sm-5">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control date-timepicker1" name="complete_at" placeholder="" value="{{ $order->complete_at }}" />
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-clock-o bigger-110"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -99,6 +123,26 @@
 
         $("#orderdetail").load("/order/{{ $order->id }} #orderdetail" );
 
+        $('.date-timepicker1').datetimepicker({
+            //format: 'MM/DD/YYYY h:mm:ss A',//use this option to display seconds
+            // format: 'YYYY-MM-DD h:mm',//use this option to display seconds
+            //useCurrent: true,
+            locale: 'th',
+            icons: {
+                time: 'fa fa-clock-o',
+                date: 'fa fa-calendar',
+                up: 'fa fa-chevron-up',
+                down: 'fa fa-chevron-down',
+                previous: 'fa fa-chevron-left',
+                next: 'fa fa-chevron-right',
+                today: 'fa fa-arrows ',
+                clear: 'fa fa-trash',
+                close: 'fa fa-times'
+            }
+        }).next().on(ace.click_event, function(){
+            $(this).prev().focus();
+        });
+
         $('#orderForm').bootstrapValidator({
             framework: 'bootstrap',
             fields: {
@@ -106,12 +150,13 @@
                     validators: {
                         notEmpty: true
                     }
-                },
-                code: {
-                    validators: {
-                        notEmpty: true
-                    }
                 }
+                // ,
+                // emscode: {
+                //     validators: {
+                //         notEmpty: true
+                //     }
+                // }
             }
         }).on("success.form.bv", function (e) {
             // Prevent form submission

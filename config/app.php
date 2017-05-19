@@ -232,6 +232,9 @@ return [
     /** Forms & HTML **/
     'Form' => Collective\Html\FormFacade::class,
     'Html' => Collective\Html\HtmlFacade::class,
+    // LDUtil MyFunction
+    //'LDUtil' => 'App\Utils\LDUtil',
+
 
     ],
 

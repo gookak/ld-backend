@@ -18,6 +18,7 @@
 
   <!-- page specific plugin styles -->
   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/colorbox.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap-datetimepicker.min.css') }}" />
 
   <!-- text fonts -->
   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/fonts.googleapis.com.css') }}" />
@@ -301,6 +302,9 @@
 <script src="{{ asset('themes/ace-master/assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/jquery.dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/jquery.colorbox.min.js') }}"></script>
+<script src="{{ asset('themes/ace-master/assets/js/moment.min.js') }}"></script>
+<script src="{{ asset('themes/ace-master/assets/js/moment/locale/th.js') }}"></script>
+<script src="{{ asset('themes/ace-master/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
 {{-- <script src="{{ asset('themes/ace-master/assets/js/dataTables.buttons.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/buttons.flash.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/buttons.html5.min.js') }}"></script>

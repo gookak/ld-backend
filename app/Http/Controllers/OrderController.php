@@ -7,6 +7,8 @@ use App\TransportStatus;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use Carbon\Carbon;
+use App\Mylibs\Mylibs;
 
 class OrderController extends Controller
 {
@@ -25,6 +27,9 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::orderBy('updated_at','desc')->get();
+        foreach ($orders  as $key => $order) {
+            $order->created_at = Mylibs::dateToView($order->created_at);
+        }
         return view('order.index', compact('orders'));
     }
 
@@ -35,7 +40,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -59,6 +64,7 @@ class OrderController extends Controller
     {
         $transportstatus=TransportStatus::all();
         $order=Order::find($id);
+        // $order->created_at = Mylibs::dateToView($order->created_at);
         return view('order.show', compact('order', 'transportstatus'));
     }
 
@@ -71,6 +77,8 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order=Order::find($id);
+        $order->send_at = Mylibs::datetimeToView($order->send_at);
+        $order->complete_at = Mylibs::datetimeToView($order->complete_at);
         $header_text = 'แก้ไขรายการสั่งซื้อ';
         $mode = 'edit';
         $form_action = '/order/'.$order->id;
@@ -87,7 +95,28 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $status = 200;
+        $msgerror = "";
+        DB::beginTransaction();
+        try{
+            //$data = $request->all();
+            $order = Order::find($id);
+            $order->transportstatus_id = $request->input('transportstatus_id');
+            $order->emscode = $request->input('emscode');
+            $order->send_at = Mylibs::datetimeToDB( $request->input('send_at') );
+            $order->complete_at = Mylibs::datetimeToDB( $request->input('complete_at') );
+            $rs = $order->save();
+        } catch (\Exception $ex) {
+            $status = 500;
+            $msgerror = $ex->getMessage();
+            DB::rollback();
+        }
+        DB::commit();
+        if ($msgerror == "") {
+            $msgerror = 'บันทึกข้อมูลเรียบร้อย';
+        }
+        $data = ['status' => $status, 'msgerror' => $msgerror, 'rs' => $rs];
+        return Response::json($data);
     }
 
     /**

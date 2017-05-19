@@ -10,6 +10,11 @@ class Admin extends Authenticatable
 {
     use Notifiable;
 
+    protected $dates = [
+    'created_at',
+    'updated_at'
+    ];
+
     public function role(){
         return $this->BelongsTo(Role::class);
     } 

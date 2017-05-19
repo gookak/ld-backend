@@ -6,6 +6,11 @@ class OrderDetail extends Model
 {
 	protected $table = 'order_detail';
 
+    protected $dates = [
+    'created_at',
+    'updated_at'
+    ];
+
     public function order() {
         return $this->belongsTo(Order::class);
     }

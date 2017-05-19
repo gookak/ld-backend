@@ -6,6 +6,8 @@ use App\User;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use Carbon\Carbon;
+use App\Mylibs\Mylibs;
 
 class UserController extends Controller
 {
@@ -24,6 +26,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::where('use', true)->orderBy('updated_at','desc')->get();
+        // foreach ($users  as $key => $user) {
+        //     //$user->created_at = Mylibs::dateToView($user->created_at);
+        //     $user->login_at = Mylibs::dateToView($user->login_at);
+        // }
         return view('user.index', compact('users'));
     }
 

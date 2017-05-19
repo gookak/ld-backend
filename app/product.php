@@ -6,6 +6,11 @@ class Product extends Model
 {
 	protected $table = 'product';
 
+	protected $dates = [
+    'created_at',
+    'updated_at'
+    ];
+
 	public function category() {
 		return $this->belongsTo(Category::class);
 	}
