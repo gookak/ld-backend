@@ -61,7 +61,7 @@
                             @endif
                         </td>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->price }}</td>
+                        <td>{{ number_format( $product->price , 2 ) }}</td>
                         <td>{{ $product->balance }}</td>
                     </tr>
                     @endforeach

@@ -75,9 +75,9 @@
                                 <td class="center">{{ $od->product->code }}</td>
                                 <td>{{ $od->product->name }}</td>
                                 <td class="hidden-xs">{{ $od->product->detail }}</td>
-                                <td>{{ $od->price }}</td>
+                                <td>{{ number_format( $od->price, 2 ) }}</td>
                                 <td>{{ $od->number }}</td>
-                                <td>{{ $od->price * $od->number}}</td>
+                                <td>{{ number_format( $od->price * $od->number, 2 ) }}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -119,10 +119,10 @@
                                         <ul class="list-unstyled">
                                             <li class="text-primary"><b>สรุปยอกการสั่งซื้อ</b></li>
                                             <li>จำนวนสินค้าทั้งหมด <b class="text-primary">{{ $order->sumnumber }}</b> ชิ้น</li>
-                                            <li>มูลค่าสินค้า <b class="text-primary">{{ $order->sumprice }}</b> บาท</li>
-                                            <li>ค่าธรรมเนียม <b class="text-primary">{{ $order->fee }}</b> บาท</li>
-                                            <li>ส่วนลด <b class="text-primary">{{ $order->promotion }}</b> บาท</li>
-                                            <li>ยอดสุทธิ <b class="text-primary">{{ $order->totalprice }}</b> บาท</li>
+                                            <li>มูลค่าสินค้า <b class="text-primary">{{ number_format( $order->sumprice , 2 ) }}</b> บาท</li>
+                                            {{-- <li>ค่าธรรมเนียม <b class="text-primary">{{ number_format( $order->fee , 2 ) }}</b> บาท</li>
+                                            <li>ส่วนลด <b class="text-primary">{{ number_format( $order->promotion , 2 ) }}</b> บาท</li> --}}
+                                            <li>ยอดสุทธิ <b class="text-primary">{{ number_format( $order->totalprice , 2 ) }}</b> บาท</li>
                                         </ul>
                                     </div>
                                 </div>

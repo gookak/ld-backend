@@ -62,7 +62,7 @@
                             {{ $order->code }}
                         </td>
                         <td>{{ $order->created_at }}</td>
-                        <td>{{ $order->totalprice }}</td>
+                        <td>{{ number_format( $order->totalprice , 2 ) }}</td>
                         <td>
                             @if($order->transportstatus->name == 'ongoing')
                             <span class="text-primary ">{{ $order->transportstatus->detail }}</span>

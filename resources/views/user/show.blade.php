@@ -133,7 +133,7 @@
                                         <a href="/order/{{ $order->id }}">{{ $order->code }}</a>
                                     </td>
                                     <td>{{ $order->created_at->addYears(543)->format('d/m/Y') }}</td>
-                                    <td>{{ $order->totalprice }}</td>
+                                    <td>{{ number_format( $order->totalprice , 2 ) }}</td>
                                     <td>
                                         @if($order->transportstatus->name == 'ongoing')
                                         <span class="text-primary ">{{ $order->transportstatus->detail }}</span>
