@@ -33,11 +33,11 @@
                     <span class="blue">{{ $order->created_at->addYears(543)->format('d/m/Y') }}</span>
                 </div>
 
-                {{-- <div class="widget-toolbar hidden-480">
-                    <a href="#">
+                <div class="widget-toolbar hidden-480">
+                    <a href="/order/{{ $order->id }}/pdf" target="_blank">
                         <i class="ace-icon fa fa-print"></i>
                     </a>
-                </div> --}}
+                </div>
             </div>
 
             <div class="widget-body">

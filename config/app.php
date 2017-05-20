@@ -179,6 +179,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        /*
+         * DomPDF
+         */
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         ],
 
@@ -232,8 +236,7 @@ return [
     /** Forms & HTML **/
     'Form' => Collective\Html\FormFacade::class,
     'Html' => Collective\Html\HtmlFacade::class,
-    // LDUtil MyFunction
-    //'LDUtil' => 'App\Utils\LDUtil',
+    'PDF' => Barryvdh\DomPDF\Facade::class,
 
 
     ],

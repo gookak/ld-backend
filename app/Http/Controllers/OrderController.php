@@ -9,6 +9,8 @@ use Response;
 use DB;
 use Carbon\Carbon;
 use App\Mylibs\Mylibs;
+use PDF;
+use App;
 
 class OrderController extends Controller
 {
@@ -40,7 +42,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        
+
     }
 
     /**
@@ -128,5 +130,15 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function pdf($id)
+    {
+        $transportstatus=TransportStatus::all();
+        $order=Order::find($id);
+        $data = [ 'order' => $order, 'transportstatus' => $transportstatus ];
+        $pdf = PDF::loadView('order.pdf', $data );
+        // return @$pdf->stream('order.pdf');
+        return view('order.pdf', compact('order', 'transportstatus'));
     }
 }

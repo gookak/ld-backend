@@ -63,6 +63,8 @@ Route::resource('user', 'UserController');
 
 Route::resource('order', 'OrderController');
 
+Route::get('order/{id}/pdf', 'OrderController@pdf');
+
 
 
 
