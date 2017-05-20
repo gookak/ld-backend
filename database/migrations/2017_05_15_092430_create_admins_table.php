@@ -21,6 +21,8 @@ class CreateAdminsTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('tel', 100)->comment('เบอร์ติดต่อ');
+            $table->string('avatar', 100)->comment('รูปภาพ');
         });
 
         Schema::table('admins', function($table) {

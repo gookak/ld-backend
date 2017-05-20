@@ -93,32 +93,32 @@
                     "iDisplayLength": 25
                 });
 
-        // //delete
-        // $(".btn-del").click(function () {
-        //     var r = confirm("คุณต้องการลบรายการที่เลือก");
-        //     if (r === true) {
-        //         var id = $(this).data("id");
-        //         $.ajax({
-        //             headers: {
-        //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //             },
-        //             url:'/category/' + id, 
-        //             type: 'POST',
-        //             data: { '_method': 'delete'},
-        //         })
-        //         .done(function(result) {
-        //             console.log(result);
-        //             if (result.status === 200) {
-        //                 location.reload(true);
-        //             }else {
-        //                 showMsgError("#msgErrorArea", result.msgerror);
-        //             }
-        //         }).fail(function () {
-        //             showMsgError("#msgErrorArea", "ส่งข้อมูล AJAX ผิดพลาด");
-        //         });
-        //     }
-        // });
-        // //end delete
+        //delete
+        $(".btn-del").click(function () {
+            var r = confirm("คุณต้องการลบรายการที่เลือก");
+            if (r === true) {
+                var id = $(this).data("id");
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    url:'/adminuser/' + id, 
+                    type: 'POST',
+                    data: { '_method': 'delete'},
+                })
+                .done(function(result) {
+                    // console.log(result);
+                    if (result.status === 200) {
+                        location.reload(true);
+                    }else {
+                        showMsgError("#msgErrorArea", result.msgerror);
+                    }
+                }).fail(function () {
+                    showMsgError("#msgErrorArea", "ส่งข้อมูล AJAX ผิดพลาด");
+                });
+            }
+        });
+        //end delete
 
 
     });

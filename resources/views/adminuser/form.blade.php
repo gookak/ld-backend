@@ -34,7 +34,7 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">ชื่อ</label>
+                <label class="col-sm-2 control-label">ชื่อ-นามสกุล</label>
                 <div class="col-sm-5">
                     <input type="text" class="form-control" name="name" placeholder="" value="{{ $adminuser->name }}" />
                 </div>
@@ -47,6 +47,13 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="col-sm-2 control-label">รหัสผ่าน</label>
+                <div class="col-sm-5">
+                    <input type="password" class="form-control" name="password" placeholder="" value="" />
+                </div>
+            </div>
+            
             <div class="form-group clearfix form-actions">
                 <div class="col-sm-5 col-xs-offset-2">
                     <button class="btn btn-sm btn-primary" type="submit">
@@ -88,6 +95,11 @@
                     validators: {
                         notEmpty: true
                     }
+                },
+                password: {
+                    validators: {
+                        notEmpty: true
+                    }
                 }
             }
         }).on("success.form.bv", function (e) {
@@ -95,9 +107,9 @@
             e.preventDefault();
             // Get the form instance
             var $form = $(e.target);
-            console.log($form);
-            console.log($form.attr('action'));
-            console.log($form.serialize());
+            // console.log($form);
+            // console.log($form.attr('action'));
+            // console.log($form.serialize());
 
             $.ajax({
                 headers: {
@@ -109,11 +121,12 @@
             })
             .done(function(result) {
                 console.log(result);
-                // if (result.status === 200) {
-                //     window.location = "/adminuser";
-                // }else {
-                //     showMsgError("#msgErrorArea", result.msgerror);
-                // }
+                if (result.status === 200) {
+                    // console.log('ไม่ error');
+                    window.location = "/adminuser";
+                }else {
+                    showMsgError("#msgErrorArea", result.msgerror);
+                }
             }).fail(function () {
                 showMsgError("#msgErrorArea", "ส่งข้อมูล AJAX ผิดพลาด");
             });
