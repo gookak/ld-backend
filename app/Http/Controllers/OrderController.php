@@ -138,7 +138,7 @@ class OrderController extends Controller
         $order=Order::find($id);
         $data = [ 'order' => $order, 'transportstatus' => $transportstatus ];
         $pdf = PDF::loadView('order.pdf', $data );
-        // return @$pdf->stream('order.pdf');
-        return view('order.pdf', compact('order', 'transportstatus'));
+        return @$pdf->stream('order.pdf');
+        // return view('order.pdf', compact('order', 'transportstatus'));
     }
 }

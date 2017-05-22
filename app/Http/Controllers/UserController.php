@@ -26,11 +26,12 @@ class UserController extends Controller
     public function index()
     {
         $users = User::where('use', true)->orderBy('updated_at','desc')->get();
-        // foreach ($users  as $key => $user) {
-        //     //$user->created_at = Mylibs::dateToView($user->created_at);
-        //     $user->login_at = Mylibs::dateToView($user->login_at);
-        // }
-        return view('user.index', compact('users'));
+        // $t = Mylibs::getNumDay($users[0]->login_at->format('Y-m-d'), date('Y-m-d'));
+
+        foreach ($users  as $key => $user) {
+            $user['numdate'] = Mylibs::getNumDay($user->login_at->format('Y-m-d'), date("Y-m-d"));
+        }
+        return view('user.index', compact('users', 't'));
     }
 
     /**
@@ -98,6 +99,22 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $status = 200;
+        $msgerror = "";
+        DB::beginTransaction();
+        try{
+            $user = User::find($id);
+            $rs = $user->delete();
+        } catch (\Exception $ex) {
+            $status = 500;
+            $msgerror = $ex->getMessage();
+            DB::rollback();
+        }
+        DB::commit();
+        if ($msgerror == "") {
+            $msgerror = 'บันทึกข้อมูลเรียบร้อย';
+        }
+        $data = ['status' => $status, 'msgerror' => $msgerror, 'rs' => $rs];
+        return Response::json($data);
     }
 }

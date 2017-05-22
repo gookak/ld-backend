@@ -3,34 +3,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Page Title</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Trirong" rel="stylesheet">
+    
     <style type="text/css">
-        @font-face {
-            font-family: 'THSarabunNew';
-            font-style: normal;
-            font-weight: normal;
-            src: url("{{ asset('/fonts/THSarabunNew.ttf') }}") format('truetype');
-        }
-        @font-face {
-            font-family: 'THSarabunNew';
-            font-style: normal;
-            font-weight: bold;
-            src: url("{{ asset('/fonts/THSarabunNew Bold.ttf') }}") format('truetype');
-        }
-        @font-face {
-            font-family: 'THSarabunNew';
-            font-style: italic;
-            font-weight: normal;
-            src: url("{{ asset('/fonts/THSarabunNew Italic.ttf') }}") format('truetype');
-        }
-        @font-face {
-            font-family: 'THSarabunNew';
-            font-style: italic;
-            font-weight: bold;
-            src: url("{{ asset('/fonts/THSarabunNew BoldItalic.ttf') }}") format('truetype');
-        }
+        
 
         body {
-            font-family: "THSarabunNew";
+            /*font-family: "THSarabunNew";*/
+            font-family: 'Trirong', serif;
         }
 
         .center{
@@ -74,6 +55,7 @@
     </style>
 </head>
 <body>
+{{-- <?php set_time_limit(600); ?> --}}
     <h2>Order # {{ $order->code }}</h2>
     <hr>
     <b>วันที่สั่งซื้อ</b> <br>
@@ -92,7 +74,7 @@
                 <th>รายละเอียด</th>
                 <th>ราคา (บาท)</th>
                 <th class="right">จำนวน (ชิ้น)</th>
-                <th class="right">รวม</th>
+                <th class="right">รวม (บาท)</th>
             </tr>
         </thead>
         <tbody>
