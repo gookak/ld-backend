@@ -15,7 +15,7 @@ class CreateAddressTable extends Migration
     {
         Schema::create('address', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('users_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->string('fullname', 200)->comment('ชื่อในการจัดส่ง');
             $table->text('detail')->comment('รายละเอียด');
             $table->string('postcode', 10)->comment('รหัสไปรษณีย์');
@@ -24,7 +24,7 @@ class CreateAddressTable extends Migration
         });
 
         Schema::table('address', function($table) {
-            $table->foreign('users_id')->references('id')->on('users'); 
+            $table->foreign('user_id')->references('id')->on('users'); 
         });
     }
 

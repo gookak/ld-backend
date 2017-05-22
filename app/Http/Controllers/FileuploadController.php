@@ -12,6 +12,13 @@ use File;
 
 class FileuploadController extends Controller
 {
+
+	public function __construct()
+	{
+		$this->middleware('auth');
+        // $this->middleware('admin');
+	}
+	
 	public function index()
 	{
 		$fileuploads = Fileupload::orderBy('updated_at','desc')->get();

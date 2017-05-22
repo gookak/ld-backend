@@ -46,11 +46,11 @@
                     <tr>
                         <td class="center">
                             <div class="btn-group">
-                                <a class="btn btn-xs btn-info" href="/product/{{ $product->id }}/edit" >
-                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                </a>
                                 <a class="btn btn-xs btn-danger btn-del" data-id="{{ $product->id }}">
                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                </a>
+                                <a class="btn btn-xs btn-warning" href="/product/{{ $product->id }}/edit" >
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
                                 </a>
                             </div>
                         </td>                        
@@ -61,7 +61,7 @@
                             @endif
                         </td>
                         <td>{{ $product->name }}</td>
-                        <td>{{ $product->price }}</td>
+                        <td>{{ number_format( $product->price , 2 ) }}</td>
                         <td>{{ $product->balance }}</td>
                     </tr>
                     @endforeach

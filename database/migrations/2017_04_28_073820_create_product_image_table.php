@@ -20,7 +20,7 @@ class CreateProductImageTable extends Migration
             //$table->string('filename', 100)->comment('ชื่อไฟล์');
             // $table->string('filetype', 50)->comment('นามสกุล');
             $table->integer('sort')->comment('เรียง');
-            $table->boolean('statusdefault', 200)->default(false)->comment('ตั้งค่าเป็น defualt');
+            $table->boolean('statusdefault')->default(false)->comment('ตั้งค่าเป็น defualt');
             $table->timestamps();
         });
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// use App\Http\Middleware\CheckUserRole;
 
 class AdminController extends Controller
 {
@@ -13,7 +14,8 @@ class AdminController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth');
+        // $this->middleware('admin');
     }
 
     /**
@@ -23,11 +25,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.home');
+        return view('admin');
     }
-
-    // public function admin(){
-    //     if (auth()->user()->usertype == 2 );
-
-    // }
 }
