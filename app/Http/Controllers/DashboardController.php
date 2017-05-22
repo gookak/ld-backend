@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Order;
+use App\User;
 use Carbon\Carbon;
 use App\Mylibs\Mylibs;
 use DB;
@@ -27,19 +28,18 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // $countOrder = Order::where('user_id', 1)->count();
+        $countOrder = Order::whereDate('created_at', '=', date('Y-m-d'))->count();
+        $sumNumber = Order::whereDate('created_at', '=', date('Y-m-d'))->sum('sumnumber');
+        $sumTotalPrice = Order::whereDate('created_at', '=', date('Y-m-d'))->sum('totalprice');
+        $countUser = User::whereDate('created_at', '=', date('Y-m-d'))->count();
+
+        $orderLasts = Order::whereDate('created_at', '=', date('Y-m-d'))->orderBy('created_at', 'desc')->limit(5)->get();
+        foreach ($orderLasts  as $key => $order) {
+            $order->created_at = Mylibs::dateToView($order->created_at);
+        }
 
 
-
-        $countOrder = Order::whereDate('created_at', Carbon::now())->get();
-
-        // $countOrder = Order::where('created_at', '=', date("Y-m-d"))
-        // ->orWhereNull('created_at')->count();
-
-        dd($countOrder);
-
-        //$max = Order::where('active', 1)->max('price');
-        // return view('dashboard.index', compact('countOrder'));
+        return view('dashboard.index', compact('countOrder', 'sumNumber', 'sumTotalPrice', 'countUser', 'orderLasts'));
     }
 
     // public function admin(){

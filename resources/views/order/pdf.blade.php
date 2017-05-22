@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Page Title</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Trirong" rel="stylesheet">
+    {{-- <link href="https://fonts.googleapis.com/css?family=Trirong" rel="stylesheet"> --}}
     
     <style type="text/css">
         
@@ -55,7 +55,6 @@
     </style>
 </head>
 <body>
-{{-- <?php set_time_limit(600); ?> --}}
     <h2>Order # {{ $order->code }}</h2>
     <hr>
     <b>วันที่สั่งซื้อ</b> <br>

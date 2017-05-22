@@ -21,7 +21,7 @@
             </div>
 
             <div class="infobox-data">
-                <span class="infobox-data-number">11,000 บาท</span>
+                <span class="infobox-data-number">{{ number_format( $sumTotalPrice) }} บาท</span>
                 <div class="infobox-content">ยอดขายประจำวัน</div>
             </div>
 
@@ -38,7 +38,7 @@
             </div>
 
             <div class="infobox-data">
-                <span class="infobox-data-number">7</span>
+                <span class="infobox-data-number">{{ number_format($sumNumber) }} ชิ้น</span>
                 <div class="infobox-content">จำนวนสินค้าที่ขายได้วันนี้</div>
             </div>
         </div>
@@ -50,7 +50,7 @@
             </div>
 
             <div class="infobox-data">
-                <span class="infobox-data-number">{{ $countOrder }} รายการ</span>
+                <span class="infobox-data-number">{{ number_format($countOrder) }} รายการ</span>
                 <div class="infobox-content">รายการสั่งซื้อวันนี้</div>
             </div>
             {{-- <div class="stat stat-important">4%</div> --}}
@@ -63,7 +63,7 @@
             </div>
 
             <div class="infobox-data">
-                <span class="infobox-data-number">32 คน</span>
+                <span class="infobox-data-number">{{ number_format($countUser) }} คน</span>
                 <div class="infobox-content">สมาชิกใหม่วันนี้</div>
             </div>
 
@@ -76,97 +76,47 @@
 
 <div class="row">
     <div class="col-sm-6">
-        <h3 class="header smaller lighter blue">สินค้าขายดีวันนี้</h3>
+        <h3 class="header smaller lighter blue">รายการสั่งซื้อล่าสุดวันนี้</h3>
         <table class="table table-bordered table-striped">
             <thead class="thin-border-bottom">
                 <tr>
-                    <th>
-                        <i class="ace-icon fa fa-caret-right blue"></i>name
-                    </th>
-
-                    <th>
-                        <i class="ace-icon fa fa-caret-right blue"></i>price
-                    </th>
-
-                    <th class="hidden-480">
-                        <i class="ace-icon fa fa-caret-right blue"></i>status
-                    </th>
+                    <th><i class="ace-icon fa fa-caret-right blue">หมายเลขของคำสั่งซื้อ</th>
+                    <th><i class="ace-icon fa fa-caret-right blue">สั่งเมื่อวันที่</th>
+                    <th><i class="ace-icon fa fa-caret-right blue">ยอดสุทธิ</th>
+                    <th><i class="ace-icon fa fa-caret-right blue">สถานะจัดส่ง</th>
                 </tr>
             </thead>
-
             <tbody>
+                @if($orderLasts)
+                @foreach($orderLasts as $order)
                 <tr>
-                    <td>internet.com</td>
-
+                    <td><a href="/order/{{ $order->id }}" target="_blank">{{ $order->code }}</a></td>
+                    <td>{{ $order->created_at }}</td>
+                    <td><b class="green">{{ number_format( $order->totalprice , 2 ) }}</b></td>
                     <td>
-                        <small>
-                            <s class="red">$29.99</s>
-                        </small>
-                        <b class="green">$19.99</b>
-                    </td>
-
-                    <td class="hidden-480">
-                        <span class="label label-info arrowed-right arrowed-in">on sale</span>
+                        @if($order->transportstatus->name == 'ongoing')
+                        <span class="text-primary ">{{ $order->transportstatus->detail }}</span>
+                        @elseif($order->transportstatus->name == 'sending')
+                        <span class="text-warning orange">{{ $order->transportstatus->detail }}</span>
+                        @elseif($order->transportstatus->name == 'completed')
+                        <span class="text-success green">{{ $order->transportstatus->detail }}</span>
+                        @endif
                     </td>
                 </tr>
-
-                <tr>
-                    <td>online.com</td>
-
-                    <td>
-                        <b class="blue">$16.45</b>
-                    </td>
-
-                    <td class="hidden-480">
-                        <span class="label label-success arrowed-in arrowed-in-right">approved</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>newnet.com</td>
-
-                    <td>
-                        <b class="blue">$15.00</b>
-                    </td>
-
-                    <td class="hidden-480">
-                        <span class="label label-danger arrowed">pending</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>web.com</td>
-
-                    <td>
-                        <small>
-                            <s class="red">$24.99</s>
-                        </small>
-                        <b class="green">$19.95</b>
-                    </td>
-
-                    <td class="hidden-480">
-                        <span class="label arrowed">
-                            <s>out of stock</s>
-                        </span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>domain.com</td>
-
-                    <td>
-                        <b class="blue">$12.00</b>
-                    </td>
-
-                    <td class="hidden-480">
-                        <span class="label label-warning arrowed arrowed-right">SOLD</span>
-                    </td>
-                </tr>
+                @endforeach
+                @endif
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <a class="btn btn-xs btn-primary" href="/order" target="_blank">ดูทั้งหมด</a>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
     <div class="col-sm-6">
-        <h3 class="header smaller lighter blue">รายการสั่งซื้อล่าสุด</h3>
+        <h3 class="header smaller lighter blue">สินค้าขายดีวันนี้</h3>
         <table class="table table-bordered table-striped">
             <thead class="thin-border-bottom">
                 <tr>
