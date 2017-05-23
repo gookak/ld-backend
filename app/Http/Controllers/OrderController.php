@@ -29,9 +29,9 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::orderBy('updated_at','desc')->get();
-        foreach ($orders  as $key => $order) {
-            $order->created_at = Mylibs::dateToView($order->created_at);
-        }
+        // foreach ($orders  as $key => $order) {
+        //     $order->created_at = Mylibs::dateToView($order->created_at);
+        // }
         return view('order.index', compact('orders'));
     }
 

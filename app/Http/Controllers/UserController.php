@@ -26,10 +26,10 @@ class UserController extends Controller
     public function index()
     {
         $users = User::where('use', true)->orderBy('updated_at','desc')->get();
-        // $t = Mylibs::getNumDay($users[0]->login_at->format('Y-m-d'), date('Y-m-d'));
-
         foreach ($users  as $key => $user) {
-            $user['numdate'] = Mylibs::getNumDay($user->login_at->format('Y-m-d'), date("Y-m-d"));
+            if ($user['numdate']) {
+                $user['numdate'] = Mylibs::getNumDay($user->login_at->format('Y-m-d'), date("Y-m-d"));
+            }
         }
         return view('user.index', compact('users', 't'));
     }

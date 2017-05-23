@@ -30,7 +30,7 @@
 
                     <br>
                     <span class="invoice-info-label">วันที่สั่งซื้อ:</span>
-                    <span class="blue">{{ $order->created_at->addYears(543)->format('d/m/Y') }}</span>
+                    <span class="blue">{{ $order->created_at ? $order->created_at->addYears(543)->format('d/m/Y') : null }}</span>
                 </div>
 
                 <div class="widget-toolbar hidden-480">

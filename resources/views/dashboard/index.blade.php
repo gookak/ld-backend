@@ -5,10 +5,10 @@
 <div class="page-header">
     <h1>
         Dashboard
-        <small>
+        {{-- <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             Static &amp; Dynamic Tables
-        </small>
+        </small> --}}
     </h1>
 </div><!-- /.page-header -->
 
@@ -120,102 +120,45 @@
         <table class="table table-bordered table-striped">
             <thead class="thin-border-bottom">
                 <tr>
-                    <th>
-                        <i class="ace-icon fa fa-caret-right blue"></i>name
-                    </th>
-
-                    <th>
-                        <i class="ace-icon fa fa-caret-right blue"></i>price
-                    </th>
-
-                    <th class="hidden-480">
-                        <i class="ace-icon fa fa-caret-right blue"></i>status
-                    </th>
+                    <th><i class="ace-icon fa fa-caret-right blue">รหัสสินค้า</th>
+                    <th><i class="ace-icon fa fa-caret-right blue">ชื่อ</th>
+                    <th><i class="ace-icon fa fa-caret-right blue">ราคาต่อชิ้น</th>
+                    <th><i class="ace-icon fa fa-caret-right blue">จำนวนที่ขายได้ (ชิ้น)</th>
                 </tr>
             </thead>
-
             <tbody>
+                @if($productBases)
+                @foreach($productBases as $productBase)
                 <tr>
-                    <td>internet.com</td>
-
-                    <td>
-                        <small>
-                            <s class="red">$29.99</s>
-                        </small>
-                        <b class="green">$19.99</b>
-                    </td>
-
-                    <td class="hidden-480">
-                        <span class="label label-info arrowed-right arrowed-in">on sale</span>
-                    </td>
+                    <td>{{ $productBase->code }}</td>
+                    <td>{{ $productBase->name }}</td>
+                    <td><b class="green">{{ number_format( $productBase->price , 2 ) }}</b></td>
+                    <td>{{ $productBase->number }}</td>
                 </tr>
-
-                <tr>
-                    <td>online.com</td>
-
-                    <td>
-                        <b class="blue">$16.45</b>
-                    </td>
-
-                    <td class="hidden-480">
-                        <span class="label label-success arrowed-in arrowed-in-right">approved</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>newnet.com</td>
-
-                    <td>
-                        <b class="blue">$15.00</b>
-                    </td>
-
-                    <td class="hidden-480">
-                        <span class="label label-danger arrowed">pending</span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>web.com</td>
-
-                    <td>
-                        <small>
-                            <s class="red">$24.99</s>
-                        </small>
-                        <b class="green">$19.95</b>
-                    </td>
-
-                    <td class="hidden-480">
-                        <span class="label arrowed">
-                            <s>out of stock</s>
-                        </span>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>domain.com</td>
-
-                    <td>
-                        <b class="blue">$12.00</b>
-                    </td>
-
-                    <td class="hidden-480">
-                        <span class="label label-warning arrowed arrowed-right">SOLD</span>
-                    </td>
-                </tr>
+                @endforeach
+                @endif
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">
+                        <a class="btn btn-xs btn-primary" href="/product" target="_blank">ดูทั้งหมด</a>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
 
-<div class="hr hr32 hr-dotted"></div>
+{{-- <div class="hr hr32 hr-dotted"></div>
 
 <div class="row">
     <div class="col-sm-6">
+        <h3 class="header smaller lighter blue">ยอดขายประจำวันแบ่งตามประเภทสินค้า</h3>
         <div id="product-balance"></div>
     </div>
-</div>
+</div> --}}
 
-<div class="hr hr32 hr-dotted"></div>
+
 
 
 
@@ -225,51 +168,6 @@
 <script type="text/javascript">
     $(function () {
 
-        Highcharts.chart('product-balance', {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 45,
-                    beta: 0
-                }
-            },
-            title: {
-                text: 'ยอดขายประจำวันแบ่งตามประเภทสินค้า'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 35,
-                    dataLabels: {
-                        enabled: false,
-                        format: '{point.name}'
-                    },
-                    showInLegend: true
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Browser share',
-                data: [
-                ['Firefox', 45.0],
-                ['IE', 26.8],
-                {
-                    name: 'Chrome',
-                    y: 12.8,
-                    sliced: true,
-                    selected: true
-                },
-                ['Safari', 8.5],
-                ['Opera', 6.2],
-                ['Others', 0.7]
-                ]
-            }]
-        });
 
     });
 </script>

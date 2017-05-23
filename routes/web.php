@@ -57,6 +57,8 @@ Route::post('/fileupload/{id}', 'FileuploadController@destroy');
 
 Route::get('/apigetfileupload', 'ApiController@apigetfileupload');
 
+Route::get('/apigetpercentpricebycategorys', 'ApiController@apigetpercentpricebycategorys');
+
 Route::resource('adminuser', 'AdminUserController');
 
 Route::resource('user', 'UserController');

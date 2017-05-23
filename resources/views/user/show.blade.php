@@ -130,7 +130,7 @@
                                 @foreach( $user->order as $order )
                                 <tr>
                                     <td>
-                                        <a href="/order/{{ $order->id }}">{{ $order->code }}</a>
+                                        <a href="/order/{{ $order->id }}" target="_blank">{{ $order->code }}</a>
                                     </td>
                                     <td>{{ $order->created_at->addYears(543)->format('d/m/Y') }}</td>
                                     <td>{{ number_format( $order->totalprice , 2 ) }}</td>
