@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Mylibs\Mylibs;
 use PDF;
 use App;
+use mPDF;
 
 class OrderController extends Controller
 {
@@ -29,9 +30,9 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::orderBy('updated_at','desc')->get();
-        foreach ($orders  as $key => $order) {
-            $order->created_at = Mylibs::dateToView($order->created_at);
-        }
+        // foreach ($orders  as $key => $order) {
+        //     $order->created_at = Mylibs::dateToView($order->created_at);
+        // }
         return view('order.index', compact('orders'));
     }
 
@@ -134,11 +135,25 @@ class OrderController extends Controller
 
     public function pdf($id)
     {
-        $transportstatus=TransportStatus::all();
-        $order=Order::find($id);
-        $data = [ 'order' => $order, 'transportstatus' => $transportstatus ];
-        $pdf = PDF::loadView('order.pdf', $data );
-        return @$pdf->stream('order.pdf');
+
+
+        $mpdf = new mPDF();
+
+// Write some HTML code:
+
+        $mpdf->WriteHTML('ทดสอบ');
+
+// Output a PDF file directly to the browser
+        $mpdf->Output();
+
+
+
+
+        // $transportstatus=TransportStatus::all();
+        // $order=Order::find($id);
+        // $data = [ 'order' => $order, 'transportstatus' => $transportstatus ];
+        // $pdf = PDF::loadView('order.pdf', $data );
+        // // return @$pdf->stream('order.pdf');
         // return view('order.pdf', compact('order', 'transportstatus'));
     }
 }

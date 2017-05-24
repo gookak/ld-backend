@@ -127,7 +127,7 @@
         try{ace.settings.loadState('sidebar')}catch(e){}
       </script>
 
-      @include('layouts.sidebar-shortcuts')
+      {{-- @include('layouts.sidebar-shortcuts') --}}
 
       <ul class="nav nav-list">
         <li class="">
@@ -140,7 +140,7 @@
         </li>
         <li class="">
           <a href="/adminuser">
-            <i class="menu-icon fa fa-tachometer"></i>
+            <i class="menu-icon fa fa-user"></i>
             <span class="menu-text"> ข้อมูลผู้ใช้งาน </span>
           </a>
 
@@ -148,7 +148,7 @@
         </li>
         <li class="">
           <a href="/category">
-            <i class="menu-icon fa fa-tachometer"></i>
+            <i class="menu-icon fa fa-list"></i>
             <span class="menu-text"> ประเภทสินค้า </span>
           </a>
 
@@ -156,7 +156,7 @@
         </li>
         <li class="">
           <a href="/fileupload">
-            <i class="menu-icon fa fa-tachometer"></i>
+            <i class="menu-icon fa fa-picture-o"></i>
             <span class="menu-text"> อัพโหลดรูปสินค้า </span>
           </a>
 
@@ -164,7 +164,7 @@
         </li>
         <li class="">
           <a href="/product">
-            <i class="menu-icon fa fa-tachometer"></i>
+            <i class="menu-icon fa fa-desktop"></i>
             <span class="menu-text"> ข้อมูลสินค้า </span>
           </a>
 
@@ -172,7 +172,7 @@
         </li>
         <li class="">
           <a href="/user">
-            <i class="menu-icon fa fa-tachometer"></i>
+            <i class="menu-icon fa fa-users"></i>
             <span class="menu-text"> ข้อมูลลูกค้า </span>
           </a>
 
@@ -180,7 +180,7 @@
         </li>
         <li class="">
           <a href="/order">
-            <i class="menu-icon fa fa-tachometer"></i>
+            <i class="menu-icon fa fa-book"></i>
             <span class="menu-text"> ข้อมูลรายการสั่งซื้อ </span>
           </a>
 

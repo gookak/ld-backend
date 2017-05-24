@@ -57,7 +57,9 @@
                         <td>{{ $user->firstname }} {{ $user->lastname }}</td>
                         <td>{{ $user->email }}</td>
                         {{-- <td>{{ $user->use }}</td> --}}
-                        <td class="center">{{ $user->login_at->addYears(543)->format('d/m/Y') }}</td>
+                        <td class="center">
+                            {{ $user->login_at ? $user->login_at->addYears(543)->format('d/m/Y') : null }}
+                        </td>
                         <td class="center">
                             @if( $user->numdate >= 90 )
                             <b class="text-danger">{{ $user->numdate }}</b>
