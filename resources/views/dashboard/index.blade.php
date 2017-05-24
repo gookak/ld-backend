@@ -4,7 +4,7 @@
 
 <div class="page-header">
     <h1>
-        Dashboard
+        หน้าแรก
         {{-- <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             Static &amp; Dynamic Tables
@@ -17,7 +17,7 @@
     <div class="col-sm-3">
         <div class="infobox infobox-blue">
             <div class="infobox-icon">
-                <i class="ace-icon fa fa-twitter"></i>
+                <i class="ace-icon fa fa-money"></i>
             </div>
 
             <div class="infobox-data">
@@ -34,7 +34,7 @@
     <div class="col-sm-3">
         <div class="infobox infobox-orange2">
             <div class="infobox-icon">
-                <i class="ace-icon fa fa-flask"></i>
+                <i class="ace-icon fa fa-gift"></i>
             </div>
 
             <div class="infobox-data">
@@ -59,7 +59,7 @@
     <div class="col-sm-3">
         <div class="infobox infobox-green">
             <div class="infobox-icon">
-                <i class="ace-icon fa fa-comments"></i>
+                <i class="ace-icon fa fa-users"></i>
             </div>
 
             <div class="infobox-data">

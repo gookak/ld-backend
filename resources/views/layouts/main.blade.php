@@ -19,7 +19,9 @@
 
   <!-- page specific plugin styles -->
   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/colorbox.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap-datetimepicker.min.css') }}" />
+{{--   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap-datepicker3.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap-datetimepicker.min.css') }}" /> --}}
+  <link rel="stylesheet" href="{{ asset('lib/bootstrap-datepicker-thai/css/datepicker.css') }}" />
 
   <!-- text fonts -->
   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/fonts.googleapis.com.css') }}" />
@@ -76,8 +78,8 @@
               {{-- <img class="nav-user-photo" src="{{ asset('themes/ace-master/assets/images/avatars/user.jpg') }}" alt="Jason's Photo" /> --}}
               <span class="user-info">
                 {{-- <small>Welcome,</small> --}}
-                ชื่อ : {{ Auth::user()->name }} <br/>
-                สิทธิ์ : {{ Auth::user()->role->name }}
+                {{ Auth::user()->name }} <br/>
+                {{ Auth::user()->role->detail }}
               </span>
 
               <i class="ace-icon fa fa-caret-down"></i>
@@ -102,7 +104,7 @@
               <li>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <i class="ace-icon fa fa-power-off"></i>
-                  Logout
+                  ออกจากระบบ
                 </a>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -139,6 +141,7 @@
 
           <b class="arrow"></b>
         </li>
+        @if( Auth::user()->role->name == 'admin')
         <li class="">
           <a href="/adminuser">
             <i class="menu-icon fa fa-user"></i>
@@ -147,6 +150,7 @@
 
           <b class="arrow"></b>
         </li>
+        @endif
         <li class="">
           <a href="/category">
             <i class="menu-icon fa fa-list"></i>
@@ -165,7 +169,7 @@
         </li>
         <li class="">
           <a href="/product">
-            <i class="menu-icon fa fa-desktop"></i>
+            <i class="menu-icon fa fa-gift"></i>
             <span class="menu-text"> ข้อมูลสินค้า </span>
           </a>
 
@@ -173,7 +177,7 @@
         </li>
         <li class="">
           <a href="/order">
-            <i class="menu-icon fa fa-book"></i>
+            <i class="menu-icon fa fa-shopping-cart"></i>
             <span class="menu-text"> ข้อมูลรายการสั่งซื้อ </span>
           </a>
 
@@ -183,6 +187,14 @@
           <a href="/user">
             <i class="menu-icon fa fa-users"></i>
             <span class="menu-text"> ข้อมูลลูกค้า </span>
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        <li class="">
+          <a href="/report">
+            <i class="menu-icon fa fa-file-text"></i>
+            <span class="menu-text"> รายงาน </span>
           </a>
 
           <b class="arrow"></b>
@@ -303,9 +315,14 @@
 <script src="{{ asset('themes/ace-master/assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/jquery.dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/jquery.colorbox.min.js') }}"></script>
+{{-- <script src="{{ asset('themes/ace-master/assets/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/moment.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/moment/locale/th.js') }}"></script>
-<script src="{{ asset('themes/ace-master/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script src="{{ asset('themes/ace-master/assets/js/bootstrap-datetimepicker.min.js') }}"></script> --}}
+<script src="{{ asset('lib/bootstrap-datepicker-thai/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('lib/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}"></script>
+<script src="{{ asset('lib/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js') }}"></script>
+
 
 {{-- highcharts--}}
 <script src="{{ asset('bower_components/highcharts/highcharts.js') }}"></script>

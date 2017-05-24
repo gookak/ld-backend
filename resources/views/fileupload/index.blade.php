@@ -27,7 +27,7 @@
                     {{ csrf_field() }}
                     <input type="file" class="form-control" name="images[]" multiple placeholder=""/>
                 </div>
-                <button type="submit" class="btn btn-sm btn-primary">Upload</button>
+                <button type="submit" class="btn btn-sm btn-primary">อัพโหลด</button>
             </form>
         </div>
     </div>
@@ -38,7 +38,7 @@
             <a href="{{ asset(env('FILE_URL').$fileupload->filename )}}" data-rel="colorbox" class="cboxElement">
                 <img width="150" height="150" alt="150x150" src="{{ asset(env('FILE_URL').$fileupload->filename )}}">
                 <div class="text">
-                    <div class="inner">Zoom</div>
+                    <div class="inner">ดูรูปภาพ</div>
                 </div>
             </a>
             <div class="tools tools-bottom">

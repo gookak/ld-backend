@@ -80,8 +80,8 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order=Order::find($id);
-        $order->send_at = Mylibs::datetimeToView($order->send_at);
-        $order->complete_at = Mylibs::datetimeToView($order->complete_at);
+        // $order->send_at = Mylibs::datetimeToView($order->send_at);
+        // $order->complete_at = Mylibs::datetimeToView($order->complete_at);
         $header_text = 'แก้ไขรายการสั่งซื้อ';
         $mode = 'edit';
         $form_action = '/order/'.$order->id;
@@ -102,12 +102,13 @@ class OrderController extends Controller
         $msgerror = "";
         DB::beginTransaction();
         try{
-            //$data = $request->all();
+            // $a = Mylibs::dateToDB( $request->input('send_at') );
+            $data = $request->all();
             $order = Order::find($id);
             $order->transportstatus_id = $request->input('transportstatus_id');
             $order->emscode = $request->input('emscode');
-            $order->send_at = Mylibs::datetimeToDB( $request->input('send_at') );
-            $order->complete_at = Mylibs::datetimeToDB( $request->input('complete_at') );
+            $order->send_at = Mylibs::dateToDB( $request->input('send_at') );
+            $order->complete_at = Mylibs::dateToDB( $request->input('complete_at') );
             $rs = $order->save();
         } catch (\Exception $ex) {
             $status = 500;
