@@ -135,25 +135,13 @@ class OrderController extends Controller
 
     public function pdf($id)
     {
-
-
-        $mpdf = new mPDF();
-
-// Write some HTML code:
-
-        $mpdf->WriteHTML('ทดสอบ');
-
-// Output a PDF file directly to the browser
-        $mpdf->Output();
-
-
-
-
-        // $transportstatus=TransportStatus::all();
-        // $order=Order::find($id);
-        // $data = [ 'order' => $order, 'transportstatus' => $transportstatus ];
-        // $pdf = PDF::loadView('order.pdf', $data );
-        // // return @$pdf->stream('order.pdf');
-        // return view('order.pdf', compact('order', 'transportstatus'));
+        $order = Order::find($id);
+        $filename = 'order_'.$order->code.'.pdf';
+        $html = view('order.pdf', compact('order'))->render();
+        $mpdf = new mPDF('th', 'A4');
+        $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
+        $mpdf->WriteHTML($html,2);
+        $mpdf->Output($filename, 'I');
+        // return view('order.pdf', compact('order'));
     }
 }

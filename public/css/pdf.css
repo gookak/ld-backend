@@ -1,0 +1,32 @@
+.center{
+  text-align: center;
+}
+.right{
+  text-align: right;
+}
+.left: {
+  text-align: left;
+}
+
+table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+table.one{
+  border:0; 
+} 
+table.one th { 
+  font-weight:bold; 
+  border-bottom:1px solid #CCC; 
+  border-top:1px solid #CCC; 
+  background-color:#DDD ;
+}
+table.one td { 
+  padding:5px; 
+  border-bottom:1px dotted #CCC; 
+}
+table.one tfoot td{ 
+  border-bottom:2px solid #CCC; 
+}

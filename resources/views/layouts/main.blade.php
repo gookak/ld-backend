@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta charset="utf-8" />
+  {{-- <meta charset="utf-8" /> --}}
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   <title>{{ config('app.name') }}</title>
 
@@ -75,8 +76,8 @@
               {{-- <img class="nav-user-photo" src="{{ asset('themes/ace-master/assets/images/avatars/user.jpg') }}" alt="Jason's Photo" /> --}}
               <span class="user-info">
                 {{-- <small>Welcome,</small> --}}
-                {{ Auth::user()->name }} <br/>
-                Role : {{ Auth::user()->role->name }}
+                ชื่อ : {{ Auth::user()->name }} <br/>
+                สิทธิ์ : {{ Auth::user()->role->name }}
               </span>
 
               <i class="ace-icon fa fa-caret-down"></i>
@@ -133,7 +134,7 @@
         <li class="">
           <a href="/dashboard">
             <i class="menu-icon fa fa-tachometer"></i>
-            <span class="menu-text"> Dashboard </span>
+            <span class="menu-text"> หน้าแรก </span>
           </a>
 
           <b class="arrow"></b>
@@ -171,17 +172,17 @@
           <b class="arrow"></b>
         </li>
         <li class="">
-          <a href="/user">
-            <i class="menu-icon fa fa-users"></i>
-            <span class="menu-text"> ข้อมูลลูกค้า </span>
+          <a href="/order">
+            <i class="menu-icon fa fa-book"></i>
+            <span class="menu-text"> ข้อมูลรายการสั่งซื้อ </span>
           </a>
 
           <b class="arrow"></b>
         </li>
         <li class="">
-          <a href="/order">
-            <i class="menu-icon fa fa-book"></i>
-            <span class="menu-text"> ข้อมูลรายการสั่งซื้อ </span>
+          <a href="/user">
+            <i class="menu-icon fa fa-users"></i>
+            <span class="menu-text"> ข้อมูลลูกค้า </span>
           </a>
 
           <b class="arrow"></b>
