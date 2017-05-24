@@ -80,8 +80,8 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order=Order::find($id);
-        $order->send_at = Mylibs::datetimeToView($order->send_at);
-        $order->complete_at = Mylibs::datetimeToView($order->complete_at);
+        // $order->send_at = Mylibs::datetimeToView($order->send_at);
+        // $order->complete_at = Mylibs::datetimeToView($order->complete_at);
         $header_text = 'แก้ไขรายการสั่งซื้อ';
         $mode = 'edit';
         $form_action = '/order/'.$order->id;
@@ -102,12 +102,13 @@ class OrderController extends Controller
         $msgerror = "";
         DB::beginTransaction();
         try{
-            //$data = $request->all();
+            // $a = Mylibs::dateToDB( $request->input('send_at') );
+            $data = $request->all();
             $order = Order::find($id);
             $order->transportstatus_id = $request->input('transportstatus_id');
             $order->emscode = $request->input('emscode');
-            $order->send_at = Mylibs::datetimeToDB( $request->input('send_at') );
-            $order->complete_at = Mylibs::datetimeToDB( $request->input('complete_at') );
+            $order->send_at = Mylibs::dateToDB( $request->input('send_at') );
+            $order->complete_at = Mylibs::dateToDB( $request->input('complete_at') );
             $rs = $order->save();
         } catch (\Exception $ex) {
             $status = 500;
@@ -135,25 +136,13 @@ class OrderController extends Controller
 
     public function pdf($id)
     {
-
-
-        $mpdf = new mPDF();
-
-// Write some HTML code:
-
-        $mpdf->WriteHTML('ทดสอบ');
-
-// Output a PDF file directly to the browser
-        $mpdf->Output();
-
-
-
-
-        // $transportstatus=TransportStatus::all();
-        // $order=Order::find($id);
-        // $data = [ 'order' => $order, 'transportstatus' => $transportstatus ];
-        // $pdf = PDF::loadView('order.pdf', $data );
-        // // return @$pdf->stream('order.pdf');
-        // return view('order.pdf', compact('order', 'transportstatus'));
+        $order = Order::find($id);
+        $filename = 'order_'.$order->code.'.pdf';
+        $html = view('order.pdf', compact('order'))->render();
+        $mpdf = new mPDF('th', 'A4');
+        $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
+        $mpdf->WriteHTML($html,2);
+        $mpdf->Output($filename, 'I');
+        // return view('order.pdf', compact('order'));
     }
 }

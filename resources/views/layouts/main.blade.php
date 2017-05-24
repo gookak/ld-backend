@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta charset="utf-8" />
+  {{-- <meta charset="utf-8" /> --}}
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
   <title>{{ config('app.name') }}</title>
 
@@ -18,7 +19,9 @@
 
   <!-- page specific plugin styles -->
   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/colorbox.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap-datetimepicker.min.css') }}" />
+{{--   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap-datepicker3.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap-datetimepicker.min.css') }}" /> --}}
+  <link rel="stylesheet" href="{{ asset('lib/bootstrap-datepicker-thai/css/datepicker.css') }}" />
 
   <!-- text fonts -->
   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/fonts.googleapis.com.css') }}" />
@@ -76,7 +79,7 @@
               <span class="user-info">
                 {{-- <small>Welcome,</small> --}}
                 {{ Auth::user()->name }} <br/>
-                Role : {{ Auth::user()->role->name }}
+                {{ Auth::user()->role->detail }}
               </span>
 
               <i class="ace-icon fa fa-caret-down"></i>
@@ -101,7 +104,7 @@
               <li>
                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <i class="ace-icon fa fa-power-off"></i>
-                  Logout
+                  ออกจากระบบ
                 </a>
 
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -133,11 +136,12 @@
         <li class="">
           <a href="/dashboard">
             <i class="menu-icon fa fa-tachometer"></i>
-            <span class="menu-text"> Dashboard </span>
+            <span class="menu-text"> หน้าแรก </span>
           </a>
 
           <b class="arrow"></b>
         </li>
+        @if( Auth::user()->role->name == 'admin')
         <li class="">
           <a href="/adminuser">
             <i class="menu-icon fa fa-user"></i>
@@ -146,6 +150,7 @@
 
           <b class="arrow"></b>
         </li>
+        @endif
         <li class="">
           <a href="/category">
             <i class="menu-icon fa fa-list"></i>
@@ -164,8 +169,16 @@
         </li>
         <li class="">
           <a href="/product">
-            <i class="menu-icon fa fa-desktop"></i>
+            <i class="menu-icon fa fa-gift"></i>
             <span class="menu-text"> ข้อมูลสินค้า </span>
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        <li class="">
+          <a href="/order">
+            <i class="menu-icon fa fa-shopping-cart"></i>
+            <span class="menu-text"> ข้อมูลรายการสั่งซื้อ </span>
           </a>
 
           <b class="arrow"></b>
@@ -179,9 +192,9 @@
           <b class="arrow"></b>
         </li>
         <li class="">
-          <a href="/order">
-            <i class="menu-icon fa fa-book"></i>
-            <span class="menu-text"> ข้อมูลรายการสั่งซื้อ </span>
+          <a href="/report">
+            <i class="menu-icon fa fa-file-text"></i>
+            <span class="menu-text"> รายงาน </span>
           </a>
 
           <b class="arrow"></b>
@@ -302,9 +315,14 @@
 <script src="{{ asset('themes/ace-master/assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/jquery.dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/jquery.colorbox.min.js') }}"></script>
+{{-- <script src="{{ asset('themes/ace-master/assets/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/moment.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/moment/locale/th.js') }}"></script>
-<script src="{{ asset('themes/ace-master/assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+<script src="{{ asset('themes/ace-master/assets/js/bootstrap-datetimepicker.min.js') }}"></script> --}}
+<script src="{{ asset('lib/bootstrap-datepicker-thai/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('lib/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}"></script>
+<script src="{{ asset('lib/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js') }}"></script>
+
 
 {{-- highcharts--}}
 <script src="{{ asset('bower_components/highcharts/highcharts.js') }}"></script>

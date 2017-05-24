@@ -11,6 +11,11 @@ class Mylibs {
 		return ($date !== null && $date !== '') ? Carbon::createFromFormat('d/m/Y H:i', $date)->subYears(543) : null;
 	}
 
+	public static function dateToDB($date) {
+		// return ex 2017-05-20
+		return ($date !== null && $date !== '') ? Carbon::createFromFormat('d/m/Y', $date)->subYears(543) : null;
+	}
+
 	public static function datetimeToView($date) {
 		// return ex 20/05/2560 14:00
 		Carbon::setToStringFormat('d/m/Y H:i');

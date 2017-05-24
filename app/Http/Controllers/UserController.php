@@ -27,7 +27,7 @@ class UserController extends Controller
     {
         $users = User::where('use', true)->orderBy('updated_at','desc')->get();
         foreach ($users  as $key => $user) {
-            if ($user['numdate']) {
+            if ( $user->login_at ) {
                 $user['numdate'] = Mylibs::getNumDay($user->login_at->format('Y-m-d'), date("Y-m-d"));
             }
         }

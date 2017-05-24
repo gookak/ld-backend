@@ -54,7 +54,7 @@
                         </td>
                         <td>{{ $adminuser->name }}</td>
                         <td>{{ $adminuser->email }}</td>
-                        <td>{{ $adminuser->role->name }}</td>
+                        <td>{{ $adminuser->role->detail }}</td>
                     </tr>
                     @endforeach
                 </tbody>

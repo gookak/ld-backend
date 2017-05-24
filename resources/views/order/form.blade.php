@@ -56,9 +56,9 @@
                                 <label class="col-sm-2 control-label">วันที่ส่งสินค้า</label>
                                 <div class="col-sm-5">
                                     <div class="input-group">
-                                        <input type="text" class="form-control date-timepicker1" name="send_at" placeholder="" value="{{ $order->send_at }}" />
+                                    <input type="text" class="form-control datepicker" name="send_at" placeholder="" value="{{ $order->send_at ? $order->send_at->addYears(543)->format('d/m/Y') : null }}"/>
                                         <span class="input-group-addon">
-                                            <i class="fa fa-clock-o bigger-110"></i>
+                                            <i class="fa fa-calendar bigger-110"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -68,9 +68,9 @@
                                 <label class="col-sm-2 control-label">วันที่เสร็จ</label>
                                 <div class="col-sm-5">
                                     <div class="input-group">
-                                        <input type="text" class="form-control date-timepicker1" name="complete_at" placeholder="" value="{{ $order->complete_at }}" />
+                                        <input type="text" class="form-control datepicker" name="complete_at" placeholder="" value="{{ $order->complete_at ? $order->complete_at->addYears(543)->format('d/m/Y') : null }}" />
                                         <span class="input-group-addon">
-                                            <i class="fa fa-clock-o bigger-110"></i>
+                                            <i class="fa fa-calendar bigger-110"></i>
                                         </span>
                                     </div>
                                 </div>
@@ -123,25 +123,12 @@
 
         $("#orderdetail").load("/order/{{ $order->id }} #orderdetail" );
 
-        $('.date-timepicker1').datetimepicker({
-            //format: 'MM/DD/YYYY h:mm:ss A',//use this option to display seconds
-            // format: 'YYYY-MM-DD h:mm',//use this option to display seconds
-            //useCurrent: true,
-            locale: 'th',
-            icons: {
-                time: 'fa fa-clock-o',
-                date: 'fa fa-calendar',
-                up: 'fa fa-chevron-up',
-                down: 'fa fa-chevron-down',
-                previous: 'fa fa-chevron-left',
-                next: 'fa fa-chevron-right',
-                today: 'fa fa-arrows ',
-                clear: 'fa fa-trash',
-                close: 'fa fa-times'
-            }
-        }).next().on(ace.click_event, function(){
+        $('.datepicker').datepicker({language:'th-th',format:'dd/mm/yyyy'})
+        //show datepicker when clicking on the icon
+        .next().on(ace.click_event, function(){
             $(this).prev().focus();
         });
+
 
         $('#orderForm').bootstrapValidator({
             framework: 'bootstrap',
@@ -176,7 +163,7 @@
                 data: $form.serialize(),
             })
             .done(function(result) {
-                console.log(result);
+                // console.log(result);
                 if (result.status === 200) {
                     window.location = "/order";
                 }else {
