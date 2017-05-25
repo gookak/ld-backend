@@ -67,6 +67,16 @@ Route::resource('order', 'OrderController');
 
 Route::get('order/{id}/pdf', 'OrderController@pdf');
 
+Route::get('/report', 'ReportController@index');
+
+Route::post('/report/salesbycategory', 'ReportController@salesbycategory');
+
+Route::post('/report/salesbyproduct', 'ReportController@salesbyproduct');
+
+
+
+
+
 
 
 

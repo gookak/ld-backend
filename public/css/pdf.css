@@ -14,6 +14,11 @@ table {
   margin-bottom: 20px;
 }
 
+table.header {
+  border-bottom:1px solid #CCC; 
+  border-top:1px solid #CCC; 
+}
+
 table.one{
   border:0; 
 } 
@@ -29,4 +34,5 @@ table.one td {
 }
 table.one tfoot td{ 
   border-bottom:2px solid #CCC; 
+  font-weight: bold;
 }
