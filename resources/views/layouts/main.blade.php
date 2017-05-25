@@ -323,12 +323,10 @@
 <script src="{{ asset('lib/bootstrap-datepicker-thai/js/bootstrap-datepicker-thai.js') }}"></script>
 <script src="{{ asset('lib/bootstrap-datepicker-thai/js/locales/bootstrap-datepicker.th.js') }}"></script>
 
-
 {{-- highcharts--}}
-<script src="{{ asset('bower_components/highcharts/highcharts.js') }}"></script>
+{{-- <script src="{{ asset('bower_components/highcharts/highcharts.js') }}"></script>
 <script src="{{ asset('bower_components/highcharts/highcharts-3d.js') }}"></script>
-<script src="{{ asset('bower_components/highcharts/modules/exporting.js') }}"></script>
-
+<script src="{{ asset('bower_components/highcharts/modules/exporting.js') }}"></script> --}}
 
 {{-- <script src="{{ asset('themes/ace-master/assets/js/dataTables.buttons.min.js') }}"></script>
 <script src="{{ asset('themes/ace-master/assets/js/buttons.flash.min.js') }}"></script>

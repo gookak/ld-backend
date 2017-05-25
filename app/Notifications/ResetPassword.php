@@ -49,7 +49,7 @@ class ResetPassword extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-        ->subject('L&D : Your Reset Password Subject Here')
+        ->subject('L&D: คำขอเปลี่ยนรหัสผ่านของคุณ')
         ->line('คุณได้รับอีเมลฉบับนี้เนื่องจากเราได้รับคำขอรีเซ็ตรหัสผ่านสำหรับบัญชีของคุณ')
         ->action('Reset Password', url(config('app.url').route('password.reset', $this->token, false)))
         ->line('หากคุณไม่ได้ขอให้ตั้งค่ารหัสผ่านใหม่คุณไม่จำเป็นต้องดำเนินการใด ๆ อีก');
