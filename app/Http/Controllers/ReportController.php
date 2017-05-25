@@ -66,6 +66,7 @@ class ReportController extends Controller
         ->join('category', 'product.category_id', '=', 'category.id')
         ->whereMonth('order.created_at', '=', $val['month'])
         ->whereYear('order.created_at', '=', $val['year'])
+        ->groupBy('category.name')
         ->orderBy('sumnumber', 'desc')
         ->orderBy('sumprice', 'desc')
         ->get();
