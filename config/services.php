@@ -14,9 +14,19 @@ return [
     |
     */
 
+    // 'mailgun' => [
+    //     'domain' => env('MAILGUN_DOMAIN'),
+    //     'secret' => env('MAILGUN_SECRET'),
+    // ],
+
+    // 'mailgun' => [
+    //     'domain' => 'admin.landdcommerce.com',
+    //     'secret' => 'key-1191474779b12c269e5ed460b2115c36',
+    // ],
+
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+        'domain' => 'sandbox1c16b71d4541439f949cffcc1ab31452.mailgun.org',
+        'secret' => 'key-1191474779b12c269e5ed460b2115c36',
     ],
 
     'ses' => [
