@@ -90,7 +90,10 @@
                     //"bScrollCollapse": true,
                     //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
                     //you may want to wrap the table inside a "div.dataTables_borderWrap" element
-                    "iDisplayLength": 25
+                    "iDisplayLength": 25,
+                    "language": {
+                        "url": "{{ asset('themes/ace-master/assets/js/datatables/i18n/Thai.lang') }}"
+                    }
                 });
 
         //delete

@@ -39,7 +39,7 @@ class AdminUserController extends Controller
         $header_text = 'เพิ่มข้อมูลผู้ใช้งาน';
         $mode = 'create';
         $form_action = '/adminuser';
-        $roleList = Role::pluck('name', 'id')->toArray();
+        $roleList = Role::pluck('detail', 'id')->toArray();
         return view('adminuser.form', compact('adminuser', 'header_text', 'mode', 'form_action', 'roleList'));
     }
 
@@ -106,7 +106,7 @@ class AdminUserController extends Controller
         $header_text = 'แก้ไขประเภทสินค้า';
         $mode = 'edit';
         $form_action = '/adminuser/'.$adminuser->id;
-        $roleList = Role::pluck('name', 'id')->toArray();
+        $roleList = Role::pluck('detail', 'id')->toArray();
         return view('adminuser.form', compact('adminuser', 'header_text', 'mode', 'form_action', 'roleList'));
     }
 
