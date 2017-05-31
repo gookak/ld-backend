@@ -63,7 +63,8 @@ class FileuploadController extends Controller
 		try{
 			$fileupload = Fileupload::find($id);
 			if($fileupload){
-				\File::delete('uploads/products/'.$fileupload->filename);
+				// \File::delete('uploads/products/'.$fileupload->filename);
+				\File::delete( substr(env('FILE_URL'), 1).$fileupload->filename );
 				$rs = $fileupload->delete();
 			}
 		} catch (\Exception $ex) {
@@ -76,7 +77,7 @@ class FileuploadController extends Controller
 			$msgerror = 'บันทึกข้อมูลเรียบร้อย';
 		}
 
-		$data = ['status' => $status, 'msgerror' => $msgerror, 'rs' => $rs];
+		$data = ['status' => $status, 'msgerror' => $msgerror];
 		return Response::json($data);
 	}
 }
