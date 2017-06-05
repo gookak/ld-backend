@@ -73,6 +73,8 @@ Route::post('/report/salesbycategory', 'ReportController@salesbycategory');
 
 Route::post('/report/salesbyproduct', 'ReportController@salesbyproduct');
 
+Route::resource('purchaseorder', 'PurchaseOrderController');
+
 
 
 

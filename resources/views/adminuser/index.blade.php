@@ -20,6 +20,38 @@
         </div>
 
         <div class="clearfix">
+            <div class="panel panel-primary">
+                <div class="panel-heading">ค้นหา</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" style="margin-left: 5px;">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ชื่อ : </label>
+                            <div class="col-sm-5">
+                                <input type="text" id="name-filter" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">อีเมล์ : </label>
+                            <div class="col-sm-5">
+                                <input type="text" id="email-filter" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">สิทธิ์ผู้ใช้งาน : </label>
+                            <div class="col-sm-5">
+                                <input type="text" id="role-filter" class="form-control" />
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix">
             <div class="pull-left tableTools-container">
                 <a class="btn btn-sm btn-primary" href="/adminuser/create">
                     <i class="ace-icon fa fa-plus align-top bigger-125"></i>
@@ -75,8 +107,10 @@
 
         var tb_adminuser = $('#tb-adminuser')
                 //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-                .dataTable({
+                .DataTable({
                     //"bAutoWidth": true,
+                    // "searching": false,
+                    "sDom": '<"top"i>rt<"bottom"lp><"clear">',
                     "aoColumns": [
                     {"bSortable": false, "width": "10%", "targets": 0},
                     null, null, null
@@ -95,6 +129,20 @@
                         "url": "{{ asset('themes/ace-master/assets/js/datatables/i18n/Thai.lang') }}"
                     }
                 });
+
+        //filter
+        $('#name-filter').keyup(function () {
+            tb_adminuser.column(1).search($(this).val()).draw();
+        });
+
+        $('#email-filter').keyup(function () {
+            tb_adminuser.column(2).search($(this).val()).draw();
+        });
+
+        $('#role-filter').keyup(function () {
+            tb_adminuser.column(3).search($(this).val()).draw();
+        });
+        //end filter
 
         //delete
         $(".btn-del").click(function () {

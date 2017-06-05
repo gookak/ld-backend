@@ -53,7 +53,40 @@
                     <input type="password" class="form-control" name="password" placeholder="" value="" />
                 </div>
             </div>
-            
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">เบอร์ติดต่อ</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="tel" placeholder="" value="{{ $adminuser->tel }}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">เพศ</label>
+                <div class="col-sm-5">
+                    {{ Form::select('gender', ['' => 'กรุณาเลือก'] + $genderList, $adminuser->gender, array('class' => 'form-control')) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">วันเกิด</label>
+                <div class="col-sm-5">
+                    <div class="input-group">
+                        <input type="text" class="form-control datepicker" name="birthday" placeholder="" value="{{ $adminuser->birthday ? $adminuser->birthday->addYears(543)->format('d/m/Y') : null }}"/>
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">ที่อยู่</label>
+                <div class="col-sm-5">
+                    <textarea class="form-control" rows="5" name="address" placeholder="">{{ $adminuser->address }}</textarea>
+                </div>
+            </div>
+
             <div class="form-group clearfix form-actions">
                 <div class="col-sm-5 col-xs-offset-2">
                     <button class="btn btn-sm btn-primary" type="submit">
@@ -77,6 +110,12 @@
 
 <script type="text/javascript">
     $(function () {
+
+        $('.datepicker').datepicker({language:'th-th',format:'dd/mm/yyyy'})
+        //show datepicker when clicking on the icon
+        .next().on(ace.click_event, function(){
+            $(this).prev().focus();
+        });
 
         $('#adminuserForm').bootstrapValidator({
             framework: 'bootstrap',

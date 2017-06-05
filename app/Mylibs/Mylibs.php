@@ -82,4 +82,12 @@ class Mylibs {
 		return array_pull($months, $num_month);
 	}
 
+	public static function getGender() {
+		$result = [
+		'ชาย' => 'ชาย',
+		'หญิง' => 'หญิง'
+		];
+		return $result;
+	}
+
 }

@@ -7,6 +7,7 @@ use App\Admin;
 use App\Role;
 use Response;
 use DB;
+use App\Mylibs\Mylibs;
 
 class AdminUserController extends Controller
 {
@@ -40,7 +41,8 @@ class AdminUserController extends Controller
         $mode = 'create';
         $form_action = '/adminuser';
         $roleList = Role::pluck('detail', 'id')->toArray();
-        return view('adminuser.form', compact('adminuser', 'header_text', 'mode', 'form_action', 'roleList'));
+        $genderList = Mylibs::getGender();
+        return view('adminuser.form', compact('adminuser', 'header_text', 'mode', 'form_action', 'roleList', 'genderList'));
     }
 
     /**
@@ -62,6 +64,10 @@ class AdminUserController extends Controller
                 $rs = Admin::create([
                     'role_id' => $val['role_id'],
                     'name' => $val['name'],
+                    'tel' => $val['tel'],
+                    'gender' => $val['gender'],
+                    'address' => $val['address'],
+                    'birthday' => Mylibs::dateToDB( $val['birthday'] ),
                     'email' => $val['email'],
                     'password' => bcrypt($val['password'])
                     ]);
@@ -107,7 +113,8 @@ class AdminUserController extends Controller
         $mode = 'edit';
         $form_action = '/adminuser/'.$adminuser->id;
         $roleList = Role::pluck('detail', 'id')->toArray();
-        return view('adminuser.form', compact('adminuser', 'header_text', 'mode', 'form_action', 'roleList'));
+        $genderList = Mylibs::getGender();
+        return view('adminuser.form', compact('adminuser', 'header_text', 'mode', 'form_action', 'roleList', 'genderList'));
     }
 
     /**
@@ -130,6 +137,10 @@ class AdminUserController extends Controller
                 if($checkEmail[0]->email == $adminuser->email){
                     $rs = $adminuser->role_id = $val['role_id'];
                     $adminuser->name = $val['name'];
+                    $adminuser->tel = $val['tel'];
+                    $adminuser->gender = $val['gender'];
+                    $adminuser->address = $val['address'];
+                    $adminuser->birthday = Mylibs::dateToDB( $val['birthday'] );
                     $adminuser->email = $val['email'];
                     $adminuser->password = bcrypt($val['password']);
                     $adminuser->save();
@@ -140,6 +151,10 @@ class AdminUserController extends Controller
             }else{
                 $rs = $adminuser->role_id = $val['role_id'];
                 $adminuser->name = $val['name'];
+                $adminuser->tel = $val['tel'];
+                $adminuser->gender = $val['gender'];
+                $adminuser->address = $val['address'];
+                $adminuser->birthday = Mylibs::dateToDB( $val['birthday'] );
                 $adminuser->email = $val['email'];
                 $adminuser->password = bcrypt($val['password']);
                 $adminuser->save();

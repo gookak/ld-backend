@@ -20,6 +20,24 @@
         </div>
 
         <div class="clearfix">
+            <div class="panel panel-primary">
+                <div class="panel-heading">ค้นหา</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" style="margin-left: 5px;">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ประเภทสินค้า : </label>
+                            <div class="col-sm-5">
+                                <input type="text" id="name-filter" class="form-control" />
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix">
             <div class="pull-left tableTools-container">
                 <a class="btn btn-sm btn-primary" href="/category/create">
                     <i class="ace-icon fa fa-plus align-top bigger-125"></i>
@@ -73,8 +91,10 @@
 
         var tb_category = $('#tb-category')
                 //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-                .dataTable({
+                .DataTable({
                     //"bAutoWidth": true,
+                    // "searching": false,
+                    "sDom": '<"top"i>rt<"bottom"lp><"clear">',
                     "aoColumns": [
                     {"bSortable": false, "width": "10%", "targets": 0},
                     {"width": "90%"}
@@ -92,6 +112,12 @@
                         "url": "{{ asset('themes/ace-master/assets/js/datatables/i18n/Thai.lang') }}"
                     }
                 });
+
+        //filter
+        $('#name-filter').keyup(function () {
+            tb_category.column(1).search($(this).val()).draw();
+        });
+        //end filter
 
         //delete
         $(".btn-del").click(function () {
