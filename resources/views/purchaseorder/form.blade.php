@@ -4,7 +4,7 @@
 
 <div class="page-header">
     <h1>
-        {{ $header_text }} {{ Auth::user()->id }}
+        {{ $header_text }}
         {{-- <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             Static &amp; Dynamic Tables

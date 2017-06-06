@@ -18,7 +18,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->integer('admin_id')->unsigned();
             $table->integer('vendor_id')->unsigned();
             $table->integer('purchase_status_id')->unsigned();
-            $table->string('vendor_person', 100)->comment('ชื่อผู้ติดต่อ');
+            $table->string('vendor_person', 100)->nullable()->comment('ชื่อผู้ติดต่อ');
             $table->string('code', 10)->comment('เลขที่ใบสั่งซื้อ');
             $table->integer('sumnumber')->nullable()->comment('รวมจำนวนสินค้าทั้งหมด');
             $table->decimal('sumprice', 10, 2)->nullable()->comment('รวมราคาสินค้าทั้งหมด');
