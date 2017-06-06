@@ -189,8 +189,6 @@
             tb_detail.row($(this).parents('tr')).remove().draw();
         });
 
-
-
         $('#purchaseOrderForm').bootstrapValidator({
             framework: 'bootstrap',
             fields: {

@@ -23,7 +23,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">ค้นหา</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" style="margin-left: 5px;">
+                    <form class="form-horizontal">
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">ประเภทสินค้า : </label>

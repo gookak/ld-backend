@@ -23,7 +23,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">ค้นหา</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" style="margin-left: 5px;">
+                    <form class="form-horizontal">
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">ชื่อ : </label>
@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">สิทธิ์ผู้ใช้งาน : </label>
                             <div class="col-sm-5">
-                                <input type="text" id="role-filter" class="form-control" />
+                                {!! Form::select('role-filter', ['' => 'ทั้งหมด'] + $roleList, null, array('class' => 'form-control input-filter')) !!}
                             </div>
                         </div>
 
@@ -69,6 +69,7 @@
                         <th>ชื่อ</th>
                         <th>อีเมล์</th>
                         <th>สิทธิ์ผู้ใช้งาน</th>
+                        <th class="hidden">role_id</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -87,6 +88,7 @@
                         <td>{{ $adminuser->name }}</td>
                         <td>{{ $adminuser->email }}</td>
                         <td>{{ $adminuser->role->detail }}</td>
+                        <td class="hidden">{{ $adminuser->role->id }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -113,7 +115,7 @@
                     "sDom": '<"top"i>rt<"bottom"lp><"clear">',
                     "aoColumns": [
                     {"bSortable": false, "width": "10%", "targets": 0},
-                    null, null, null
+                    null, null, null, null
                     // {"width": "90%"}
                     ],
                     "aaSorting": [],
@@ -139,8 +141,17 @@
             tb_adminuser.column(2).search($(this).val()).draw();
         });
 
-        $('#role-filter').keyup(function () {
-            tb_adminuser.column(3).search($(this).val()).draw();
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var v = $('[name=role-filter]').val();
+            var dataCol = data[4] || 0;
+            if ((v === '') || (v === dataCol)) {
+                return true;
+            }
+            return false;
+        });
+
+        $('.input-filter').change(function () {
+            tb_adminuser.draw();
         });
         //end filter
 

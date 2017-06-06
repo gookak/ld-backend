@@ -26,7 +26,8 @@ class AdminUserController extends Controller
     public function index()
     {
         $adminusers = Admin::orderBy('updated_at','desc')->get();
-        return view('adminuser.index', compact('adminusers'));
+        $roleList = Role::pluck('detail', 'id')->toArray();
+        return view('adminuser.index', compact('adminusers', 'roleList'));
     }
 
     /**

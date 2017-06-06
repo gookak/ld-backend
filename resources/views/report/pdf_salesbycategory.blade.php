@@ -9,7 +9,8 @@
             <td class="center"><b>{{ $report->name }}</b></td>
         </tr>
         <tr>
-            <td class="center">ประจำเดือน {{ $report->month }} ปี {{ $report->year }} </td>
+            {{-- <td class="center">ประจำเดือน {{ $report->month }} ปี {{ $report->year }} </td> --}}
+            <td class="center">ระหว่างวันที่ {{ $report->start_date }} - {{ $report->end_date }} </td>
         </tr>
     </tbody>
 </table>

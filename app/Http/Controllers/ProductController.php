@@ -28,7 +28,8 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::orderBy('updated_at','desc')->get();
-        return view('product.index', compact('products'));
+        $categoryList = Category::pluck('name', 'id')->toArray();
+        return view('product.index', compact('products', 'categoryList'));
     }
 
     /**
@@ -201,7 +202,8 @@ class ProductController extends Controller
         $msgerror = "";
         DB::beginTransaction();
         try{
-            $rs = $product->delete();
+            ProductImage::where('product_id', $product->id)->delete();
+            $product->delete();
         } catch (\Exception $ex) {
             $status = 500;
             $msgerror = $ex->getMessage();
@@ -211,7 +213,7 @@ class ProductController extends Controller
         if ($msgerror == "") {
             $msgerror = 'บันทึกข้อมูลเรียบร้อย';
         }
-        $data = ['status' => $status, 'msgerror' => $msgerror, 'rs' => $rs];
+        $data = ['status' => $status, 'msgerror' => $msgerror];
         return Response::json($data);
     }
 

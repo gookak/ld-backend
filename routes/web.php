@@ -47,6 +47,8 @@ Route::resource('category', 'CategoryController');
 
 Route::resource('product', 'ProductController');
 
+Route::resource('purchaseorder', 'PurchaseOrderController');
+
 // // Route::get('/show', 'FileuploadController@show');
 
 Route::get('/fileupload', 'FileuploadController@index');
@@ -73,7 +75,11 @@ Route::post('/report/salesbycategory', 'ReportController@salesbycategory');
 
 Route::post('/report/salesbyproduct', 'ReportController@salesbyproduct');
 
-Route::resource('purchaseorder', 'PurchaseOrderController');
+Route::post('/report/balancebyproduct', 'ReportController@balancebyproduct');
+
+Route::post('/report/employee', 'ReportController@employee');
+
+
 
 
 

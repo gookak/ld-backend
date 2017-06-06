@@ -19,14 +19,30 @@
             <div id="msgErrorArea"></div>
         </div>
 
-        {{-- <div class="clearfix">
-            <div class="pull-left tableTools-container">
-                <a class="btn btn-sm btn-primary" href="/user/create">
-                    <i class="ace-icon fa fa-plus align-top bigger-125"></i>
-                    เพิ่ม
-                </a>
+        <div class="clearfix">
+            <div class="panel panel-primary">
+                <div class="panel-heading">ค้นหา</div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">หมายเลขคำสั่งซื้อ : </label>
+                            <div class="col-sm-5">
+                                <input type="text" id="code-filter" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">สถานะจัดส่ง : </label>
+                            <div class="col-sm-5">
+                                {!! Form::select('transportstatus-filter', ['' => 'ทั้งหมด'] + $transportstatusList, null, array('class' => 'form-control input-filter')) !!}
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
             </div>
-        </div> --}}
+        </div>
 
         <!-- div.dataTables_borderWrap -->
         <div class="table-responsive">
@@ -34,10 +50,11 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>หมายเลขของคำสั่งซื้อ</th>
+                        <th>หมายเลขคำสั่งซื้อ</th>
                         <th>สั่งเมื่อวันที่</th>
                         <th>ยอดสุทธิ</th>
                         <th>สถานะจัดส่ง</th>
+                        <th class="hidden">transportstatus_id</th>
                         <th>รหัสพัสดุ</th>
                     </tr>
                 </thead>
@@ -64,14 +81,15 @@
                         <td>{{ $order->created_at ? $order->created_at->addYears(543)->format('d/m/Y') : null }}</td>
                         <td>{{ number_format( $order->totalprice , 2 ) }}</td>
                         <td>
-                            @if($order->transportstatus->name == 'ongoing')
+                            @if( $order->transportstatus->name == 'ongoing' )
                             <span class="text-primary ">{{ $order->transportstatus->detail }}</span>
-                            @elseif($order->transportstatus->name == 'sending')
+                            @elseif( $order->transportstatus->name == 'sending' )
                             <span class="text-warning orange">{{ $order->transportstatus->detail }}</span>
-                            @elseif($order->transportstatus->name == 'completed')
+                            @elseif( $order->transportstatus->name == 'completed' )
                             <span class="text-success green">{{ $order->transportstatus->detail }}</span>
                             @endif
                         </td>
+                        <td class="hidden">{{ $order->transportstatus->id }}</td>
                         <td>{{ $order->emscode }}</td>
                     </tr>
                     @endforeach
@@ -93,11 +111,13 @@
 
         var tb_order = $('#tb-order')
                 //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-                .dataTable({
+                .DataTable({
                     //"bAutoWidth": true,
+                    // "searching": false,
+                    "sDom": '<"top"i>rt<"bottom"lp><"clear">',
                     "aoColumns": [
                     {"bSortable": false, "width": "10%", "targets": 0},
-                    null, null, null, null, null
+                    null, null, null, null, null, null
                     ],
                     "aaSorting": [],
                     //"sScrollY": "200px",
@@ -112,6 +132,25 @@
                         "url": "{{ asset('themes/ace-master/assets/js/datatables/i18n/Thai.lang') }}"
                     }
                 });
+
+        //filter
+        $('#code-filter').keyup(function () {
+            tb_order.column(1).search($(this).val()).draw();
+        });
+
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var v = $('[name=transportstatus-filter]').val();
+            var dataCol = data[5] || 0;
+            if ((v === '') || (v === dataCol)) {
+                return true;
+            }
+            return false;
+        });
+
+        $('.input-filter').change(function () {
+            tb_order.draw();
+        });
+        //end filter
 
         // //delete
         // $(".btn-del").click(function () {

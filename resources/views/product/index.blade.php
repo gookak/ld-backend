@@ -20,6 +20,31 @@
         </div>
 
         <div class="clearfix">
+            <div class="panel panel-primary">
+                <div class="panel-heading">ค้นหา</div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ชื่อ : </label>
+                            <div class="col-sm-5">
+                                <input type="text" id="name-filter" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ประเภทสินค้า : </label>
+                            <div class="col-sm-5">
+                                {!! Form::select('category-filter', ['' => 'ทั้งหมด'] + $categoryList, null, array('class' => 'form-control input-filter')) !!}
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix">
             <div class="pull-left tableTools-container">
                 <a class="btn btn-sm btn-primary" href="/product/create">
                     <i class="ace-icon fa fa-plus align-top bigger-125"></i>
@@ -34,11 +59,13 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>รหัสสินค้า</th>
+                        {{-- <th>รหัสสินค้า</th> --}}
                         <th>รูป</th>
                         <th>ชื่อ</th>
                         <th>ราคาต่อชิ้น</th>
                         <th>จำนวนคงเหลือ</th>
+                        <th>ประเภทสินค้า</th>
+                        <th class="hidden">category_id</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,7 +81,7 @@
                                 </a>
                             </div>
                         </td>                        
-                        <td>{{ $product->code }}</td>
+                        {{-- <td>{{ $product->code }}</td> --}}
                         <td>
                             @if(count($product->productImage) > 0)
                             <img width="80" height="80" alt="150x150" src="{{ asset(env('FILE_URL').$product->productImage[0]->fileupload->filename )}}">
@@ -63,6 +90,8 @@
                         <td>{{ $product->name }}</td>
                         <td>{{ number_format( $product->price , 2 ) }}</td>
                         <td>{{ $product->balance }}</td>
+                        <td>{{ $product->category->name }}</td>
+                        <td class="hidden">{{ $product->category->id }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -83,11 +112,13 @@
 
         var tb_product = $('#tb-product')
                 //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-                .dataTable({
+                .DataTable({
                     //"bAutoWidth": true,
+                    // "searching": false,
+                    "sDom": '<"top"i>rt<"bottom"lp><"clear">',
                     "aoColumns": [
                     {"bSortable": false, "targets": 0},
-                    null, null, null, null, null
+                    null, null, null, null, null, null
                     ],
                     "aaSorting": [],
                     //"sScrollY": "200px",
@@ -102,6 +133,25 @@
                         "url": "{{ asset('themes/ace-master/assets/js/datatables/i18n/Thai.lang') }}"
                     }
                 });
+
+        //filter
+        $('#name-filter').keyup(function () {
+            tb_product.column(2).search($(this).val()).draw();
+        });
+
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var v = $('[name=category-filter]').val();
+            var dataCol = data[6] || 0;
+            if ((v === '') || (v === dataCol)) {
+                return true;
+            }
+            return false;
+        });
+
+        $('.input-filter').change(function () {
+            tb_product.draw();
+        });
+        //end filter
 
         //delete
         $(".btn-del").click(function () {
