@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\PurchaseOrder;
+use App\PurchaseOrderDetail;
 use App\PurchaseStatus;
 use App\Vendor;
+use Auth;
 use Illuminate\Http\Request;
 use Response;
 use DB;
@@ -57,7 +59,48 @@ class PurchaseOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $status = 200;
+        $msgerror = "";
+
+        $po = $request->input('purchase_order');
+        $pods = $request->input('purchase_order_detail');
+
+        DB::beginTransaction();
+        try{
+            $rspo = PurchaseOrder::create([
+                'admin_id' => Auth::user()->id,
+                'vendor_id' => $po['vendor_id'],
+                'purchase_status_id' => $po['purchase_status_id'],
+                'code' => Mylibs::GeraHash(10),
+                'order_at' => Mylibs::dateToDB( $po['order_at'] ),
+                'complete_at' => Mylibs::dateToDB( $po['complete_at'] ),
+                'note' => $po['note']
+                ]);
+            if(count($pods)){
+                foreach ($pods as $pod) {
+                    $rspod = PurchaseOrderDetail::create([
+                        'purchase_order_id' => $rspo->id,
+                        'name' => $pod['name'],
+                        'number' => $pod['number']
+                        ]);
+                }
+            }
+        } catch (\Exception $ex) {
+            DB::rollback();
+            $status = 500;
+            $msgerror = $ex->getMessage();
+        }
+        DB::commit();
+        if ($msgerror == "") {
+            $msgerror = 'บันทึกข้อมูลเรียบร้อย';
+        }
+
+        $data = ['status' => $status, 'msgerror' => $msgerror, 'rspo' => $rspo, 'rspod' => $rspod];
+        return Response::json($data);
+
+        // $val = $request->all();
+        // $data = $val ;
+        // return Response::json($data);
     }
 
     /**

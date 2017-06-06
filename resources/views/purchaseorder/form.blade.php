@@ -4,7 +4,7 @@
 
 <div class="page-header">
     <h1>
-        {{ $header_text }}
+        {{ $header_text }} {{ Auth::user()->id }}
         {{-- <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             Static &amp; Dynamic Tables
@@ -28,7 +28,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">หมายเลขสั่งของ</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="code" placeholder="" value="{{ $purchaseorder->code }}" readonly />
+                    <input type="text" class="form-control" name="code" placeholder="" value="{{ $purchaseorder->code }}" disabled />
                 </div>
             </div>
 
@@ -115,11 +115,6 @@
                     </tbody>
                 </table>
 
-
-
-
-
-
             </div>   
 
             <div class="form-group clearfix form-actions">
@@ -189,14 +184,50 @@
             tb_detail.row($(this).parents('tr')).remove().draw();
         });
 
+        // $(document).on("focus", ".name", function () {
+        //     if (!$(this).data("autocomplete")) { // If the autocomplete wasn't called yet:
+        //         //console.log($(this).html());
+        //         $(this).autocomplete({//   call it
+        //             //source: availableTags
+        //             source: function (request, response) {
+        //                 console.log(request.term);
+        //                 var getting = $.get("/apigetproductname/" + request.term );
+        //                 getting.done(function (data) {
+        //                     console.log(data);
+        //                     response($.map(data.rs, function (v, i) {
+        //                         return {
+        //                             label: v.name,
+        //                             value: v.name
+        //                         };
+        //                     }));
+        //                 });
+        //             }, 
+        //             // minLength: 3,
+        //             select: function (event, ui) {
+        //                 //console.log(ui.item.empid);
+        //                 // $(this).siblings(".empid").text(ui.item.empid);
+        //                 //$(this).attr('data-empid', ui.item.empid);
+        //             }
+        //          //    change: function (event, ui) {
+        //          //     console.log(ui.item.empid);
+        //          //     $(this).attr('data-empid', ui.item.empid);
+        //          // }
+        //      });
+        //     }
+        // });
+
+
+
+
+
         $('#purchaseOrderForm').bootstrapValidator({
             framework: 'bootstrap',
             fields: {
-                code: {
-                    validators: {
-                        notEmpty: true
-                    }
-                }
+                // code: {
+                //     validators: {
+                //         notEmpty: true
+                //     }
+                // }
                 // ,
                 // emscode: {
                 //     validators: {
@@ -213,28 +244,57 @@
             // console.log($form.attr('action'));
             // console.log($form.serialize());
 
+            var po = {};
+            var formdata = $form.serializeArray();
+            $.each(formdata, function(i, field){
+                //console.log(field.name + ":" + field.value + " ");
+                po[field.name] = field.value;
+            });
+
+            var pod = [];
+            $("#tb-detail tbody tr").each(function () {
+                // console.log($(this).find('.name').html());
+                pod.push({
+                    name: $(this).find('.name').html(),
+                    number: $(this).find('.number').html()
+                });
+            });
+
+            var alldata = {};
+            var mode = "{{ $mode=='edit'? 'edit' : null }}";
+            if(mode=='edit') {
+                alldata['_method'] = 'PUT';
+            }
+            alldata['purchase_order'] = po;
+            alldata['purchase_order_detail'] = pod;
+            // console.log(alldata);
+
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 url: $form.attr('action'), 
                 type: 'POST',
-                data: $form.serialize(),
+                data: alldata,
+                dataType: 'JSON',
             })
             .done(function(result) {
-                console.log(result);
-                // if (result.status === 200) {
-                //     window.location = "/order";
-                // }else {
-                //     showMsgError("#msgErrorArea", result.msgerror);
-                // }
+                // console.log(result);
+                if (result.status === 200) {
+                    window.location = "/purchaseorder";
+                }else {
+                    showMsgError("#msgErrorArea", result.msgerror);
+                }
             }).fail(function () {
                 showMsgError("#msgErrorArea", "ส่งข้อมูล AJAX ผิดพลาด");
             });
+
         });
 
     });
 </script>
+
+{{-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> --}}
 
 @stop
 

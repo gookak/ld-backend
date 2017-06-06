@@ -61,6 +61,8 @@ Route::get('/apigetfileupload', 'ApiController@apigetfileupload');
 
 Route::get('/apigetpercentpricebycategorys', 'ApiController@apigetpercentpricebycategorys');
 
+Route::get('/apigetproductname/{name}', 'ApiController@apigetproductname');
+
 Route::resource('adminuser', 'AdminUserController');
 
 Route::resource('user', 'UserController');

@@ -35,9 +35,9 @@
                     <tr>
                         <th></th>
                         <th>หมายเลข</th>
-                        <th>สั่งเมื่อวันที่</th>
-                        <th>ยอดสุทธิ</th>
-                        <th>สถานะจัดส่ง</th>
+                        <th>ผู้สั่ง</th>
+                        <th>ผู้ขาย</th>
+                        <th>สถานะ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,13 +57,15 @@
                             </div>
                         </td>
                         <td>{{ $purchaseorder->code }}</td>
-                        <td>{{ $purchaseorder->created_at ? $purchaseorder->created_at->addYears(543)->format('d/m/Y') : null }}</td>
-                        <td>{{ number_format( $purchaseorder->totalprice , 2 ) }}</td>
+                        <td>{{ $purchaseorder->admin->name }}</td>
+                        <td>{{ $purchaseorder->vendor->name }}</td>
                         <td>
-                            @if($purchaseorder->purchasetstatus->name == 'ongoing')
-                            <span class="text-primary ">{{ $purchaseorder->purchasetstatus->detail }}</span>
-                            @elseif($order->transportstatus->name == 'completed')
-                            <span class="text-success green">{{ $purchaseorder->purchasetstatus->detail }}</span>
+                            @if( $purchaseorder->purchasestatus->name == 'create' )
+                            <span class="text-primary ">{{ $purchaseorder->purchasestatus->detail }}</span>
+                            @elseif( $purchaseorder->purchasestatus->name == 'ongoing' )
+                            <span class="text-warning orange">{{ $purchaseorder->purchasestatus->detail }}</span>
+                            @elseif( $purchaseorder->purchasestatus->name == 'completed' )
+                            <span class="text-success green">{{ $purchaseorder->purchasestatus->detail }}</span>
                             @endif
                         </td>
                     </tr>

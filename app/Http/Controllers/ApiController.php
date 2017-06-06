@@ -9,6 +9,7 @@ use DB;
 use Illuminate\Support\Facades\Storage;
 use App\Order;
 use App\User;
+use App\Product;
 use Carbon\Carbon;
 use App\Mylibs\Mylibs;
 
@@ -49,6 +50,14 @@ class ApiController extends Controller
         
 
         $data = ['status' => $status, 'rs' => $sumPriceByCategorys];
+        return Response::json($data);
+    }
+
+    public function apigetproductname($name)
+    {
+        $status = 200;
+        $rs = Product::where('name', 'like', '%'.$name.'%')->get();
+        $data = ['status' => $status, 'rs' => $rs];
         return Response::json($data);
     }
 
