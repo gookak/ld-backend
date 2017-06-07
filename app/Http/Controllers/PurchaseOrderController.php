@@ -32,7 +32,8 @@ class PurchaseOrderController extends Controller
     public function index()
     {
         $purchaseorders = PurchaseOrder::orderBy('updated_at','desc')->get();
-        return view('purchaseorder.index', compact('purchaseorders'));
+        $purchasestatusList = PurchaseStatus::pluck('detail', 'id')->toArray();
+        return view('purchaseorder.index', compact('purchaseorders', 'purchasestatusList'));
     }
 
     /**
@@ -67,16 +68,17 @@ class PurchaseOrderController extends Controller
 
         DB::beginTransaction();
         try{
-            $rspo = PurchaseOrder::create([
-                'admin_id' => Auth::user()->id,
-                'vendor_id' => $po['vendor_id'],
-                'purchase_status_id' => $po['purchase_status_id'],
-                'code' => Mylibs::GeraHash(10),
-                'order_at' => Mylibs::dateToDB( $po['order_at'] ),
-                'complete_at' => Mylibs::dateToDB( $po['complete_at'] ),
-                'note' => $po['note']
-                ]);
-            if(count($pods)){
+            if(count($pods) < 1){
+                $rspo = PurchaseOrder::create([
+                    'admin_id' => Auth::user()->id,
+                    'vendor_id' => $po['vendor_id'],
+                    'purchase_status_id' => $po['purchase_status_id'],
+                    'code' => Mylibs::GeraHash(10),
+                    'order_at' => Mylibs::dateToDB( $po['order_at'] ),
+                    'complete_at' => Mylibs::dateToDB( $po['complete_at'] ),
+                    'note' => $po['note']
+                    ]);
+
                 foreach ($pods as $pod) {
                     $rspod = PurchaseOrderDetail::create([
                         'purchase_order_id' => $rspo->id,
@@ -95,7 +97,7 @@ class PurchaseOrderController extends Controller
             $msgerror = 'บันทึกข้อมูลเรียบร้อย';
         }
 
-        $data = ['status' => $status, 'msgerror' => $msgerror, 'rspo' => $rspo, 'rspod' => $rspod];
+        $data = ['status' => $status, 'msgerror' => $msgerror ];
         return Response::json($data);
 
         // $val = $request->all();
@@ -111,7 +113,9 @@ class PurchaseOrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $purchaseorder = PurchaseOrder::find($id);
+        $purchasestatuss = Purchasestatus::all();
+        return view('purchaseorder.show', compact('purchaseorder', 'purchasestatuss'));
     }
 
     /**
@@ -122,7 +126,13 @@ class PurchaseOrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $purchaseorder = PurchaseOrder::find($id);
+        $header_text = 'แก้ไขรายการสั่งของ';
+        $mode = 'edit';
+        $form_action = '/purchaseorder/'.$purchaseorder->id;
+        $purchasestatusList = PurchaseStatus::pluck('detail', 'id')->toArray();
+        $vendorList = Vendor::pluck('name', 'id')->toArray();
+        return view('purchaseorder.form', compact('purchaseorder', 'header_text', 'mode', 'form_action', 'purchasestatusList', 'vendorList'));
     }
 
     /**
@@ -134,7 +144,48 @@ class PurchaseOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $status = 200;
+        $msgerror = "";
+
+        $po = $request->input('purchase_order');
+        $pods = $request->input('purchase_order_detail');
+
+        DB::beginTransaction();
+        try{
+            $rspo = PurchaseOrder::find($id);
+            $rspo->vendor_id = $po['vendor_id'];
+            $rspo->purchase_status_id = $po['purchase_status_id'];
+            $rspo->order_at = Mylibs::dateToDB( $po['order_at'] );
+            $rspo->complete_at = Mylibs::dateToDB( $po['complete_at'] );
+            $rspo->note = $po['note'];
+            $rspo->save();
+
+            if(count($pods)){
+                PurchaseOrderDetail::where('purchase_order_id', $id)->delete();
+                foreach ($pods as $pod) {
+                    $rspod = PurchaseOrderDetail::create([
+                        'purchase_order_id' => $rspo->id,
+                        'name' => $pod['name'],
+                        'number' => $pod['number']
+                        ]);
+                }
+            }
+        } catch (\Exception $ex) {
+            DB::rollback();
+            $status = 500;
+            $msgerror = $ex->getMessage();
+        }
+        DB::commit();
+        if ($msgerror == "") {
+            $msgerror = 'บันทึกข้อมูลเรียบร้อย';
+        }
+
+        $data = ['status' => $status, 'msgerror' => $msgerror, 'rspo' => $po, 'rspod' => $pods];
+        return Response::json($data);
+
+        // $val = $request->all();
+        // $data = $val ;
+        // return Response::json($data);
     }
 
     /**
@@ -145,6 +196,34 @@ class PurchaseOrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $status = 200;
+        $msgerror = "";
+        DB::beginTransaction();
+        try{
+            $rspod = PurchaseOrderDetail::where('purchase_order_id', $id)->delete();
+            $rspo = PurchaseOrder::find($id)->delete();
+        } catch (\Exception $ex) {
+            $status = 500;
+            $msgerror = $ex->getMessage();
+            DB::rollback();
+        }
+        DB::commit();
+        if ($msgerror == "") {
+            $msgerror = 'บันทึกข้อมูลเรียบร้อย';
+        }
+        $data = ['status' => $status, 'msgerror' => $msgerror];
+        return Response::json($data);
+    }
+
+    public function pdf($id)
+    {
+        $purchaseorder = PurchaseOrder::find($id);
+        $filename = 'purchase_order_'.$purchaseorder->code.'.pdf';
+        $html = view('purchaseorder.pdf', compact('purchaseorder'))->render();
+        $mpdf = new mPDF('th', 'A4');
+        $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
+        $mpdf->WriteHTML($html,2);
+        $mpdf->Output($filename, 'I');
+        // return view('purchaseorder.pdf', compact('purchaseorder'));
     }
 }

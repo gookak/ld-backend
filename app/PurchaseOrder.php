@@ -7,6 +7,7 @@ class PurchaseOrder extends Model
 	protected $table = 'purchase_orders';
 
     protected $dates = [
+    'order_at',
     'complete_at',
     'created_at',
     'updated_at'
@@ -17,7 +18,8 @@ class PurchaseOrder extends Model
     }
 
     public function vendor() {
-        return $this->belongsTo(Vendor::class);
+        // return $this->belongsTo(Vendor::class);
+        return $this->belongsTo(Vendor::class, 'vendor_id');
     }
 
     public function purchasestatus() {

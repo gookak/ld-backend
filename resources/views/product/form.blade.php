@@ -188,7 +188,10 @@
                 price: {
                     validators: {
                         notEmpty: true,
-                        integer:true
+                        numeric: {
+                            thousandsSeparator: '',
+                            decimalSeparator: '.'
+                        }
                     }
                 },
                 balance: {

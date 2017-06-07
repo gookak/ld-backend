@@ -192,8 +192,16 @@
           <b class="arrow"></b>
         </li>
         <li class="">
+          <a href="/vendor">
+            <i class="menu-icon fa fa-male"></i>
+            <span class="menu-text"> ข้อมูลผู้ขาย </span>
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        <li class="">
           <a href="/purchaseorder">
-            <i class="menu-icon fa fa-shopping-cart"></i>
+            <i class="menu-icon fa fa-truck"></i>
             <span class="menu-text"> ข้อมูลรายการสั่งของ </span>
           </a>
 

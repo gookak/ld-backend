@@ -4,7 +4,7 @@
 
 <div class="page-header">
     <h1>
-        ข้อมูลรายการสั่งของ
+        ข้อมูลผู้ขาย
         {{-- <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             Static &amp; Dynamic Tables
@@ -26,30 +26,9 @@
                     <form class="form-horizontal">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">หมายเลข : </label>
+                            <label class="col-sm-2 control-label">ชื่อ : </label>
                             <div class="col-sm-5">
-                                <input type="text" id="code-filter" class="form-control" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">ผู้สั่ง : </label>
-                            <div class="col-sm-5">
-                                <input type="text" id="admin-name-filter" class="form-control" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">ผู้ขาย : </label>
-                            <div class="col-sm-5">
-                                <input type="text" id="vendor-name-filter" class="form-control" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">สถานะจัดส่ง : </label>
-                            <div class="col-sm-5">
-                                {!! Form::select('purchasestatus-filter', ['' => 'ทั้งหมด'] + $purchasestatusList, null, array('class' => 'form-control input-filter')) !!}
+                                <input type="text" id="name-filter" class="form-control" />
                             </div>
                         </div>
 
@@ -60,7 +39,7 @@
 
         <div class="clearfix">
             <div class="pull-left tableTools-container">
-                <a class="btn btn-sm btn-primary" href="/purchaseorder/create">
+                <a class="btn btn-sm btn-primary" href="/vendor/create">
                     <i class="ace-icon fa fa-plus align-top bigger-125"></i>
                     เพิ่ม
                 </a>
@@ -69,46 +48,29 @@
 
         <!-- div.dataTables_borderWrap -->
         <div class="table-responsive">
-            <table id="tb-purchase-order" class="table table-striped table-bordered table-hover">
+            <table id="tb-vendor" class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th></th>
-                        <th>หมายเลข</th>
-                        <th>ผู้สั่ง</th>
-                        <th>ผู้ขาย</th>
-                        <th>สถานะ</th>
-                        <th class="hidden">purchasestatus_id</th>
+                        <th>ชื่อ</th>
+                        <th>เบอร์โทร</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($purchaseorders as $purchaseorder)
+                    @foreach($vendors as $vendor)
                     <tr>
                         <td class="center">
                             <div class="btn-group">
-                                <a class="btn btn-xs btn-danger btn-del" data-id="{{ $purchaseorder->id }}">
+                                <a class="btn btn-xs btn-danger btn-del" data-id="{{ $vendor->id }}">
                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                 </a>
-                                <a class="btn btn-xs btn-warning" href="/purchaseorder/{{ $purchaseorder->id }}/edit" >
+                                <a class="btn btn-xs btn-warning" href="/vendor/{{ $vendor->id }}/edit" >
                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                </a>
-                                <a class="btn btn-xs btn-info" href="/purchaseorder/{{ $purchaseorder->id }}" >
-                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                 </a>
                             </div>
                         </td>
-                        <td>{{ $purchaseorder->code }}</td>
-                        <td>{{ $purchaseorder->admin->name }}</td>
-                        <td>{{ $purchaseorder->vendor->name }}</td>
-                        <td>
-                            @if( $purchaseorder->purchasestatus->name == 'create' )
-                            <span class="text-primary ">{{ $purchaseorder->purchasestatus->detail }}</span>
-                            @elseif( $purchaseorder->purchasestatus->name == 'ongoing' )
-                            <span class="text-warning orange">{{ $purchaseorder->purchasestatus->detail }}</span>
-                            @elseif( $purchaseorder->purchasestatus->name == 'completed' )
-                            <span class="text-success green">{{ $purchaseorder->purchasestatus->detail }}</span>
-                            @endif
-                        </td>
-                        <td class="hidden">{{ $purchaseorder->purchasestatus->id }}</td>
+                        <td>{{ $vendor->name }}</td>
+                        <td>{{ $vendor->tel }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -127,7 +89,7 @@
 
         //checkBoxAllMutiTablePerPage("#checkAll", ".check");
 
-        var tb_purchase_order = $('#tb-purchase-order')
+        var tb_vendor = $('#tb-vendor')
                 //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                 .DataTable({
                     //"bAutoWidth": true,
@@ -135,7 +97,8 @@
                     "sDom": '<"top"i>rt<"bottom"lp><"clear">',
                     "aoColumns": [
                     {"bSortable": false, "width": "10%", "targets": 0},
-                    null, null, null, null, null
+                    null, null
+                    // {"width": "90%"}
                     ],
                     "aaSorting": [],
                     //"sScrollY": "200px",
@@ -151,35 +114,24 @@
                     }
                 });
 
-
         //filter
-        $('#code-filter').keyup(function () {
-            tb_purchase_order.column(1).search($(this).val()).draw();
+        $('#name-filter').keyup(function () {
+            tb_vendor.column(1).search($(this).val()).draw();
         });
 
-        $('#admin-name-filter').keyup(function () {
-            tb_purchase_order.column(2).search($(this).val()).draw();
-        });
+        // $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+        //     var v = $('[name=role-filter]').val();
+        //     var dataCol = data[4] || 0;
+        //     if ((v === '') || (v === dataCol)) {
+        //         return true;
+        //     }
+        //     return false;
+        // });
 
-        $('#vendor-name-filter').keyup(function () {
-            tb_purchase_order.column(3).search($(this).val()).draw();
-        });
-
-        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-            var v = $('[name=purchasestatus-filter]').val();
-            var dataCol = data[5] || 0;
-            if ((v === '') || (v === dataCol)) {
-                return true;
-            }
-            return false;
-        });
-
-        $('.input-filter').change(function () {
-            tb_purchase_order.draw();
-        });
+        // $('.input-filter').change(function () {
+        //     tb_adminuser.draw();
+        // });
         //end filter
-
-
 
         //delete
         $(".btn-del").click(function () {
@@ -190,7 +142,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url:'/purchaseorder/' + id, 
+                    url:'/vendor/' + id, 
                     type: 'POST',
                     data: { '_method': 'delete'},
                 })
@@ -207,7 +159,6 @@
             }
         });
         //end delete
-
 
 
     });

@@ -110,7 +110,7 @@ class AdminUserController extends Controller
     public function edit($id)
     {
         $adminuser = Admin::find($id);
-        $header_text = 'แก้ไขประเภทสินค้า';
+        $header_text = 'แก้ไขข้อมูลผู้ใช้งาน';
         $mode = 'edit';
         $form_action = '/adminuser/'.$adminuser->id;
         $roleList = Role::pluck('detail', 'id')->toArray();

@@ -49,6 +49,10 @@ Route::resource('product', 'ProductController');
 
 Route::resource('purchaseorder', 'PurchaseOrderController');
 
+Route::get('purchaseorder/{id}/pdf', 'PurchaseOrderController@pdf');
+
+Route::resource('vendor', 'VendorController');
+
 // // Route::get('/show', 'FileuploadController@show');
 
 Route::get('/fileupload', 'FileuploadController@index');

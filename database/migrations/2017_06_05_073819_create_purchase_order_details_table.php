@@ -19,7 +19,7 @@ class CreatePurchaseOrderDetailsTable extends Migration
             $table->string('name', 200)->comment('ชื่อ');
             $table->text('detail')->nullable()->comment('รายละเอียด');
             $table->integer('number')->comment('จำนวน');
-            $table->decimal('price', 10, 2)->nullable()->comment('ราคาต่อชิ้น');
+            $table->decimal('price', 10, 2)->nullable()->comment('ราคาต่อชิ้น (ยังไม่ใช้)');
             $table->timestamps();
         });
 

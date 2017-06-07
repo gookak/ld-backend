@@ -25,17 +25,19 @@
 
             {{ $mode=='edit'? method_field('PUT') : null }}
 
+            @if($mode=='edit')
             <div class="form-group">
                 <label class="col-sm-2 control-label">หมายเลขสั่งของ</label>
                 <div class="col-sm-5">
                     <input type="text" class="form-control" name="code" placeholder="" value="{{ $purchaseorder->code }}" disabled />
                 </div>
             </div>
+            @endif
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">ผู้ขาย</label>
                 <div class="col-sm-5">
-                    {{ Form::select('vendor_id', $vendorList, $purchaseorder->vendor_id, array('class' => 'form-control')) }}
+                    {{ Form::select('vendor_id', ['' => 'กรุณาเลือก'] + $vendorList, $purchaseorder->vendor_id, array('class' => 'form-control')) }}
                 </div>
             </div>
 
@@ -104,14 +106,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @if($purchaseorder->purchaseorderdetail)
+                        @foreach($purchaseorder->purchaseorderdetail as $purchaseorderdetail)
                         <tr>
                             <td class="center"></td>
-                            <td>Semi Mechanical Gaming Keyboard Rubber Dome รุ่น CENTAURUS KB-730</td>
-                            <td>1</td>
+                            <td>{{ $purchaseorderdetail->name }}</td>
+                            <td>{{ $purchaseorderdetail->number }}</td>
                             <td class="text-center">
                                 <button name="bt-delrow" data-tableid="tb-detail" type="button" class="btn btn-danger btn-sm fa fa-trash-o"></button>
                             </td>
                         </tr>
+                        @endforeach
+                        @endif
                     </tbody>
                 </table>
 
@@ -158,9 +164,9 @@
                 url: "{{ asset('themes/ace-master/assets/js/datatables/i18n/Thai.lang') }}"
             },
             columnDefs: [
-            // {"width": "5%", "targets": 0},
-            // {"width": "15%", "targets": 1},
-            // {"width": "5%", "targets": 3}
+            {"width": "5%", "targets": 0},
+            {"width": "10%", "targets": 2},
+            {"width": "5%", "targets": 3}
             ],
             createdRow: function (row, data, index) {
                 $('td', row).eq(0).addClass('text-center');
@@ -216,18 +222,14 @@
         //     }
         // });
 
-
-
-
-
         $('#purchaseOrderForm').bootstrapValidator({
             framework: 'bootstrap',
             fields: {
-                // code: {
-                //     validators: {
-                //         notEmpty: true
-                //     }
-                // }
+                vendor_id: {
+                    validators: {
+                        notEmpty: true
+                    }
+                }
                 // ,
                 // emscode: {
                 //     validators: {
