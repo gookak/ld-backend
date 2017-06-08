@@ -187,12 +187,17 @@
                 },
                 price: {
                     validators: {
-                        notEmpty: true
+                        notEmpty: true,
+                        numeric: {
+                            thousandsSeparator: '',
+                            decimalSeparator: '.'
+                        }
                     }
                 },
                 balance: {
                     validators: {
-                        notEmpty: true
+                        notEmpty: true,
+                        integer:true
                     }
                 }
             }

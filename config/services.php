@@ -14,10 +14,21 @@ return [
     |
     */
 
+    // 'mailgun' => [
+    //     'domain' => env('MAILGUN_DOMAIN'),
+    //     'secret' => env('MAILGUN_SECRET'),
+    // ],
+
+    // 'mailgun' => [
+    //     'domain' => 'admin.landdcommerce.com',
+    //     'secret' => 'key-1191474779b12c269e5ed460b2115c36',
+    // ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
     ],
+    
 
     'ses' => [
         'key' => env('SES_KEY'),

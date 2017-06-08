@@ -47,6 +47,12 @@ Route::resource('category', 'CategoryController');
 
 Route::resource('product', 'ProductController');
 
+Route::resource('purchaseorder', 'PurchaseOrderController');
+
+Route::get('purchaseorder/{id}/pdf', 'PurchaseOrderController@pdf');
+
+Route::resource('seller', 'SellerController');
+
 // // Route::get('/show', 'FileuploadController@show');
 
 Route::get('/fileupload', 'FileuploadController@index');
@@ -58,6 +64,8 @@ Route::post('/fileupload/{id}', 'FileuploadController@destroy');
 Route::get('/apigetfileupload', 'ApiController@apigetfileupload');
 
 Route::get('/apigetpercentpricebycategorys', 'ApiController@apigetpercentpricebycategorys');
+
+Route::get('/apigetproductname/{name}', 'ApiController@apigetproductname');
 
 Route::resource('adminuser', 'AdminUserController');
 
@@ -72,6 +80,12 @@ Route::get('/report', 'ReportController@index');
 Route::post('/report/salesbycategory', 'ReportController@salesbycategory');
 
 Route::post('/report/salesbyproduct', 'ReportController@salesbyproduct');
+
+Route::post('/report/balancebyproduct', 'ReportController@balancebyproduct');
+
+Route::post('/report/employee', 'ReportController@employee');
+
+
 
 
 

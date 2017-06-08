@@ -6,6 +6,21 @@ use Carbon\Carbon;
 
 class Mylibs {
 
+	public static function GeraHash($qtd){ 
+		//Under the string $Caracteres you write all the characters you want to be used to randomly generate the code. 
+		$Caracteres = 'ABCDEFGHIJKLMOPQRSTUVXWYZ0123456789'; 
+		$QuantidadeCaracteres = strlen($Caracteres); 
+		$QuantidadeCaracteres--; 
+
+		$Hash=NULL; 
+		for($x=1;$x<=$qtd;$x++){ 
+			$Posicao = rand(0,$QuantidadeCaracteres); 
+			$Hash .= substr($Caracteres,$Posicao,1); 
+		} 
+		return $Hash; 
+	}
+
+
 	public static function datetimeToDB($date) {
 		// return ex 2017-05-20 14:00
 		return ($date !== null && $date !== '') ? Carbon::createFromFormat('d/m/Y H:i', $date)->subYears(543) : null;
@@ -80,6 +95,14 @@ class Mylibs {
 		'12' => 'ธันวาคม'
 		];
 		return array_pull($months, $num_month);
+	}
+
+	public static function getGender() {
+		$result = [
+		'ชาย' => 'ชาย',
+		'หญิง' => 'หญิง'
+		];
+		return $result;
 	}
 
 }

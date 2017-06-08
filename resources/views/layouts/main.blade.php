@@ -20,25 +20,25 @@
   <!-- page specific plugin styles -->
   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/colorbox.min.css') }}" />
 {{--   <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap-datepicker3.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap-datetimepicker.min.css') }}" /> --}}
-  <link rel="stylesheet" href="{{ asset('lib/bootstrap-datepicker-thai/css/datepicker.css') }}" />
+<link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/bootstrap-datetimepicker.min.css') }}" /> --}}
+<link rel="stylesheet" href="{{ asset('lib/bootstrap-datepicker-thai/css/datepicker.css') }}" />
 
-  <!-- text fonts -->
-  <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/fonts.googleapis.com.css') }}" />
+<!-- text fonts -->
+<link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/fonts.googleapis.com.css') }}" />
 
-  <!-- ace styles -->
-  <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
+<!-- ace styles -->
+<link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
 
-  <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/ace-skins.min.css') }}" />
-  <link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/ace-rtl.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/ace-skins.min.css') }}" />
+<link rel="stylesheet" href="{{ asset('themes/ace-master/assets/css/ace-rtl.min.css') }}" />
 
-  <!-- my styles -->
-  <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
+<!-- my styles -->
+<link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
 
-  <!-- ace settings handler -->
-  <script src="{{ asset('themes/ace-master/assets/js/ace-extra.min.js') }}"></script>
+<!-- ace settings handler -->
+<script src="{{ asset('themes/ace-master/assets/js/ace-extra.min.js') }}"></script>
 
-  @yield('tag-header')
+@yield('tag-header')
 
 </head>
 
@@ -187,6 +187,22 @@
           <a href="/user">
             <i class="menu-icon fa fa-users"></i>
             <span class="menu-text"> ข้อมูลลูกค้า </span>
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        <li class="">
+          <a href="/seller">
+            <i class="menu-icon fa fa-male"></i>
+            <span class="menu-text"> ข้อมูลผู้ขาย </span>
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        <li class="">
+          <a href="/purchaseorder">
+            <i class="menu-icon fa fa-truck"></i>
+            <span class="menu-text"> ข้อมูลรายการสั่งของ </span>
           </a>
 
           <b class="arrow"></b>

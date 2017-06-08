@@ -32,17 +32,19 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">ปี</label>
-                <div class="col-sm-5">
-                    {{ Form::select('year', $yearList, Carbon\Carbon::now()->year, array('class' => 'form-control')) }}
-                </div>
-            </div>
+            <div id="date-filter" class="form-group">
+                <label class="col-sm-2 control-label no-padding-right">ตั้งแต่วันที่</label>
 
-            <div class="form-group">
-                <label class="col-sm-2 control-label">เดือน</label>
-                <div class="col-sm-5">
-                    {{ Form::select('month', $monthList, Carbon\Carbon::now()->month, array('class' => 'form-control')) }}
+                <div class="col-sm-10">
+                    <span class="input-icon input-icon-right">
+                        <input type="text" class="form-control datepicker" name="start_date"/>
+                        <i class="ace-icon fa fa-calendar bigger-110"></i>
+                    </span>
+                    ถึง
+                    <span class="input-icon input-icon-right">
+                        <input type="text" class="form-control datepicker" name="end_date"/>
+                        <i class="ace-icon fa fa-calendar bigger-110"></i>
+                    </span>
                 </div>
             </div>
 
@@ -70,6 +72,25 @@
 <script type="text/javascript">
     $(function () {
 
+        $('#date-filter').hide();
+
+        $( "[name=report_url]" ).change(function() {
+            switch( $(this).val() ) {
+                case '/report/salesbycategory':
+                case '/report/salesbyproduct':
+                $('#date-filter').show();
+                break;
+                default:
+                $('#date-filter').hide();
+            }
+        });
+
+        $('.datepicker').datepicker({language:'th-th',format:'dd/mm/yyyy'})
+        //show datepicker when clicking on the icon
+        .next().on(ace.click_event, function(){
+            $(this).prev().focus();
+        });
+
         $('select[name=report_url]').change( function(){
             // console.log($(this).val());
             $('#reportForm').attr('action', $(this).val());
@@ -83,6 +104,17 @@
                         notEmpty: true
                     }
                 }
+                // ,
+                // start_date: {
+                //     validators: {
+                //         notEmpty: true
+                //     }
+                // },
+                // end_date: {
+                //     validators: {
+                //         notEmpty: true
+                //     }
+                // }
             }
         });
 

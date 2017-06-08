@@ -20,6 +20,38 @@
         </div>
 
         <div class="clearfix">
+            <div class="panel panel-primary">
+                <div class="panel-heading">ค้นหา</div>
+                <div class="panel-body">
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ชื่อ : </label>
+                            <div class="col-sm-5">
+                                <input type="text" id="name-filter" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">อีเมล์ : </label>
+                            <div class="col-sm-5">
+                                <input type="text" id="email-filter" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">สิทธิ์ผู้ใช้งาน : </label>
+                            <div class="col-sm-5">
+                                {!! Form::select('role-filter', ['' => 'ทั้งหมด'] + $roleList, null, array('class' => 'form-control input-filter')) !!}
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="clearfix">
             <div class="pull-left tableTools-container">
                 <a class="btn btn-sm btn-primary" href="/adminuser/create">
                     <i class="ace-icon fa fa-plus align-top bigger-125"></i>
@@ -37,6 +69,7 @@
                         <th>ชื่อ</th>
                         <th>อีเมล์</th>
                         <th>สิทธิ์ผู้ใช้งาน</th>
+                        <th class="hidden">role_id</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,6 +88,7 @@
                         <td>{{ $adminuser->name }}</td>
                         <td>{{ $adminuser->email }}</td>
                         <td>{{ $adminuser->role->detail }}</td>
+                        <td class="hidden">{{ $adminuser->role->id }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -75,11 +109,13 @@
 
         var tb_adminuser = $('#tb-adminuser')
                 //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
-                .dataTable({
+                .DataTable({
                     //"bAutoWidth": true,
+                    // "searching": false,
+                    "sDom": '<"top"i>rt<"bottom"lp><"clear">',
                     "aoColumns": [
                     {"bSortable": false, "width": "10%", "targets": 0},
-                    null, null, null
+                    null, null, null, null
                     // {"width": "90%"}
                     ],
                     "aaSorting": [],
@@ -90,8 +126,34 @@
                     //"bScrollCollapse": true,
                     //Note: if you are applying horizontal scrolling (sScrollX) on a ".table-bordered"
                     //you may want to wrap the table inside a "div.dataTables_borderWrap" element
-                    "iDisplayLength": 25
+                    "iDisplayLength": 25,
+                    "language": {
+                        "url": "{{ asset('themes/ace-master/assets/js/datatables/i18n/Thai.lang') }}"
+                    }
                 });
+
+        //filter
+        $('#name-filter').keyup(function () {
+            tb_adminuser.column(1).search($(this).val()).draw();
+        });
+
+        $('#email-filter').keyup(function () {
+            tb_adminuser.column(2).search($(this).val()).draw();
+        });
+
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var v = $('[name=role-filter]').val();
+            var dataCol = data[4] || 0;
+            if ((v === '') || (v === dataCol)) {
+                return true;
+            }
+            return false;
+        });
+
+        $('.input-filter').change(function () {
+            tb_adminuser.draw();
+        });
+        //end filter
 
         //delete
         $(".btn-del").click(function () {
