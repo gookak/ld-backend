@@ -17,9 +17,9 @@ class PurchaseOrder extends Model
         return $this->belongsTo(Admin::class);
     }
 
-    public function vendor() {
-        // return $this->belongsTo(Vendor::class);
-        return $this->belongsTo(Vendor::class, 'vendor_id');
+    public function seller() {
+        // return $this->belongsTo(Seller::class);
+        return $this->belongsTo(Seller::class, 'seller_id');
     }
 
     public function purchasestatus() {

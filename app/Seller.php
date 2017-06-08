@@ -2,9 +2,9 @@
 
 namespace App;
 
-class Vendor extends Model
+class Seller extends Model
 {
-	protected $table = 'vendors';
+	protected $table = 'sellers';
 
 	protected $dates = [
 	'created_at',

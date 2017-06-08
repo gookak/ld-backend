@@ -16,9 +16,9 @@ class CreatePurchaseOrdersTable extends Migration
         Schema::create('purchase_orders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('admin_id')->unsigned();
-            $table->integer('vendor_id')->unsigned();
+            $table->integer('seller_id')->unsigned();
             $table->integer('purchase_status_id')->unsigned();
-            $table->string('vendor_person', 100)->nullable()->comment('ชื่อผู้ติดต่อ (ยังไม่ใช้)');
+            $table->string('seller_person', 100)->nullable()->comment('ชื่อผู้ติดต่อ (ยังไม่ใช้)');
             $table->string('code', 10)->comment('เลขที่ใบสั่งซื้อ');
             $table->integer('sumnumber')->nullable()->comment('รวมจำนวนสินค้าทั้งหมด (ยังไม่ใช้)');
             $table->decimal('sumprice', 10, 2)->nullable()->comment('รวมราคาสินค้าทั้งหมด (ยังไม่ใช้)');
@@ -32,7 +32,7 @@ class CreatePurchaseOrdersTable extends Migration
 
         Schema::table('purchase_orders', function($table) {
             $table->foreign('admin_id')->references('id')->on('admins'); 
-            $table->foreign('vendor_id')->references('id')->on('vendors'); 
+            $table->foreign('seller_id')->references('id')->on('sellers'); 
             $table->foreign('purchase_status_id')->references('id')->on('purchase_status'); 
         });
     }

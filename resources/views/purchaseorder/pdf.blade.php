@@ -26,10 +26,10 @@
         <tr>
             <td>
                 <b>ข้อมูลร้านค้า (ผู้ขาย)</b><br>
-                {{ $purchaseorder->vendor->name }}<br>
-                {{ $purchaseorder->vendor->address }}<br>
-                เบอร์โทร {{ $purchaseorder->vendor->tel ? $purchaseorder->vendor->tel : '-' }}<br>
-                FAX. {{ $purchaseorder->vendor->fax ? $purchaseorder->vendor->fax : '-' }}<br>
+                {{ $purchaseorder->seller->name }}<br>
+                {{ $purchaseorder->seller->address }}<br>
+                เบอร์โทร {{ $purchaseorder->seller->tel ? $purchaseorder->seller->tel : '-' }}<br>
+                FAX. {{ $purchaseorder->seller->fax ? $purchaseorder->seller->fax : '-' }}<br>
             </td>
             {{-- <td>
                 <b>ข้อมูลผู้ติดต่อ</b><br>

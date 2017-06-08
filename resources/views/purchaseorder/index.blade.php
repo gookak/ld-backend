@@ -42,7 +42,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">ผู้ขาย : </label>
                             <div class="col-sm-5">
-                                <input type="text" id="vendor-name-filter" class="form-control" />
+                                <input type="text" id="seller-name-filter" class="form-control" />
                             </div>
                         </div>
 
@@ -98,7 +98,7 @@
                         </td>
                         <td>{{ $purchaseorder->code }}</td>
                         <td>{{ $purchaseorder->admin->name }}</td>
-                        <td>{{ $purchaseorder->vendor->name }}</td>
+                        <td>{{ $purchaseorder->seller->name }}</td>
                         <td>
                             @if( $purchaseorder->purchasestatus->name == 'create' )
                             <span class="text-primary ">{{ $purchaseorder->purchasestatus->detail }}</span>
@@ -161,7 +161,7 @@
             tb_purchase_order.column(2).search($(this).val()).draw();
         });
 
-        $('#vendor-name-filter').keyup(function () {
+        $('#seller-name-filter').keyup(function () {
             tb_purchase_order.column(3).search($(this).val()).draw();
         });
 

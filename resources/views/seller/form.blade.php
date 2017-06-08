@@ -20,7 +20,7 @@
             <div id="msgErrorArea"></div>
         </div>
 
-        <form id="vendorForm" class="form-horizontal" role="form" action="{{ $form_action }}" method="POST">
+        <form id="sellerForm" class="form-horizontal" role="form" action="{{ $form_action }}" method="POST">
 
             {{ csrf_field() }}
 
@@ -29,28 +29,28 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">ชื่อ</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="name" placeholder="" value="{{ $vendor->name }}" />
+                    <input type="text" class="form-control" name="name" placeholder="" value="{{ $seller->name }}" />
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">ที่อยู่</label>
                 <div class="col-sm-5">
-                    <textarea class="form-control" rows="5" name="address" placeholder="">{{ $vendor->address }}</textarea>
+                    <textarea class="form-control" rows="5" name="address" placeholder="">{{ $seller->address }}</textarea>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">เบอร์โทร</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="tel" placeholder="" value="{{ $vendor->tel }}" />
+                    <input type="text" class="form-control" name="tel" placeholder="" value="{{ $seller->tel }}" />
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">FAX.</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="fax" placeholder="" value="{{ $vendor->fax }}" />
+                    <input type="text" class="form-control" name="fax" placeholder="" value="{{ $seller->fax }}" />
                 </div>
             </div>
 
@@ -60,7 +60,7 @@
                         <i class="ace-icon fa fa-check bigger-110"></i>
                         บันทึก
                     </button>
-                    <a class="btn btn-sm btn-default" href="/vendor">
+                    <a class="btn btn-sm btn-default" href="/seller">
                         <i class="ace-icon fa fa-reply bigger-110"></i>
                         ยกเลิก
                     </a>
@@ -84,7 +84,7 @@
         //     $(this).prev().focus();
         // });
 
-        $('#vendorForm').bootstrapValidator({
+        $('#sellerForm').bootstrapValidator({
             framework: 'bootstrap',
             fields: {
                 name: {
@@ -114,7 +114,7 @@
                 // console.log(result);
                 if (result.status === 200) {
                     // console.log('ไม่ error');
-                    window.location = "/vendor";
+                    window.location = "/seller";
                 }else {
                     showMsgError("#msgErrorArea", result.msgerror);
                 }

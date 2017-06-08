@@ -192,7 +192,7 @@
           <b class="arrow"></b>
         </li>
         <li class="">
-          <a href="/vendor">
+          <a href="/seller">
             <i class="menu-icon fa fa-male"></i>
             <span class="menu-text"> ข้อมูลผู้ขาย </span>
           </a>

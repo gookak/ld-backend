@@ -66,10 +66,10 @@
                                         <div class="widget-main">
                                             <ul class="list-unstyled">
                                                 <li class="text-primary"><b>ข้อมูลร้านค้า (ผู้ขาย)</b></li>
-                                                <li>{{ $purchaseorder->vendor->name }}</li>
-                                                <li>{{ $purchaseorder->vendor->address }}</li>
-                                                <li>เบอร์โทร {{ $purchaseorder->vendor->tel ? $purchaseorder->vendor->tel : '-' }}</li>
-                                                <li>FAX. {{ $purchaseorder->vendor->fax ? $purchaseorder->vendor->fax : '-' }}</li>
+                                                <li>{{ $purchaseorder->seller->name }}</li>
+                                                <li>{{ $purchaseorder->seller->address }}</li>
+                                                <li>เบอร์โทร {{ $purchaseorder->seller->tel ? $purchaseorder->seller->tel : '-' }}</li>
+                                                <li>FAX. {{ $purchaseorder->seller->fax ? $purchaseorder->seller->fax : '-' }}</li>
                                             </ul>
                                         </div>
                                     </div>

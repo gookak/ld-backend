@@ -39,7 +39,7 @@
 
         <div class="clearfix">
             <div class="pull-left tableTools-container">
-                <a class="btn btn-sm btn-primary" href="/vendor/create">
+                <a class="btn btn-sm btn-primary" href="/seller/create">
                     <i class="ace-icon fa fa-plus align-top bigger-125"></i>
                     เพิ่ม
                 </a>
@@ -48,7 +48,7 @@
 
         <!-- div.dataTables_borderWrap -->
         <div class="table-responsive">
-            <table id="tb-vendor" class="table table-striped table-bordered table-hover">
+            <table id="tb-seller" class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr>
                         <th></th>
@@ -57,20 +57,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($vendors as $vendor)
+                    @foreach($sellers as $seller)
                     <tr>
                         <td class="center">
                             <div class="btn-group">
-                                <a class="btn btn-xs btn-danger btn-del" data-id="{{ $vendor->id }}">
+                                <a class="btn btn-xs btn-danger btn-del" data-id="{{ $seller->id }}">
                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                 </a>
-                                <a class="btn btn-xs btn-warning" href="/vendor/{{ $vendor->id }}/edit" >
+                                <a class="btn btn-xs btn-warning" href="/seller/{{ $seller->id }}/edit" >
                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                                 </a>
                             </div>
                         </td>
-                        <td>{{ $vendor->name }}</td>
-                        <td>{{ $vendor->tel }}</td>
+                        <td>{{ $seller->name }}</td>
+                        <td>{{ $seller->tel }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -89,7 +89,7 @@
 
         //checkBoxAllMutiTablePerPage("#checkAll", ".check");
 
-        var tb_vendor = $('#tb-vendor')
+        var tb_seller = $('#tb-seller')
                 //.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
                 .DataTable({
                     //"bAutoWidth": true,
@@ -116,7 +116,7 @@
 
         //filter
         $('#name-filter').keyup(function () {
-            tb_vendor.column(1).search($(this).val()).draw();
+            tb_seller.column(1).search($(this).val()).draw();
         });
 
         // $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
@@ -142,7 +142,7 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    url:'/vendor/' + id, 
+                    url:'/seller/' + id, 
                     type: 'POST',
                     data: { '_method': 'delete'},
                 })

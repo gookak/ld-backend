@@ -37,7 +37,7 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">ผู้ขาย</label>
                 <div class="col-sm-5">
-                    {{ Form::select('vendor_id', ['' => 'กรุณาเลือก'] + $vendorList, $purchaseorder->vendor_id, array('class' => 'form-control')) }}
+                    {{ Form::select('seller_id', ['' => 'กรุณาเลือก'] + $sellerList, $purchaseorder->seller_id, array('class' => 'form-control')) }}
                 </div>
             </div>
 
@@ -225,7 +225,7 @@
         $('#purchaseOrderForm').bootstrapValidator({
             framework: 'bootstrap',
             fields: {
-                vendor_id: {
+                seller_id: {
                     validators: {
                         notEmpty: true
                     }

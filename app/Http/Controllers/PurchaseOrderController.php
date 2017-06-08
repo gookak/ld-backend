@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\PurchaseOrder;
 use App\PurchaseOrderDetail;
 use App\PurchaseStatus;
-use App\Vendor;
+use App\Seller;
 use Auth;
 use Illuminate\Http\Request;
 use Response;
@@ -48,8 +48,8 @@ class PurchaseOrderController extends Controller
         $mode = 'create';
         $form_action = '/purchaseorder';
         $purchasestatusList = PurchaseStatus::pluck('detail', 'id')->toArray();
-        $vendorList = Vendor::pluck('name', 'id')->toArray();
-        return view('purchaseorder.form', compact('purchaseorder', 'header_text', 'mode', 'form_action', 'purchasestatusList', 'vendorList'));
+        $sellerList = Seller::pluck('name', 'id')->toArray();
+        return view('purchaseorder.form', compact('purchaseorder', 'header_text', 'mode', 'form_action', 'purchasestatusList', 'sellerList'));
     }
 
     /**
@@ -68,10 +68,10 @@ class PurchaseOrderController extends Controller
 
         DB::beginTransaction();
         try{
-            if(count($pods) < 1){
+            if(count($pods) > 0){
                 $rspo = PurchaseOrder::create([
                     'admin_id' => Auth::user()->id,
-                    'vendor_id' => $po['vendor_id'],
+                    'seller_id' => $po['seller_id'],
                     'purchase_status_id' => $po['purchase_status_id'],
                     'code' => Mylibs::GeraHash(10),
                     'order_at' => Mylibs::dateToDB( $po['order_at'] ),
@@ -97,7 +97,7 @@ class PurchaseOrderController extends Controller
             $msgerror = 'บันทึกข้อมูลเรียบร้อย';
         }
 
-        $data = ['status' => $status, 'msgerror' => $msgerror ];
+        $data = ['status' => $status, 'msgerror' => count($pods) ];
         return Response::json($data);
 
         // $val = $request->all();
@@ -131,8 +131,8 @@ class PurchaseOrderController extends Controller
         $mode = 'edit';
         $form_action = '/purchaseorder/'.$purchaseorder->id;
         $purchasestatusList = PurchaseStatus::pluck('detail', 'id')->toArray();
-        $vendorList = Vendor::pluck('name', 'id')->toArray();
-        return view('purchaseorder.form', compact('purchaseorder', 'header_text', 'mode', 'form_action', 'purchasestatusList', 'vendorList'));
+        $sellerList = Seller::pluck('name', 'id')->toArray();
+        return view('purchaseorder.form', compact('purchaseorder', 'header_text', 'mode', 'form_action', 'purchasestatusList', 'sellerList'));
     }
 
     /**
@@ -153,7 +153,7 @@ class PurchaseOrderController extends Controller
         DB::beginTransaction();
         try{
             $rspo = PurchaseOrder::find($id);
-            $rspo->vendor_id = $po['vendor_id'];
+            $rspo->seller_id = $po['seller_id'];
             $rspo->purchase_status_id = $po['purchase_status_id'];
             $rspo->order_at = Mylibs::dateToDB( $po['order_at'] );
             $rspo->complete_at = Mylibs::dateToDB( $po['complete_at'] );

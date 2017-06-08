@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Vendor;
+use App\Seller;
 use Response;
 use DB;
 use App\Mylibs\Mylibs;
 
-class VendorController extends Controller
+class SellerController extends Controller
 {
 
     public function __construct()
@@ -24,8 +24,8 @@ class VendorController extends Controller
      */
     public function index()
     {
-        $vendors = Vendor::orderBy('updated_at','desc')->get();
-        return view('vendor.index', compact('vendors'));
+        $sellers = Seller::orderBy('updated_at','desc')->get();
+        return view('seller.index', compact('sellers'));
     }
 
     /**
@@ -35,11 +35,11 @@ class VendorController extends Controller
      */
     public function create()
     {
-        $vendor = new Vendor();
+        $seller = new Seller();
         $header_text = 'เพิ่มข้อมูลผู้ขาย';
         $mode = 'create';
-        $form_action = '/vendor';
-        return view('vendor.form', compact('vendor', 'header_text', 'mode', 'form_action'));
+        $form_action = '/seller';
+        return view('seller.form', compact('seller', 'header_text', 'mode', 'form_action'));
     }
 
     /**
@@ -56,7 +56,7 @@ class VendorController extends Controller
         $msgerror = "";
         DB::beginTransaction();
         try{
-            $rs = Vendor::create([
+            $rs = Seller::create([
                 'name' => $val['name'],
                 'address' => $val['address'],
                 'tel' => $val['tel'],
@@ -71,7 +71,7 @@ class VendorController extends Controller
         if ($msgerror == "") {
             $msgerror = 'บันทึกข้อมูลเรียบร้อย';
         }
-        $data = ['status' => $status, 'msgerror' => $msgerror, 'rs' => $rs];
+        $data = ['status' => $status, 'msgerror' => $msgerror, 'rs' => $val];
         return Response::json($data);
     }
 
@@ -94,11 +94,11 @@ class VendorController extends Controller
      */
     public function edit($id)
     {
-        $vendor = Vendor::find($id);
+        $seller = Seller::find($id);
         $header_text = 'แก้ไขข้อมูลผู้ขาย';
         $mode = 'edit';
-        $form_action = '/vendor/'.$vendor->id;
-        return view('vendor.form', compact('vendor', 'header_text', 'mode', 'form_action'));
+        $form_action = '/seller/'.$seller->id;
+        return view('seller.form', compact('seller', 'header_text', 'mode', 'form_action'));
     }
 
     /**
@@ -115,12 +115,12 @@ class VendorController extends Controller
         $msgerror = "";
         DB::beginTransaction();
         try{
-            $vendor = Vendor::find($id);
-            $rs = $vendor->name = $val['name'];
-            $vendor->address = $val['address'];
-            $vendor->tel = $val['tel'];
-            $vendor->fax = $val['fax'];
-            $vendor->save();
+            $seller = Seller::find($id);
+            $rs = $seller->name = $val['name'];
+            $seller->address = $val['address'];
+            $seller->tel = $val['tel'];
+            $seller->fax = $val['fax'];
+            $seller->save();
         } catch (\Exception $ex) {
             $status = 500;
             $msgerror = $ex->getMessage();
@@ -146,8 +146,8 @@ class VendorController extends Controller
         $msgerror = "";
         DB::beginTransaction();
         try{
-            $vendor = Vendor::find($id);
-            $rs = $vendor->delete();
+            $seller = Seller::find($id);
+            $rs = $seller->delete();
         } catch (\Exception $ex) {
             $status = 500;
             $msgerror = $ex->getMessage();
