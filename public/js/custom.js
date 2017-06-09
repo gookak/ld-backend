@@ -184,12 +184,12 @@ function checkBoxAllMutiTablePerPage(idCheckAll, idCheck) {
         if ($(this).is(':checked')) {
             $(idCheck).each(function () {
                 $(this).prop("checked", true);
-                $(this).parent().parent().parent().addClass("success");
+                // $(this).parent().parent().parent().addClass("success");
             });
         } else {
             $(idCheck).each(function () {
                 $(this).prop("checked", false);
-                $(this).parent().parent().parent().removeClass("success");
+                // $(this).parent().parent().parent().removeClass("success");
             });
         }
     });
@@ -197,10 +197,10 @@ function checkBoxAllMutiTablePerPage(idCheckAll, idCheck) {
     $(idCheck).click(function () {
         $(idCheck).each(function () {
             if ($(this).is(':checked')) {
-                $(this).parent().parent().parent().addClass("success");
+                // $(this).parent().parent().parent().addClass("success");
             } else {
                 $(idCheckAll).prop("checked", false);
-                $(this).parent().parent().parent().removeClass("success");
+                // $(this).parent().parent().parent().removeClass("success");
             }
         });
     });

@@ -92,7 +92,7 @@
 
             <div class="row">
 
-
+                <button type="button" class="btn btn-primary btn-sm fa fa-search fa-x" data-toggle="modal" data-target="#modal-filter"> ค้นหา</button>
 
                 <table class="table table-striped table-bordered table-hover" id="tb-detail">
                     <thead>
@@ -138,6 +138,92 @@
 
         </form>
 
+        <!-- Modal -->
+        <div class="modal fade" id="modal-filter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">ค้นหา</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form id="form-filter" class="form-horizontal">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">คงเหลือ : </label>
+                                <div class="col-sm-2">
+                                    <select class="form-control" name="condition-filter">
+                                        <option value="">ทั้งหมด</option>
+                                        <option value="<">น้อยกว่า</option>
+                                        <option value=">">มากกว่า</option>
+                                        <option value="=">เท่ากับ</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="text" name="balance-filter" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">ประเภทสินค้า : </label>
+                                <div class="col-sm-5">
+                                    {!! Form::select('category_id-filter', ['' => 'ทั้งหมด'] + $categoryList, null, array('class' => 'form-control')) !!}
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">ชื่อสินค้า : </label>
+                                <div class="col-sm-5">
+                                    <input type="text" name="name-filter" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-5 col-sm-offset-2">
+                                    <button id="btn-filter" class="btn btn-sm btn-primary" type="submit">
+                                        <i class="ace-icon fa fa-search bigger-110"></i>
+                                        ค้นหา
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <table id="tb-filter" class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="center" style="width: 5%;">
+                                        <label class="pos-rel">
+                                            <input id="checkAll" type="checkbox" class="ace" />
+                                            <span class="lbl"></span>
+                                        </label>
+                                    </th>
+                                    <th>ชื่อ</th>
+                                    <th class="center" style="width: 10%;">คงเหลือ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{-- <tr>
+                                    <td class="center">
+                                        <label class="inline pos-rel"><input type="checkbox" class="ace check"/><span class="lbl"></span></label>
+                                    </td>
+                                    <td>55555</td>
+                                    <td class="center">5555555</td>
+                                </tr> --}}
+                            </tbody>
+                        </table>
+
+                    </div> <!--end modal-body-->
+                    <div class="modal-footer">
+                        <button type="button" id="btn-add-filter" class="btn btn-primary pull-left">เพิ่ม</button>
+                        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">ปิด</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal -->
+
         <!-- PAGE CONTENT ENDS -->
     </div><!-- /.col -->
 </div><!-- /.row -->
@@ -147,6 +233,8 @@
 
 <script type="text/javascript">
     $(function () {
+
+        checkBoxAllMutiTablePerPage("#checkAll", ".check");
 
         $('.datepicker').datepicker({language:'th-th',format:'dd/mm/yyyy'})
         //show datepicker when clicking on the icon
@@ -189,6 +277,59 @@
         $(document).on("click", "[name='bt-delrow']", function () {
             tb_detail.row($(this).parents('tr')).remove().draw();
         });
+
+
+        //filter
+        $("#form-filter").submit(function( event ) {
+            event.preventDefault();
+            $("#tb-filter tbody").html("");
+            
+            var url = '/apigetproduct';
+            url += '?' + $(this).serialize();
+            // console.log(url);
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+            }).done(function(result) {
+                // console.log(result);
+                if (result.status === 200) {
+                    $.each( result.rs, function( key, value ) {
+                        $('#tb-filter tbody').append(
+                            '<tr><td class="center"><label class="inline pos-rel"><input type="checkbox" class="ace check"/><span class="lbl"></span></label></td>'
+                            +'<td class="name">'+ value.name +'</td>'
+                            +'<td class="center balance">' + value.balance + '</td></tr>'
+                            );
+                        // tb_filter.row.add([
+                        //     '<label class="inline pos-rel"><input type="checkbox" class="ace check"/><span class="lbl"></span></label>'
+                        //     , value.name, value.balance 
+                        //     ]).draw();
+                    });
+                }
+            });
+        });
+
+        $('#modal-filter').on('hidden.bs.modal', function (e) {
+            clearform("#modal-filter");
+            $("#tb-filter tbody").html("");
+        });
+
+        $('#btn-add-filter').click(function(){
+            var countCheck = $("#tb-filter tbody input[type=checkbox]:checked").length;
+            if (countCheck > 0) {
+                $("#tb-filter tbody input[type=checkbox]:checked").each(function() {
+                    var name = $(this).parent().parent().siblings(".name").html();
+                    var balance = $(this).parent().parent().siblings(".balance").html();
+                    // console.log(balance);
+                    tb_detail.row.add([
+                        '', name, balance, '<button name="bt-delrow" data-tableid="tb-detail" type="button" class="btn btn-danger btn-sm fa fa-trash-o"></button>'
+                        ]).draw();
+                });
+            }
+
+            $('#modal-filter').modal('hide');
+        });
+        //end filter
 
         // $(document).on("focus", ".name", function () {
         //     if (!$(this).data("autocomplete")) { // If the autocomplete wasn't called yet:

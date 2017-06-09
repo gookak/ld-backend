@@ -6,6 +6,7 @@ use App\PurchaseOrder;
 use App\PurchaseOrderDetail;
 use App\PurchaseStatus;
 use App\Seller;
+use App\Category;
 use Auth;
 use Illuminate\Http\Request;
 use Response;
@@ -49,7 +50,8 @@ class PurchaseOrderController extends Controller
         $form_action = '/purchaseorder';
         $purchasestatusList = PurchaseStatus::pluck('detail', 'id')->toArray();
         $sellerList = Seller::pluck('name', 'id')->toArray();
-        return view('purchaseorder.form', compact('purchaseorder', 'header_text', 'mode', 'form_action', 'purchasestatusList', 'sellerList'));
+        $categoryList = Category::pluck('name', 'id')->toArray();
+        return view('purchaseorder.form', compact('purchaseorder', 'header_text', 'mode', 'form_action', 'purchasestatusList', 'sellerList', 'categoryList'));
     }
 
     /**
@@ -132,7 +134,8 @@ class PurchaseOrderController extends Controller
         $form_action = '/purchaseorder/'.$purchaseorder->id;
         $purchasestatusList = PurchaseStatus::pluck('detail', 'id')->toArray();
         $sellerList = Seller::pluck('name', 'id')->toArray();
-        return view('purchaseorder.form', compact('purchaseorder', 'header_text', 'mode', 'form_action', 'purchasestatusList', 'sellerList'));
+        $categoryList = Category::pluck('name', 'id')->toArray();
+        return view('purchaseorder.form', compact('purchaseorder', 'header_text', 'mode', 'form_action', 'purchasestatusList', 'sellerList', 'categoryList'));
     }
 
     /**
