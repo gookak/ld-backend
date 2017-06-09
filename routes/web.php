@@ -67,6 +67,8 @@ Route::get('/apigetpercentpricebycategorys', 'ApiController@apigetpercentpriceby
 
 Route::get('/apigetproductname/{name}', 'ApiController@apigetproductname');
 
+Route::get('/apigetproduct', 'ApiController@apigetproduct');	///{category_id?}/{condition?}/{balnace?}/{name?}
+
 Route::resource('adminuser', 'AdminUserController');
 
 Route::resource('user', 'UserController');

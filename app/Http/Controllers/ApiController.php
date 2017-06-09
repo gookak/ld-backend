@@ -61,4 +61,27 @@ class ApiController extends Controller
         return Response::json($data);
     }
 
+    public function apigetproduct(Request $request) //$category_id = null, $condition = null, $balnace = null, $name = null
+    {
+        $category_id = $request['category_id-filter'];
+        $condition = $request['condition-filter'];
+        $balance = $request['balance-filter'];
+        $name = $request['name-filter'];
+
+        $status = 200;
+        $rs = Product::select('name', 'balance');
+        if($category_id){
+            $rs = $rs->where('category_id', $category_id);
+        }
+        if( $condition && $balance ){
+            $rs = $rs->where('balance', $condition, $balance);
+        }
+        if($name){
+            $rs = $rs->where('name', 'like', '%'.$name.'%');
+        }
+        $rs = $rs->orderBy('balance','asc')->get();
+        $data = ['status' => $status, 'rs' => $rs, 'request' => $request->all() ];
+        return Response::json($data);
+    }
+
 }
