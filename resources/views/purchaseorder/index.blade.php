@@ -85,9 +85,6 @@
                     <tr>
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-xs btn-info" href="/purchaseorder/{{ $purchaseorder->id }}" >
-                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
-                                </a>
                                 @if( $purchaseorder->purchasestatus->name == 'create' )
                                 <a class="btn btn-xs btn-danger btn-del" data-id="{{ $purchaseorder->id }}">
                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
@@ -100,6 +97,9 @@
                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                                 </a>
                                 @endif
+                                <a class="btn btn-xs btn-info" href="/purchaseorder/{{ $purchaseorder->id }}" >
+                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
+                                </a>
                             </div>
                         </td>
                         <td>{{ $purchaseorder->code }}</td>
