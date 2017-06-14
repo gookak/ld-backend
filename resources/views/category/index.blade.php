@@ -114,6 +114,14 @@
                 });
 
         //filter
+        $('form').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                e.preventDefault();
+                return false;
+            }
+        });
+        
         $('#name-filter').keyup(function () {
             tb_category.column(1).search($(this).val()).draw();
         });

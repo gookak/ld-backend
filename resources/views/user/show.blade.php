@@ -50,6 +50,18 @@
                                     <span>{{ $user->tel }}</span>
                                 </div>
                             </div>
+                            {{-- <div class="profile-info-row">
+                                <div class="profile-info-name"> วันที่สมัคร </div>
+                                <div class="profile-info-value">
+                                    <span>{{ $user->created_at ? $user->created_at->addYears(543)->format('d/m/Y') : null }}</span>
+                                </div>
+                            </div> --}}
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> เข้าระบบฯล่าสุด </div>
+                                <div class="profile-info-value">
+                                    <span>{{ $user->login_at ? $user->login_at->addYears(543)->format('d/m/Y') : null }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

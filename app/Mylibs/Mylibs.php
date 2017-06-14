@@ -49,7 +49,7 @@ class Mylibs {
 		// $d2="2017-03-01";
 		$date = strtotime("$enddate") - strtotime("$startdate");
 		$numday = floor($date / 86400);
-		return $numday +1;
+		return $numday;
 	}
 
 	public static function getMonthList() {

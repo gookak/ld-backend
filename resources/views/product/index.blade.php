@@ -135,6 +135,14 @@
                 });
 
         //filter
+        $('form').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) { 
+                e.preventDefault();
+                return false;
+            }
+        });
+
         $('#name-filter').keyup(function () {
             tb_product.column(2).search($(this).val()).draw();
         });
