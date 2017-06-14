@@ -15,7 +15,9 @@
         <tr>
             <td>
                 <b>เลขที่ {{ $purchaseorder->code }}</b><br>
-                วันที่สั่ง {{ $purchaseorder->order_at ? $purchaseorder->order_at->addYears(543)->format('d/m/Y') : null }}
+                วันที่สั่ง {{ $purchaseorder->order_at ? $purchaseorder->order_at->addYears(543)->format('d/m/Y') : '-' }}<br>
+                วันที่รับของ {{ $purchaseorder->complete_at ? $purchaseorder->complete_at->addYears(543)->format('d/m/Y') : '-' }}<br>
+                หมายเหตุ {{ $purchaseorder->note ? $purchaseorder->note : '-' }}
             </td>
         </tr>
     </tbody>
