@@ -83,14 +83,20 @@
                 <tbody>
                     @foreach($purchaseorders as $purchaseorder)
                     <tr>
-                        <td class="center">
+                        <td>
                             <div class="btn-group">
+                                @if( $purchaseorder->purchasestatus->name == 'create' )
                                 <a class="btn btn-xs btn-danger btn-del" data-id="{{ $purchaseorder->id }}">
                                     <i class="ace-icon fa fa-trash-o bigger-120"></i>
                                 </a>
                                 <a class="btn btn-xs btn-warning" href="/purchaseorder/{{ $purchaseorder->id }}/edit" >
                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
                                 </a>
+                                @elseif( $purchaseorder->purchasestatus->name == 'ongoing' )
+                                <a class="btn btn-xs btn-warning" href="/purchaseorder/{{ $purchaseorder->id }}/edit" >
+                                    <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                </a>
+                                @endif
                                 <a class="btn btn-xs btn-info" href="/purchaseorder/{{ $purchaseorder->id }}" >
                                     <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                 </a>

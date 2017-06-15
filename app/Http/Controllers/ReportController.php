@@ -114,7 +114,7 @@ class ReportController extends Controller
         // $filename = $report->name.'_'.$report->year.'_'.$report->month.'.pdf';
         $filename = $report->name.'.pdf';
         $html = view('report.pdf_salesbyproduct', compact('orders', 'report'))->render();
-        $mpdf = new mPDF('th', 'A4');
+        $mpdf = new mPDF('th', 'A4-L');
         $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
         $mpdf->WriteHTML($html,2);
         $mpdf->SetTitle($filename);

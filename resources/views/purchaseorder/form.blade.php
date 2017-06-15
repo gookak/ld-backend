@@ -100,7 +100,7 @@
                             <th class="center">ลำดับ</th>
                             <th>ชื่อ</th>
                             <th class="center">จำนวน</th>
-                            <th class="text-center">
+                            <th class="text-center @if($mode == 'edit') {{ $purchaseorder->purchasestatus->name == 'ongoing' ? 'hidden' : null  }} @endif">
                                 <button name="bt-addrow" data-tableid="tb-detail" type="button" class="btn btn-success btn-sm fa fa-plus fa-x"></button>
                             </th>
                         </tr>
@@ -112,7 +112,7 @@
                             <td class="center"></td>
                             <td>{{ $purchaseorderdetail->name }}</td>
                             <td>{{ $purchaseorderdetail->number }}</td>
-                            <td class="text-center">
+                            <td class="text-center @if($mode == 'edit') {{ $purchaseorder->purchasestatus->name == 'ongoing' ? 'hidden' : null  }} @endif">
                                 <button name="bt-delrow" data-tableid="tb-detail" type="button" class="btn btn-danger btn-sm fa fa-trash-o"></button>
                             </td>
                         </tr>
@@ -258,9 +258,9 @@
             ],
             createdRow: function (row, data, index) {
                 $('td', row).eq(0).addClass('text-center');
-                $('td', row).eq(1).addClass('name').attr('contentEditable', true).attr('placeholder', 'กรอกชื่ออย่างน้อย 3 ตัวอักษรเพื่อค้นหา');
-                $('td', row).eq(2).addClass('text-center number').attr('contentEditable', true);
-                $('td', row).eq(3).addClass('text-center');
+                $('td', row).eq(1).addClass('name').attr('contentEditable', @if($mode == 'edit') {{ $purchaseorder->purchasestatus->name == 'create' ? 'true' : 'false' }} @endif);
+                $('td', row).eq(2).addClass('text-center number').attr('contentEditable', @if($mode == 'edit') {{ $purchaseorder->purchasestatus->name == 'create' ? 'true' : 'false' }} @endif);
+                $('td', row).eq(3).addClass("text-center @if($mode == 'edit') {{ $purchaseorder->purchasestatus->name == 'ongoing' ? 'hidden' : null  }} @endif ");
             },
             fnRowCallback: function (nRow, aData, iDisplayIndex) {
                 $("td:first", nRow).html(iDisplayIndex + 1);

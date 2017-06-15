@@ -96,27 +96,27 @@
             $('#reportForm').attr('action', $(this).val());
         });
 
-        $('#reportForm').bootstrapValidator({
-            framework: 'bootstrap',
-            fields: {
-                report_url: {
-                    validators: {
-                        notEmpty: true
-                    }
-                }
-                // ,
-                // start_date: {
-                //     validators: {
-                //         notEmpty: true
-                //     }
-                // },
-                // end_date: {
-                //     validators: {
-                //         notEmpty: true
-                //     }
-                // }
-            }
-        });
+        // $('#reportForm').bootstrapValidator({
+        //     framework: 'bootstrap',
+        //     fields: {
+        //         report_url: {
+        //             validators: {
+        //                 notEmpty: true
+        //             }
+        //         }
+        //         // ,
+        //         // start_date: {
+        //         //     validators: {
+        //         //         notEmpty: true
+        //         //     }
+        //         // },
+        //         // end_date: {
+        //         //     validators: {
+        //         //         notEmpty: true
+        //         //     }
+        //         // }
+        //     }
+        // });
 
     });
 </script>

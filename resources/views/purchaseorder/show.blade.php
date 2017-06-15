@@ -58,6 +58,22 @@
 
                         <div class="space"></div>
 
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="widget-box">
+                                    <div class="widget-body">
+                                        <div class="widget-main">
+                                            <ul class="list-unstyled">
+                                                <li class="text-primary"><b>ข้อมูลใบสั่งของ</b></li>
+                                                <li>วันที่สั่งของ {{ $purchaseorder->order_at ? $purchaseorder->order_at->addYears(543)->format('d/m/Y') : '-' }}</li>
+                                                <li>วันที่รับของ {{ $purchaseorder->complete_at ? $purchaseorder->complete_at->addYears(543)->format('d/m/Y') : '-' }}</li>
+                                                <li>หมายเหตุ {{ $purchaseorder->note ? $purchaseorder->note : '-' }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-xs-12">
