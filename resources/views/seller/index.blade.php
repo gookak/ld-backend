@@ -4,7 +4,7 @@
 
 <div class="page-header">
     <h1>
-        ข้อมูลผู้ขาย
+        ข้อมูลคู่ค้า
         {{-- <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             Static &amp; Dynamic Tables

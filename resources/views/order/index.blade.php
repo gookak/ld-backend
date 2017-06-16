@@ -4,7 +4,7 @@
 
 <div class="page-header">
     <h1>
-        ข้อมูลรายการสั่งซื้อ
+        ข้อมูลรายการขาย
         {{-- <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             Static &amp; Dynamic Tables
@@ -26,16 +26,16 @@
                     <form class="form-horizontal">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">หมายเลขคำสั่งซื้อ : </label>
+                            <label class="col-sm-2 control-label">สถานะจัดส่ง : </label>
                             <div class="col-sm-5">
-                                <input type="text" id="code-filter" class="form-control" />
+                                {!! Form::select('transportstatus-filter', ['' => 'ทั้งหมด'] + $transportstatusList, null, array('class' => 'form-control input-filter')) !!}
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">สถานะจัดส่ง : </label>
+                            <label class="col-sm-2 control-label">หมายเลขรายการขาย : </label>
                             <div class="col-sm-5">
-                                {!! Form::select('transportstatus-filter', ['' => 'ทั้งหมด'] + $transportstatusList, null, array('class' => 'form-control input-filter')) !!}
+                                <input type="text" id="code-filter" class="form-control" />
                             </div>
                         </div>
 
@@ -50,7 +50,7 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>หมายเลขคำสั่งซื้อ</th>
+                        <th>หมายเลขรายการขาย</th>
                         <th>สั่งเมื่อวันที่</th>
                         <th>ยอดสุทธิ</th>
                         <th>สถานะจัดส่ง</th>

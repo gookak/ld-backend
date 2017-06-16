@@ -26,7 +26,14 @@
                     <form class="form-horizontal">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">ชื่อ : </label>
+                            <label class="col-sm-2 control-label">สิทธิ์ผู้ใช้งาน : </label>
+                            <div class="col-sm-5">
+                                {!! Form::select('role-filter', ['' => 'ทั้งหมด'] + $roleList, null, array('class' => 'form-control input-filter')) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">ชื่อ-นามสกุล : </label>
                             <div class="col-sm-5">
                                 <input type="text" id="name-filter" class="form-control" />
                             </div>
@@ -36,13 +43,6 @@
                             <label class="col-sm-2 control-label">อีเมล์ : </label>
                             <div class="col-sm-5">
                                 <input type="text" id="email-filter" class="form-control" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">สิทธิ์ผู้ใช้งาน : </label>
-                            <div class="col-sm-5">
-                                {!! Form::select('role-filter', ['' => 'ทั้งหมด'] + $roleList, null, array('class' => 'form-control input-filter')) !!}
                             </div>
                         </div>
 
@@ -66,7 +66,7 @@
                 <thead>
                     <tr>
                         <th></th>
-                        <th>ชื่อ</th>
+                        <th>ชื่อ-นามสกุล</th>
                         <th>อีเมล์</th>
                         <th>สิทธิ์ผู้ใช้งาน</th>
                         <th class="hidden">role_id</th>
@@ -82,6 +82,9 @@
                                 </a>
                                 <a class="btn btn-xs btn-warning" href="/adminuser/{{ $adminuser->id }}/edit" >
                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
+                                </a>
+                                <a class="btn btn-xs btn-info" href="/adminuser/{{ $adminuser->id }}" >
+                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                 </a>
                             </div>
                         </td>
@@ -114,7 +117,7 @@
                     // "searching": false,
                     "sDom": '<"top"i>rt<"bottom"lp><"clear">',
                     "aoColumns": [
-                    {"bSortable": false, "width": "10%", "targets": 0},
+                    {"bSortable": false, "width": "15%", "targets": 0},
                     null, null, null, null
                     // {"width": "90%"}
                     ],

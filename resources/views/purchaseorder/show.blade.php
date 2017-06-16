@@ -21,7 +21,7 @@
                 <div class="widget-header widget-header-large">
                     <h3 class="widget-title">
                         {{-- <i class="ace-icon fa fa-leaf green"></i> --}}
-                        #{{ $purchaseorder->code }}
+                        หมายเลขรายการสั่งของ {{ $purchaseorder->code }}
                     </h3>
 
                     <div class="widget-toolbar no-border invoice-info">

@@ -71,6 +71,8 @@ Route::get('/apigetproduct', 'ApiController@apigetproduct');	///{category_id?}/{
 
 Route::resource('adminuser', 'AdminUserController');
 
+Route::get('adminuser/{id}/pdf', 'AdminUserController@pdf');
+
 Route::resource('user', 'UserController');
 
 Route::resource('order', 'OrderController');

@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h2>#{{ $order->code }}</h2>
+<h2>หมายเลขรายการขาย {{ $order->code }}</h2>
 <hr>
 <b>วันที่สั่งซื้อ</b> <br>
 {{ $order->created_at->addYears(543)->format('d/m/Y') }} <br>
@@ -37,10 +37,12 @@
 </tbody>
 <tfoot>
   <tr>
-    <td colspan="3" class="right">รวม</td>
-    <td class="right">{{ $order->sumnumber }}</td>
-    <td class="right">{{ number_format( $order->totalprice , 2 ) }}</td>
-</tr>
+      <td colspan="3" class="right">รวม</td>
+      <td class="right">{{ $order->sumnumber }}</td>
+      <td class="right">{{ number_format( $order->totalprice , 2 ) }}</td>
+  </tr>
+  <tr>
+      <td colspan="5" class="right"><br>{{ $order->totalpricestring }}
 </tfoot>
 </table>
 @endif

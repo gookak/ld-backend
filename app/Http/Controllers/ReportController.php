@@ -64,7 +64,7 @@ class ReportController extends Controller
         // $report['year'] = $val['year'] + 543;
         // $report['month'] = Mylibs::getMonthName($val['month']);
 
-        $orders = Order::select('category.name', DB::raw('sum(order_detail.number) AS sumnumber'), DB::raw('sum(order_detail.price) AS sumprice') )
+        $orders = Order::select('category.name', DB::raw('sum(order_detail.number) AS sumnumber'), DB::raw('sum(order_detail.number * order_detail.price) AS sumprice') )
         ->join('order_detail', 'order.id', '=', 'order_detail.order_id')
         ->join('product', 'order_detail.product_id', '=', 'product.id')
         ->join('category', 'product.category_id', '=', 'category.id')
@@ -99,7 +99,7 @@ class ReportController extends Controller
         // $report['year'] = $val['year'] + 543;
         // $report['month'] = Mylibs::getMonthName($val['month']);
 
-        $orders = Order::select('product.code', 'product.name', 'product.price', DB::raw('sum(order_detail.number) AS sumnumber'), DB::raw('sum(order_detail.price) AS sumprice') )
+        $orders = Order::select('product.code', 'product.name', 'product.price', DB::raw('sum(order_detail.number) AS sumnumber'), DB::raw('sum(order_detail.number * order_detail.price) AS sumprice') )
         ->join('order_detail', 'order.id', '=', 'order_detail.order_id')
         ->join('product', 'order_detail.product_id', '=', 'product.id')
         // ->whereMonth('order.created_at', '=', $val['month'])
@@ -159,11 +159,16 @@ class ReportController extends Controller
         $filename = $report->name.'.pdf';
         $html = view('report.pdf_employee', compact('employees', 'report'))->render();
         $mpdf = new mPDF('th', 'A4');
+        // $mpdf->SetHTMLHeader('<h1>TEST</h1>');
+        $mpdf->setDisplayMode('fullpage');
         $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
         $mpdf->WriteHTML($html,2);
         $mpdf->SetTitle($filename);
         $mpdf->Output();
-        // return view('report.pdf_employee', compact('employees', 'report'));
+        return view('report.pdf_employee', compact('employees', 'report'));
+
+
+
     }
 
 }
