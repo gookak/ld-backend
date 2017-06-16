@@ -178,7 +178,7 @@
         <li class="">
           <a href="/order">
             <i class="menu-icon fa fa-shopping-cart"></i>
-            <span class="menu-text"> ข้อมูลรายการสั่งซื้อ </span>
+            <span class="menu-text"> ข้อมูลรายการขาย </span>
           </a>
 
           <b class="arrow"></b>
@@ -194,7 +194,7 @@
         <li class="">
           <a href="/seller">
             <i class="menu-icon fa fa-male"></i>
-            <span class="menu-text"> ข้อมูลผู้ขาย </span>
+            <span class="menu-text"> ข้อมูลคู่ค้า </span>
           </a>
 
           <b class="arrow"></b>
