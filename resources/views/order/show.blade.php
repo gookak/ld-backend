@@ -1,7 +1,6 @@
 @extends('layouts/main')
 
 @section('content')
-
 {{-- <div class="page-header">
     <h1>
         รายละเอียดคำสั่งซื้อ
@@ -21,7 +20,7 @@
                 <div class="widget-header widget-header-large">
                     <h3 class="widget-title">
                         {{-- <i class="ace-icon fa fa-leaf green"></i> --}}
-                        #{{ $order->code }}
+                        หมายเลขรายการขาย {{ $order->code }}
                     </h3>
 
                     <div class="widget-toolbar no-border invoice-info">
@@ -29,11 +28,12 @@
                     <span class="red">#{{ $order->code }}</span> --}}
 
                     <br>
-                    <span class="invoice-info-label">วันที่สั่งซื้อ:</span>
+                    <span class="invoice-info-label">วันที่:</span>
                     <span class="blue">{{ $order->created_at ? $order->created_at->addYears(543)->format('d/m/Y') : null }}</span>
                 </div>
 
-                <div class="widget-toolbar hidden-480">
+                {{-- hidden-480 --}}
+                <div class="widget-toolbar">
                     <a href="/order/{{ $order->id }}/pdf" target="_blank">
                         <i class="ace-icon fa fa-print"></i>
                     </a>
@@ -123,6 +123,7 @@
                                             {{-- <li>ค่าธรรมเนียม <b class="text-primary">{{ number_format( $order->fee , 2 ) }}</b> บาท</li>
                                             <li>ส่วนลด <b class="text-primary">{{ number_format( $order->promotion , 2 ) }}</b> บาท</li> --}}
                                             <li>ยอดสุทธิ <b class="text-primary">{{ number_format( $order->totalprice , 2 ) }}</b> บาท</li>
+                                            <li><b class="text-primary">{{ $order->totalpricestring }}</b></li>
                                         </ul>
                                     </div>
                                 </div>

@@ -26,6 +26,13 @@
                     <form class="form-horizontal">
 
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">สถานะจัดส่ง : </label>
+                            <div class="col-sm-5">
+                                {!! Form::select('purchasestatus-filter', ['' => 'ทั้งหมด'] + $purchasestatusList, null, array('class' => 'form-control input-filter')) !!}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">หมายเลข : </label>
                             <div class="col-sm-5">
                                 <input type="text" id="code-filter" class="form-control" />
@@ -43,13 +50,6 @@
                             <label class="col-sm-2 control-label">ผู้ขาย : </label>
                             <div class="col-sm-5">
                                 <input type="text" id="seller-name-filter" class="form-control" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">สถานะจัดส่ง : </label>
-                            <div class="col-sm-5">
-                                {!! Form::select('purchasestatus-filter', ['' => 'ทั้งหมด'] + $purchasestatusList, null, array('class' => 'form-control input-filter')) !!}
                             </div>
                         </div>
 

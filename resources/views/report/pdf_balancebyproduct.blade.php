@@ -46,7 +46,7 @@
 <tfoot>
   <tr>
       <td colspan="3" class="right">รวม</td>
-      <td class="center">{{ $totalnumber }}</td>
+      <td class="center">{{ number_format( $totalnumber ) }}</td>
   </tr>
 </tfoot>
 </table>

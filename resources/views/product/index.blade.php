@@ -26,16 +26,16 @@
                     <form class="form-horizontal">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">ชื่อ : </label>
+                            <label class="col-sm-2 control-label">ประเภทสินค้า : </label>
                             <div class="col-sm-5">
-                                <input type="text" id="name-filter" class="form-control" />
+                                {!! Form::select('category-filter', ['' => 'ทั้งหมด'] + $categoryList, null, array('class' => 'form-control input-filter')) !!}
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">ประเภทสินค้า : </label>
+                            <label class="col-sm-2 control-label">ชื่อ : </label>
                             <div class="col-sm-5">
-                                {!! Form::select('category-filter', ['' => 'ทั้งหมด'] + $categoryList, null, array('class' => 'form-control input-filter')) !!}
+                                <input type="text" id="name-filter" class="form-control" />
                             </div>
                         </div>
 
@@ -83,9 +83,14 @@
                         </td>                        
                         {{-- <td>{{ $product->code }}</td> --}}
                         <td>
-                            @if(count($product->productImage) > 0)
                             <img width="80" height="80" alt="150x150" src="{{ asset(env('FILE_URL').$product->productImage[0]->fileupload->filename )}}">
+                           {{--  @if(count($product->productImage) > 0)
+                            @if(file_exists(public_path().env('FILE_URL').$product->productImage[0]->fileupload->filename))
+                            <img width="80" height="80" alt="150x150" src="{{ asset(env('FILE_URL').$product->productImage[0]->fileupload->filename )}}">
+                            @else
+                            <img width="80" height="80" alt="150x150" src="{{ asset(env('FILE_URL').'noimage.jpg' )}}">
                             @endif
+                            @endif --}}
                         </td>
                         <td>{{ $product->name }}</td>
                         <td>{{ number_format( $product->price , 2 ) }}</td>

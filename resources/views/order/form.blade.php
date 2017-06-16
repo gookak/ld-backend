@@ -98,7 +98,7 @@
                     <h4 class="panel-title">
                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                             <i class="ace-icon fa fa-angle-down bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
-                            &nbsp;รายละเอียดรายการสั่งซื้อ
+                            &nbsp;รายละเอียดรายการขาย
                         </a>
                     </h4>
                 </div>

@@ -8,6 +8,7 @@ use App\Role;
 use Response;
 use DB;
 use App\Mylibs\Mylibs;
+use mPDF;
 
 class AdminUserController extends Controller
 {
@@ -98,7 +99,8 @@ class AdminUserController extends Controller
      */
     public function show($id)
     {
-        //
+        $adminuser = Admin::find($id);
+        return view('adminuser.show', compact('adminuser'));
     }
 
     /**
@@ -199,5 +201,17 @@ class AdminUserController extends Controller
         }
         $data = ['status' => $status, 'msgerror' => $msgerror, 'rs' => $rs];
         return Response::json($data);
+    }
+
+    public function pdf($id)
+    {
+        $adminuser = Admin::find($id);
+        $filename = $adminuser->name.'.pdf';
+        $html = view('adminuser.pdf', compact('adminuser'))->render();
+        $mpdf = new mPDF('th', 'A4');
+        $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
+        $mpdf->WriteHTML($html,2);
+        $mpdf->Output($filename, 'I');
+        // return view('adminuser.pdf', compact('adminuser'));
     }
 }

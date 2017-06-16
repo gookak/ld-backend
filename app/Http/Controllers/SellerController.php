@@ -36,7 +36,7 @@ class SellerController extends Controller
     public function create()
     {
         $seller = new Seller();
-        $header_text = 'เพิ่มข้อมูลผู้ขาย';
+        $header_text = 'เพิ่มข้อมูลคู่ค้า';
         $mode = 'create';
         $form_action = '/seller';
         return view('seller.form', compact('seller', 'header_text', 'mode', 'form_action'));
@@ -95,7 +95,7 @@ class SellerController extends Controller
     public function edit($id)
     {
         $seller = Seller::find($id);
-        $header_text = 'แก้ไขข้อมูลผู้ขาย';
+        $header_text = 'แก้ไขข้อมูลคู่ค้า';
         $mode = 'edit';
         $form_action = '/seller/'.$seller->id;
         return view('seller.form', compact('seller', 'header_text', 'mode', 'form_action'));
