@@ -73,7 +73,7 @@ class ApiController extends Controller
         if($category_id){
             $rs = $rs->where('category_id', $category_id);
         }
-        if( $condition && $balance ){
+        if( $condition && ($balance >= 0) ){
             $rs = $rs->where('balance', $condition, $balance);
         }
         if($name){

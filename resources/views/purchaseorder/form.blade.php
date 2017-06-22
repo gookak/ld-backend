@@ -258,8 +258,25 @@
             ],
             createdRow: function (row, data, index) {
                 $('td', row).eq(0).addClass('text-center');
-                $('td', row).eq(1).addClass('name').attr('contentEditable', @if($mode == 'edit') {{ $purchaseorder->purchasestatus->name == 'create' ? 'true' : 'false' }} @endif);
-                $('td', row).eq(2).addClass('text-center number').attr('contentEditable', @if($mode == 'edit') {{ $purchaseorder->purchasestatus->name == 'create' ? 'true' : 'false' }} @endif);
+                @if($mode == 'create')
+                $('td', row).eq(1).addClass('name').attr('contentEditable' , true);
+                @else
+                    @if( $purchaseorder->purchasestatus->name == 'create' )
+                    $('td', row).eq(1).addClass('name').attr('contentEditable' , true);
+                    @else
+                    $('td', row).eq(1).addClass('name').attr('contentEditable' , false);
+                    @endif
+                @endif
+
+                @if($mode == 'create')
+                $('td', row).eq(2).addClass('text-center number').attr('contentEditable' , true);
+                @else
+                    @if( $purchaseorder->purchasestatus->name == 'create' )
+                    $('td', row).eq(2).addClass('text-center number').attr('contentEditable' , true);
+                    @else
+                    $('td', row).eq(2).addClass('text-center number').attr('contentEditable' , false);
+                    @endif
+                @endif
                 $('td', row).eq(3).addClass("text-center @if($mode == 'edit') {{ $purchaseorder->purchasestatus->name == 'ongoing' ? 'hidden' : null  }} @endif ");
             },
             fnRowCallback: function (nRow, aData, iDisplayIndex) {
@@ -292,7 +309,7 @@
                 url: url,
                 type: 'GET',
             }).done(function(result) {
-                // console.log(result);
+                //console.log(result);
                 if (result.status === 200) {
                     $.each( result.rs, function( key, value ) {
                         $('#tb-filter tbody').append(
