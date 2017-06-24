@@ -27,7 +27,7 @@
                     <h4 class="panel-title">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
                             <i class="ace-icon fa fa-angle-down bigger-110" data-icon-hide="ace-icon fa fa-angle-down" data-icon-show="ace-icon fa fa-angle-right"></i>
-                            &nbsp;แก้ไขรายการสั่งซื้อ
+                            &nbsp;แก้ไขรายการขาย
                         </a>
                     </h4>
                 </div>

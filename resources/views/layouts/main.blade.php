@@ -134,6 +134,14 @@
 
       <ul class="nav nav-list">
         <li class="">
+          <a href="http://landdcommerce.com/" target="_blank">
+            <i class="menu-icon fa fa-eye"></i>
+            <span class="menu-text"> ดูหน้าร้าน </span>
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        <li class="">
           <a href="/dashboard">
             <i class="menu-icon fa fa-tachometer"></i>
             <span class="menu-text"> หน้าแรก </span>

@@ -57,6 +57,10 @@
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     ลืมรหัสผ่าน?
                                 </a>
+
+                                <a class="btn btn-link" href="http://landdcommerce.com/">
+                                ไปหน้าร้าน
+                                </a>
                             </div>
                         </div>
                     </form>
