@@ -49,8 +49,8 @@
 </tbody>
 <tfoot>
   <tr>
-      <td colspan="2" class="right">รวม</td>
-      <td class="center">{{ $totalnumber }}</td>
+      <td colspan="2" class="center">{{ $report->totalpricestring }}</td>
+      <td class="">รวม {{ $totalnumber }}</td>
       <td class="center">{{ number_format( $totalprice , 2 ) }}</td>
   </tr>
 </tfoot>
