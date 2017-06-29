@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
+use Auth;
 use App\Mylibs\Mylibs;
 use App\Order;
 use App\User;
@@ -27,9 +28,9 @@ class ReportController extends Controller
     public function index()
     {
         $reportList = Report::pluck('name', 'url')->toArray();
-        // $monthList = Mylibs::getMonthList();
-        // $yearList = Mylibs::getYearList();
-        return view('report.index', compact('reportList'));
+        $monthList = Mylibs::getMonthList();
+        $yearList = Mylibs::getYearList();
+        return view('report.index', compact('reportList', 'monthList', 'yearList'));
 
 
         //  $countOrder = Order::whereYear('created_at', '=', date('Y-m-d'))
@@ -59,23 +60,45 @@ class ReportController extends Controller
         $val = $request->all();
 
         $report = Report::where('url', $val['report_url'])->first();
-        $report['start_date'] = $val['start_date'];
-        $report['end_date'] = $val['end_date'];
-        // $report['year'] = $val['year'] + 543;
-        // $report['month'] = Mylibs::getMonthName($val['month']);
+
+        switch ($val['findby']) {
+            case 'date':
+            $report['text_header'] = 'ประจำวันที่ '.$val['date'];
+            break;
+            case 'year-month':
+            $y =  $val['year'] + 543;
+            $report['text_header'] = 'ประจำเดือน '.Mylibs::getMonthName($val['month']).' ปี '.$y;
+            break;
+            case 'date-between':
+            $report['text_header'] = 'ระหว่างวันที่ '.$val['start_date'].' ถึง '.$val['end_date'];
+            break;
+            default:
+            //return redirect('/error500');
+            break;
+        }
 
         $orders = Order::select('category.name', DB::raw('sum(order_detail.number) AS sumnumber'), DB::raw('sum(order_detail.number * order_detail.price) AS sumprice') )
         ->join('order_detail', 'order.id', '=', 'order_detail.order_id')
         ->join('product', 'order_detail.product_id', '=', 'product.id')
         ->join('category', 'product.category_id', '=', 'category.id')
-        // ->whereMonth('order.created_at', '=', $val['month'])
-        // ->whereYear('order.created_at', '=', $val['year'])
-        ->whereBetween( 'order.created_at', [ Mylibs::dateToDB( $val['start_date'] ) , Mylibs::dateToDB( $val['end_date'] ) ] )
-        ->where('transportstatus_id', 3)
-        ->groupBy('category.name')
+        ->where('order.transportstatus_id', 3);
+        if ($val['findby']) {
+            if ($val['findby'] == 'date') {
+                $orders = $orders->whereDate('order.created_at', '=', Mylibs::dateSelectToDB( $val['date'] ) );
+            }elseif ($val['findby'] == 'year-month') {
+                $orders = $orders->whereYear('order.created_at', '=', $val['year'])
+                ->whereMonth('order.created_at', '=', $val['month']);
+            }elseif ($val['findby'] == 'date-between') {
+                $orders = $orders->whereBetween( 'order.created_at', [ Mylibs::dateSelectToDB( $val['start_date'] ) , Mylibs::dateSelectToDB( $val['end_date'] ) ] );
+            }
+        }
+        $orders = $orders->groupBy('category.name')
         ->orderBy('sumnumber', 'desc')
         ->orderBy('sumprice', 'desc')
         ->get();
+
+        $categorys = category::all();
+
 
         $totalprice = 0;
         foreach ($orders as $key => $order) {
@@ -87,8 +110,13 @@ class ReportController extends Controller
 
         // $filename = $report->name.'_'.$report->year.'_'.$report->month.'.pdf';
         $filename = $report->name.'.pdf';
-        $html = view('report.pdf_salesbycategory', compact('orders', 'report'))->render();
+        $html = view('report.pdf_salesbycategory', compact('orders', 'report', '$categorys'))->render();
         $mpdf = new mPDF('th', 'A4');
+        $mpdf->SetFooter($report->name
+            .'|{PAGENO}/{nbpg}|'
+            .' พิมพ์โดย '.Auth::user()->name
+            .'<br>'
+            .'วันที่พิมพ์ '.Carbon::now('asia/bangkok')->addYears(543)->format('d/m/Y H:i'));
         $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
         $mpdf->WriteHTML($html,2);
         $mpdf->SetTitle($filename);
@@ -100,24 +128,70 @@ class ReportController extends Controller
     {
         // dd($request->all());
         $val = $request->all();
+        // dd(Mylibs::dateSelectToDB( $val['end_date'] ) );
 
         $report = Report::where('url', $val['report_url'])->first();
-        $report['start_date'] = $val['start_date'];
-        $report['end_date'] = $val['end_date'];
-        // $report['year'] = $val['year'] + 543;
-        // $report['month'] = Mylibs::getMonthName($val['month']);
 
-        $orders = Order::select('product.code', 'product.name', 'product.price', DB::raw('sum(order_detail.number) AS sumnumber'), DB::raw('sum(order_detail.number * order_detail.price) AS sumprice') )
+        switch ($val['findby']) {
+            case 'date':
+            $report['text_header'] = 'ประจำวันที่ '.$val['date'];
+            break;
+            case 'year-month':
+            $y =  $val['year'] + 543;
+            $report['text_header'] = 'ประจำเดือน '.Mylibs::getMonthName($val['month']).' ปี '.$y;
+            break;
+            case 'date-between':
+            $report['text_header'] = 'ระหว่างวันที่ '.$val['start_date'].' ถึง '.$val['end_date'];
+            break;
+            default:
+            //return redirect('/error500');
+            break;
+        }
+
+        $orders = Order::select('category.id as category_id', 'category.name as category_name', 'product.code', 'product.name as product_name', 'product.price', DB::raw('sum(order_detail.number) AS sumnumber'), DB::raw('sum(order_detail.number * order_detail.price) AS sumprice') )
         ->join('order_detail', 'order.id', '=', 'order_detail.order_id')
         ->join('product', 'order_detail.product_id', '=', 'product.id')
-        // ->whereMonth('order.created_at', '=', $val['month'])
-        // ->whereYear('order.created_at', '=', $val['year'])
-        ->whereBetween( 'order.created_at', [ Mylibs::dateToDB( $val['start_date'] ) , Mylibs::dateToDB( $val['end_date'] ) ] )
-        ->where('transportstatus_id', 3)
-        ->groupBy('product.code', 'product.name', 'product.price')
-        ->orderBy('sumnumber', 'desc')
+        ->join('category', 'product.category_id', '=', 'category.id')
+        ->where('order.transportstatus_id', 3);
+        if ($val['findby']) {
+            if ($val['findby'] == 'date') {
+                $orders = $orders->whereDate('order.created_at', '=', Mylibs::dateSelectToDB( $val['date'] ) );
+            }elseif ($val['findby'] == 'year-month') {
+                $orders = $orders->whereYear('order.created_at', '=', $val['year'])
+                ->whereMonth('order.created_at', '=', $val['month']);
+            }elseif ($val['findby'] == 'date-between') {
+                $orders = $orders->whereBetween( 'order.created_at', [ Mylibs::dateSelectToDB( $val['start_date'] ) , Mylibs::dateSelectToDB( $val['end_date'] ) ] );
+            }
+        }
+        $orders = $orders->groupBy('category.id', 'category.name', 'product.code', 'product.name', 'product.price')
+        ->orderBy('category.id', 'asc')
         ->orderBy('sumprice', 'desc')
+        ->orderBy('sumnumber', 'desc')
         ->get();
+
+        // $categorys = category::all();
+
+        $categorys = Order::select('category.id', 'category.name')
+        ->join('order_detail', 'order.id', '=', 'order_detail.order_id')
+        ->join('product', 'order_detail.product_id', '=', 'product.id')
+        ->join('category', 'product.category_id', '=', 'category.id')
+        ->where('order.transportstatus_id', 3);
+        if ($val['findby']) {
+            if ($val['findby'] == 'date') {
+                $categorys = $categorys->whereDate('order.created_at', '=', Mylibs::dateSelectToDB( $val['date'] ) );
+            }elseif ($val['findby'] == 'year-month') {
+                $categorys = $categorys->whereYear('order.created_at', '=', $val['year'])
+                ->whereMonth('order.created_at', '=', $val['month']);
+            }elseif ($val['findby'] == 'date-between') {
+                $categorys = $categorys->whereBetween( 'order.created_at', [ Mylibs::dateSelectToDB( $val['start_date'] ) , Mylibs::dateSelectToDB( $val['end_date'] ) ] );
+            }
+        }
+        $categorys = $categorys->orderBy('category.id', 'asc')
+        ->distinct()
+        ->get();
+
+
+
 
         $totalprice = 0;
         foreach ($orders as $key => $order) {
@@ -129,8 +203,13 @@ class ReportController extends Controller
         
         // $filename = $report->name.'_'.$report->year.'_'.$report->month.'.pdf';
         $filename = $report->name.'.pdf';
-        $html = view('report.pdf_salesbyproduct', compact('orders', 'report'))->render();
+        $html = view('report.pdf_salesbyproduct', compact('orders', 'report', 'categorys'))->render();
         $mpdf = new mPDF('th', 'A4-L');
+        $mpdf->SetFooter($report->name
+            .'|{PAGENO}/{nbpg}|'
+            .' พิมพ์โดย '.Auth::user()->name
+            .'<br>'
+            .'วันที่พิมพ์ '.Carbon::now('asia/bangkok')->addYears(543)->format('d/m/Y H:i'));
         $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
         $mpdf->WriteHTML($html,2);
         $mpdf->SetTitle($filename);
@@ -146,13 +225,25 @@ class ReportController extends Controller
         $report = Report::where('url', $val['report_url'])->first();
         $report['create_date'] = Carbon::now()->addYears(543)->format('d/m/Y');
 
-        $products = Product::orderBy('balance', 'asc')
-        // ->orderBy('category_id', 'asc')
+        $products = Product::orderBy('category_id', 'asc')
+        ->orderBy('balance', 'asc')
         ->get();
 
+        $categorys = Product::select('category.id', 'category.name')
+        ->join('category', 'product.category_id', '=', 'category.id')
+        ->orderBy('category_id', 'asc')
+        ->distinct()
+        ->get();
+        
+
         $filename = $report->name.'.pdf';
-        $html = view('report.pdf_balancebyproduct', compact('products', 'report'))->render();
+        $html = view('report.pdf_balancebyproduct', compact('products', 'report', 'categorys'))->render();
         $mpdf = new mPDF('th', 'A4-L');
+        $mpdf->SetFooter($report->name
+            .'|{PAGENO}/{nbpg}|'
+            .' พิมพ์โดย '.Auth::user()->name
+            .'<br>'
+            .'วันที่พิมพ์ '.Carbon::now('asia/bangkok')->addYears(543)->format('d/m/Y H:i'));
         $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
         $mpdf->WriteHTML($html,2);
         $mpdf->SetTitle($filename);
@@ -176,6 +267,11 @@ class ReportController extends Controller
         $html = view('report.pdf_employee', compact('employees', 'report'))->render();
         $mpdf = new mPDF('th', 'A4');
         // $mpdf->SetHTMLHeader('<h1>TEST</h1>');
+        $mpdf->SetFooter($report->name
+            .'|{PAGENO}/{nbpg}|'
+            .' พิมพ์โดย '.Auth::user()->name
+            .'<br>'
+            .'วันที่พิมพ์ '.Carbon::now('asia/bangkok')->addYears(543)->format('d/m/Y H:i'));
         $mpdf->setDisplayMode('fullpage');
         $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
         $mpdf->WriteHTML($html,2);
@@ -238,12 +334,6 @@ class ReportController extends Controller
         }
         return $ret;
     }
-
-
-
-
-
-
 
 
 }

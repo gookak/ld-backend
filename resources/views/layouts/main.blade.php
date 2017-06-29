@@ -199,7 +199,7 @@
 
           <b class="arrow"></b>
         </li>
-        <li class="">
+        {{-- <li class="">
           <a href="/seller">
             <i class="menu-icon fa fa-male"></i>
             <span class="menu-text"> ข้อมูลคู่ค้า </span>
@@ -214,7 +214,7 @@
           </a>
 
           <b class="arrow"></b>
-        </li>
+        </li> --}}
         <li class="">
           <a href="/report">
             <i class="menu-icon fa fa-file-text"></i>

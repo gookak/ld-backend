@@ -12,6 +12,7 @@ use App\Mylibs\Mylibs;
 use App\Mylibs\ConvertNumberString;
 use PDF;
 use App;
+use Auth;
 use mPDF;
 
 class OrderController extends Controller
@@ -140,8 +141,15 @@ class OrderController extends Controller
         $filename = 'order_'.$order->code.'.pdf';
         $html = view('order.pdf', compact('order'))->render();
         $mpdf = new mPDF('th', 'A4');
+        $mpdf->SetFooter('รายการขายเลขที่ '
+            .$order->code
+            .'|{PAGENO}/{nbpg}|'
+            .' พิมพ์โดย '.Auth::user()->name
+            .'<br>'
+            .'วันที่พิมพ์ '.Carbon::now('asia/bangkok')->addYears(543)->format('d/m/Y H:i'));
         $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
         $mpdf->WriteHTML($html,2);
+        $mpdf->SetTitle($filename);
         $mpdf->Output($filename, 'I');
         // return view('order.pdf', compact('order'));
     }
