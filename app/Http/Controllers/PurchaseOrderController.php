@@ -224,6 +224,11 @@ class PurchaseOrderController extends Controller
         $filename = 'purchase_order_'.$purchaseorder->code.'.pdf';
         $html = view('purchaseorder.pdf', compact('purchaseorder'))->render();
         $mpdf = new mPDF('th', 'A4');
+        $mpdf->SetFooter('ใบสั่งของ'
+            .'|{PAGENO}/{nbpg}|'
+            .' พิมพ์โดย '.Auth::user()->name
+            .'<br>'
+            .'วันที่พิมพ์ '.Carbon::now('asia/bangkok')->addYears(543)->format('d/m/Y H:i'));
         $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
         $mpdf->WriteHTML($html,2);
         $mpdf->Output($filename, 'I');

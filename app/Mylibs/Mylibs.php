@@ -21,6 +21,27 @@ class Mylibs {
 	}
 
 
+
+
+	public static function dateSelectToDB($date) {
+		// return ex 2017-05-20
+		Carbon::setToStringFormat('Y-m-d');
+
+		if($date !== null){
+			$d = Carbon::createFromFormat('d/m/Y', trim($date))->subYears(543);
+			return Carbon::parse($d)->format('Y-m-d');
+		} else{
+			return null;
+		}
+
+		
+	}
+
+
+
+
+
+
 	public static function datetimeToDB($date) {
 		// return ex 2017-05-20 14:00
 		return ($date !== null && $date !== '') ? Carbon::createFromFormat('d/m/Y H:i', $date)->subYears(543) : null;
@@ -101,6 +122,15 @@ class Mylibs {
 		$result = [
 		'ชาย' => 'ชาย',
 		'หญิง' => 'หญิง'
+		];
+		return $result;
+	}
+
+	public static function getTitleName() {
+		$result = [
+		'นาย' => 'นาย',
+		'นาง' => 'นาง',
+		'นางสาว' => 'นางสาว'
 		];
 		return $result;
 	}

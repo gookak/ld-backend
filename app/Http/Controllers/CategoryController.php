@@ -53,20 +53,28 @@ class CategoryController extends Controller
         $msgerror = "";
         DB::beginTransaction();
         try{
-            $rs = Category::create([
-                'name' => $request->input('name'),
-                'detail' => $request->input('detail')
-                ]);
+            $checkName = Category::where('name', $request->input('name') )->get();
+            if ( count($checkName) ) {
+                $status = 500;
+                $msgerror = $msgerror.'<br>- ชื่อนี้มีการใช้งานอยู่แล้ว';
+            }
+
+            if($status == 200){
+                $rs = Category::create([
+                    'name' => $request->input('name'),
+                    'detail' => $request->input('detail')
+                    ]);
+            }
         } catch (\Exception $ex) {
             $status = 500;
             $msgerror = $ex->getMessage();
             DB::rollback();
         }
         DB::commit();
-        if ($msgerror == "") {
+        if ($status == 200) {
             $msgerror = 'บันทึกข้อมูลเรียบร้อย';
         }
-        $data = ['status' => $status, 'msgerror' => $msgerror, 'rs' => $rs];
+        $data = ['status' => $status, 'msgerror' => $msgerror];
         return Response::json($data);
 
         // // $this->validate($request, [
@@ -127,9 +135,21 @@ class CategoryController extends Controller
         $msgerror = "";
         DB::beginTransaction();
         try{
-            $rs = $category->name = $request->input('name');
-            $category->detail = $request->input('detail');
-            $category->save();
+
+            $checkName = Category::where('name', $request->input('name') )->get();
+            if ( count($checkName) ) {
+                if($checkName[0]->name != $category->name){
+                    $status = 500;
+                    $msgerror = $msgerror.'<br>- ชื่อนี้มีการใช้งานอยู่แล้ว';
+                }
+            }
+
+            if($status == 200){
+                $rs = $category->name = $request->input('name');
+                $category->detail = $request->input('detail');
+                $category->save();
+            }
+
         } catch (\Exception $ex) {
             $status = 500;
             $msgerror = $ex->getMessage();
@@ -139,7 +159,7 @@ class CategoryController extends Controller
         if ($msgerror == "") {
             $msgerror = 'บันทึกข้อมูลเรียบร้อย';
         }
-        $data = ['status' => $status, 'msgerror' => $msgerror, 'rs' => $rs];
+        $data = ['status' => $status, 'msgerror' => $msgerror];
         return Response::json($data);
 
         // try{

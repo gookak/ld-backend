@@ -10,7 +10,8 @@
         </tr>
         <tr>
             {{-- <td class="center">ประจำเดือน {{ $report->month }} ปี {{ $report->year }} </td> --}}
-            <td class="center">ระหว่างวันที่ {{ $report->start_date }} - {{ $report->end_date }} </td>
+            {{-- <td class="center">ระหว่างวันที่ {{ $report->start_date }} - {{ $report->end_date }} </td> --}}
+            <td class="center">{{ $report->text_header }}</td>
         </tr>
     </tbody>
 </table>
@@ -25,13 +26,13 @@
     </tr>
 </thead>
 <tbody>
-    @if( $orders )
     @php 
     $i = 1;
     $totalnumber = 0; 
     $totalprice = 0; 
     @endphp
 
+    @if( $orders->count() > 0 )
     @foreach( $orders as $order )
     <tr>
         <td class="center">{{ $i }}</td>
@@ -45,13 +46,19 @@
     $totalprice += $order->sumprice;
     @endphp
     @endforeach
+    @else
+    <tr>
+        <td colspan="4" class="center"><b>ไม่พบข้อมูล</b></td>
+    </tr>
     @endif
 </tbody>
 <tfoot>
   <tr>
+      @if( $orders->count() > 0 )
       <td colspan="2" class="center">{{ $report->totalpricestring }}</td>
       <td class="">รวม {{ $totalnumber }}</td>
       <td class="center">{{ number_format( $totalprice , 2 ) }}</td>
+      @endif
   </tr>
 </tfoot>
 </table>

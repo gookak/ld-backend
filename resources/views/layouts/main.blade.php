@@ -78,7 +78,7 @@
               {{-- <img class="nav-user-photo" src="{{ asset('themes/ace-master/assets/images/avatars/user.jpg') }}" alt="Jason's Photo" /> --}}
               <span class="user-info">
                 {{-- <small>Welcome,</small> --}}
-                {{ Auth::user()->name }} <br/>
+                {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}<br/>
                 {{ Auth::user()->role->detail }}
               </span>
 
@@ -199,7 +199,7 @@
 
           <b class="arrow"></b>
         </li>
-        <li class="">
+        {{-- <li class="">
           <a href="/seller">
             <i class="menu-icon fa fa-male"></i>
             <span class="menu-text"> ข้อมูลคู่ค้า </span>
@@ -214,7 +214,7 @@
           </a>
 
           <b class="arrow"></b>
-        </li>
+        </li> --}}
         <li class="">
           <a href="/report">
             <i class="menu-icon fa fa-file-text"></i>
