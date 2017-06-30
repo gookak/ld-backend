@@ -126,4 +126,13 @@ class Mylibs {
 		return $result;
 	}
 
+	public static function getTitleName() {
+		$result = [
+		'นาย' => 'นาย',
+		'นาง' => 'นาง',
+		'นางสาว' => 'นางสาว'
+		];
+		return $result;
+	}
+
 }

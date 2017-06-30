@@ -33,6 +33,13 @@
                         </div>
 
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">เลขบัตรประชาชน : </label>
+                            <div class="col-sm-5">
+                                <input type="text" id="card_id-filter" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">ชื่อ-นามสกุล : </label>
                             <div class="col-sm-5">
                                 <input type="text" id="name-filter" class="form-control" />
@@ -66,6 +73,7 @@
                 <thead>
                     <tr>
                         <th></th>
+                        <th>เลขบัตรประชาชน</th>
                         <th>ชื่อ-นามสกุล</th>
                         <th>อีเมล์</th>
                         <th>สิทธิ์ผู้ใช้งาน</th>
@@ -88,7 +96,8 @@
                                 </a>
                             </div>
                         </td>
-                        <td>{{ $adminuser->name }}</td>
+                        <td>{{ $adminuser->card_id }}</td>
+                        <td>{{ $adminuser->firstname }} {{ $adminuser->lastname }}</td>
                         <td>{{ $adminuser->email }}</td>
                         <td>{{ $adminuser->role->detail }}</td>
                         <td class="hidden">{{ $adminuser->role->id }}</td>
@@ -118,7 +127,7 @@
                     "sDom": '<"top"i>rt<"bottom"lp><"clear">',
                     "aoColumns": [
                     {"bSortable": false, "width": "15%", "targets": 0},
-                    null, null, null, null
+                    null, null, null, null, null
                     // {"width": "90%"}
                     ],
                     "aaSorting": [],
@@ -136,17 +145,21 @@
                 });
 
         //filter
-        $('#name-filter').keyup(function () {
+        $('#card_id-filter').keyup(function () {
             tb_adminuser.column(1).search($(this).val()).draw();
         });
 
-        $('#email-filter').keyup(function () {
+        $('#name-filter').keyup(function () {
             tb_adminuser.column(2).search($(this).val()).draw();
+        });
+
+        $('#email-filter').keyup(function () {
+            tb_adminuser.column(3).search($(this).val()).draw();
         });
 
         $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
             var v = $('[name=role-filter]').val();
-            var dataCol = data[4] || 0;
+            var dataCol = data[5] || 0;
             if ((v === '') || (v === dataCol)) {
                 return true;
             }

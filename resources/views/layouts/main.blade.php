@@ -78,7 +78,7 @@
               {{-- <img class="nav-user-photo" src="{{ asset('themes/ace-master/assets/images/avatars/user.jpg') }}" alt="Jason's Photo" /> --}}
               <span class="user-info">
                 {{-- <small>Welcome,</small> --}}
-                {{ Auth::user()->name }} <br/>
+                {{ Auth::user()->firstname }} {{ Auth::user()->lastname }}<br/>
                 {{ Auth::user()->role->detail }}
               </span>
 

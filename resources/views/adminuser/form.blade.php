@@ -34,37 +34,70 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">ชื่อ-นามสกุล</label>
-                <div class="col-sm-5">
-                    <input type="text" class="form-control" name="name" placeholder="" value="{{ $adminuser->name }}" />
-                </div>
-            </div>
-
-            <div class="form-group">
                 <label class="col-sm-2 control-label">อีเมล์</label>
                 <div class="col-sm-5">
                     <input type="email" class="form-control" name="email" placeholder="" value="{{ $adminuser->email }}" />
                 </div>
             </div>
 
+            @if($mode == 'create')
             <div class="form-group">
                 <label class="col-sm-2 control-label">รหัสผ่าน</label>
                 <div class="col-sm-5">
                     <input type="password" class="form-control" name="password" placeholder="" value="" />
                 </div>
             </div>
+            @endif
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">เบอร์ติดต่อ</label>
+                <label class="col-sm-2 control-label">คำนำหน้า</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" name="tel" placeholder="" value="{{ $adminuser->tel }}" />
+                    {{ Form::select('title', ['' => 'กรุณาเลือก'] + $titleList, $adminuser->title, array('class' => 'form-control')) }}
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-sm-2 control-label">เพศ</label>
+                <label class="col-sm-2 control-label">ชื่อ</label>
                 <div class="col-sm-5">
-                    {{ Form::select('gender', ['' => 'กรุณาเลือก'] + $genderList, $adminuser->gender, array('class' => 'form-control')) }}
+                    <input type="text" class="form-control" name="firstname" placeholder="" value="{{ $adminuser->firstname }}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">นามสกุล</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="lastname" placeholder="" value="{{ $adminuser->lastname }}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">เลขบัตรประชาชน</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="card_id" placeholder="" value="{{ $adminuser->card_id }}" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">วันที่ออกบัตร</label>
+                <div class="col-sm-5">
+                    <div class="input-group">
+                        <input type="text" class="form-control datepicker" name="card_build_at" placeholder="" value="{{ $adminuser->card_build_at ? $adminuser->card_build_at->addYears(543)->format('d/m/Y') : null }}"/>
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">วันที่บัตรหมดอายุ</label>
+                <div class="col-sm-5">
+                    <div class="input-group">
+                        <input type="text" class="form-control datepicker" name="card_expire_at" placeholder="" value="{{ $adminuser->card_expire_at ? $adminuser->card_expire_at->addYears(543)->format('d/m/Y') : null }}"/>
+                        <span class="input-group-addon">
+                            <i class="fa fa-calendar bigger-110"></i>
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -77,6 +110,20 @@
                             <i class="fa fa-calendar bigger-110"></i>
                         </span>
                     </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">เพศ</label>
+                <div class="col-sm-5">
+                    {{ Form::select('gender', ['' => 'กรุณาเลือก'] + $genderList, $adminuser->gender, array('class' => 'form-control')) }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">เบอร์ติดต่อ</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="tel" placeholder="" value="{{ $adminuser->tel }}"/>
                 </div>
             </div>
 
@@ -125,7 +172,30 @@
                         notEmpty: true
                     }
                 },
-                name: {
+                card_id: {
+                    validators: {
+                        notEmpty: true,
+                        regexp: {
+                            message: 'กรุณาระบุเฉพาะตัวเลข 13 หลักเท่านั้น',
+                            regexp: /^\d{13}$/
+                        }
+                    }
+                },
+                tel: {
+                    validators: {
+                        notEmpty: true,
+                        regexp: {
+                            message: 'กรุณาระบุเฉพาะตัวเลข 10 หลักเท่านั้น',
+                            regexp: /^\d{10}$/
+                        }
+                    }
+                },
+                firstname: {
+                    validators: {
+                        notEmpty: true
+                    }
+                },
+                lastname: {
                     validators: {
                         notEmpty: true
                     }

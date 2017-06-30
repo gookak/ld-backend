@@ -44,7 +44,8 @@ class AdminUserController extends Controller
         $form_action = '/adminuser';
         $roleList = Role::pluck('detail', 'id')->toArray();
         $genderList = Mylibs::getGender();
-        return view('adminuser.form', compact('adminuser', 'header_text', 'mode', 'form_action', 'roleList', 'genderList'));
+        $titleList = Mylibs::getTitleName();
+        return view('adminuser.form', compact('adminuser', 'header_text', 'mode', 'form_action', 'roleList', 'genderList', 'titleList'));
     }
 
     /**
@@ -62,28 +63,43 @@ class AdminUserController extends Controller
         DB::beginTransaction();
         try{
             $checkEmail = Admin::where('email', $val['email'])->get();
-            if (!count($checkEmail)) {
+            if (count($checkEmail)) {
+                $status = 500;
+                $msgerror = $msgerror.'<br>- อีเมล์นี้มีการใช้งานอยู่แล้ว';
+            }
+
+            $checkIdCard = Admin::where('card_id', $val['card_id'])->get();
+            if (count($checkIdCard)) {
+                $status = 500;
+                $msgerror = $msgerror.'<br>- เลขบัตรประชาชนนี้มีการใช้งานอยู่แล้ว';
+            }
+
+            if($status == 200){
                 $rs = Admin::create([
                     'role_id' => $val['role_id'],
-                    'name' => $val['name'],
-                    'tel' => $val['tel'],
-                    'gender' => $val['gender'],
-                    'address' => $val['address'],
-                    'birthday' => Mylibs::dateToDB( $val['birthday'] ),
                     'email' => $val['email'],
-                    'password' => bcrypt($val['password'])
+                    'password' => bcrypt($val['password']),
+                    'title' => $val['title'],
+                    'firstname' => $val['firstname'],
+                    'lastname' => $val['lastname'],
+                    'card_id' => $val['card_id'],
+                    'card_build_at' => Mylibs::dateToDB( $val['card_build_at'] ),
+                    'card_expire_at' => Mylibs::dateToDB( $val['card_expire_at'] ),
+                    'birthday' => Mylibs::dateToDB( $val['birthday'] ),
+                    'gender' => $val['gender'],
+                    'tel' => $val['tel'],
+                    'address' => $val['address']
                     ]);
-            }else{
-                $status = 500;
-                $msgerror = 'อีเมล์นี้มีการใช้งานอยู่แล้ว';
             }
+
         } catch (\Exception $ex) {
             $status = 500;
             $msgerror = $ex->getMessage();
             DB::rollback();
         }
         DB::commit();
-        if ($msgerror == "") {
+
+        if ($status == 200) {
             $msgerror = 'บันทึกข้อมูลเรียบร้อย';
         }
         $data = ['status' => $status, 'msgerror' => $msgerror];
@@ -117,7 +133,8 @@ class AdminUserController extends Controller
         $form_action = '/adminuser/'.$adminuser->id;
         $roleList = Role::pluck('detail', 'id')->toArray();
         $genderList = Mylibs::getGender();
-        return view('adminuser.form', compact('adminuser', 'header_text', 'mode', 'form_action', 'roleList', 'genderList'));
+        $titleList = Mylibs::getTitleName();
+        return view('adminuser.form', compact('adminuser', 'header_text', 'mode', 'form_action', 'roleList', 'genderList', 'titleList'));
     }
 
     /**
@@ -135,40 +152,93 @@ class AdminUserController extends Controller
         DB::beginTransaction();
         try{
             $adminuser = Admin::find($id);
+
             $checkEmail = Admin::where('email', $val['email'])->get();
             if (count($checkEmail)) {
-                if($checkEmail[0]->email == $adminuser->email){
-                    $rs = $adminuser->role_id = $val['role_id'];
-                    $adminuser->name = $val['name'];
-                    $adminuser->tel = $val['tel'];
-                    $adminuser->gender = $val['gender'];
-                    $adminuser->address = $val['address'];
-                    $adminuser->birthday = Mylibs::dateToDB( $val['birthday'] );
-                    $adminuser->email = $val['email'];
-                    $adminuser->password = bcrypt($val['password']);
-                    $adminuser->save();
-                }else{
+                if($checkEmail[0]->email != $adminuser->email){
                     $status = 500;
-                    $msgerror = 'อีเมล์นี้มีการใช้งานอยู่แล้ว';
+                    $msgerror = $msgerror.'<br>- อีเมล์นี้มีการใช้งานอยู่แล้ว';
                 }
-            }else{
+            }
+
+            $checkIdCard = Admin::where('card_id', $val['card_id'])->get();
+            if (count($checkIdCard)) {
+                if($checkIdCard[0]->card_id != $adminuser->card_id){
+                    $status = 500;
+                    $msgerror = $msgerror.'<br>- เลขบัตรประชาชนนี้มีการใช้งานอยู่แล้ว';
+                }
+            }
+
+            if($status == 200){
                 $rs = $adminuser->role_id = $val['role_id'];
-                $adminuser->name = $val['name'];
-                $adminuser->tel = $val['tel'];
-                $adminuser->gender = $val['gender'];
-                $adminuser->address = $val['address'];
-                $adminuser->birthday = Mylibs::dateToDB( $val['birthday'] );
                 $adminuser->email = $val['email'];
-                $adminuser->password = bcrypt($val['password']);
+                // $adminuser->password = bcrypt($val['password']);
+                $adminuser->title = $val['title'];
+                $adminuser->firstname = $val['firstname'];
+                $adminuser->lastname = $val['lastname'];
+                $adminuser->card_id = $val['card_id'];
+                $adminuser->card_build_at = Mylibs::dateToDB( $val['card_build_at'] );
+                $adminuser->card_expire_at = Mylibs::dateToDB( $val['card_expire_at'] );
+                $adminuser->birthday = Mylibs::dateToDB( $val['birthday'] );
+                $adminuser->gender = $val['gender'];
+                $adminuser->tel = $val['tel'];
+                $adminuser->address = $val['address'];
                 $adminuser->save();
             }
+            // else{
+            //     $rs = $adminuser->role_id = $val['role_id'];
+            //     $adminuser->card_id = $val['card_id'];
+            //     $adminuser->firstname = $val['firstname'];
+            //     $adminuser->lastname = $val['lastname'];
+            //     $adminuser->tel = $val['tel'];
+            //     $adminuser->gender = $val['gender'];
+            //     $adminuser->address = $val['address'];
+            //     $adminuser->birthday = Mylibs::dateToDB( $val['birthday'] );
+            //     $adminuser->email = $val['email'];
+            //     // $adminuser->password = bcrypt($val['password']);
+            //     $adminuser->save();
+            // }
+
+
+            // $adminuser = Admin::find($id);
+            // $checkEmail = Admin::where('email', $val['email'])->get();
+            // if (count($checkEmail)) {
+            //     if($checkEmail[0]->email == $adminuser->email){
+            //         $rs = $adminuser->role_id = $val['role_id'];
+            //         $adminuser->card_id = $val['card_id'];
+            //         $adminuser->firstname = $val['firstname'];
+            //         $adminuser->lastname = $val['lastname'];
+            //         $adminuser->tel = $val['tel'];
+            //         $adminuser->gender = $val['gender'];
+            //         $adminuser->address = $val['address'];
+            //         $adminuser->birthday = Mylibs::dateToDB( $val['birthday'] );
+            //         $adminuser->email = $val['email'];
+            //         // $adminuser->password = bcrypt($val['password']);
+            //         $adminuser->save();
+            //     }else{
+            //         $status = 500;
+            //         $msgerror = 'อีเมล์นี้มีการใช้งานอยู่แล้ว';
+            //     }
+            // }else{
+            //     $rs = $adminuser->role_id = $val['role_id'];
+            //     $adminuser->card_id = $val['card_id'];
+            //     $adminuser->firstname = $val['firstname'];
+            //     $adminuser->lastname = $val['lastname'];
+            //     $adminuser->tel = $val['tel'];
+            //     $adminuser->gender = $val['gender'];
+            //     $adminuser->address = $val['address'];
+            //     $adminuser->birthday = Mylibs::dateToDB( $val['birthday'] );
+            //     $adminuser->email = $val['email'];
+            //     // $adminuser->password = bcrypt($val['password']);
+            //     $adminuser->save();
+            // }
         } catch (\Exception $ex) {
             $status = 500;
             $msgerror = $ex->getMessage();
             DB::rollback();
         }
         DB::commit();
-        if ($msgerror == "") {
+        if ($status == 200) {
             $msgerror = 'บันทึกข้อมูลเรียบร้อย';
         }
         $data = ['status' => $status, 'msgerror' => $msgerror];

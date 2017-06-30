@@ -39,13 +39,6 @@
                             </div>
 
                             <div class="profile-info-row">
-                                <div class="profile-info-name"> ชื่อ-นามสกุล </div>
-                                <div class="profile-info-value">
-                                    <span>{{ $adminuser->name }}</span>
-                                </div>
-                            </div>
-
-                            <div class="profile-info-row">
                                 <div class="profile-info-name"> อีเมล์ </div>
                                 <div class="profile-info-value">
                                     <span>{{ $adminuser->email }}</span>
@@ -53,9 +46,37 @@
                             </div>
 
                             <div class="profile-info-row">
-                                <div class="profile-info-name"> เบอร์ติดต่อ </div>
+                                <div class="profile-info-name"> ชื่อ-นามสกุล </div>
                                 <div class="profile-info-value">
-                                    <span>{{ $adminuser->tel }}</span>
+                                    <span>{{ $adminuser->title }} {{ $adminuser->firstname }} {{ $adminuser->lastname }}</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> เลขบัตรประชาชน </div>
+                                <div class="profile-info-value">
+                                    <span>{{ $adminuser->card_id }}</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> วันที่ออกบัตร </div>
+                                <div class="profile-info-value">
+                                    <span>{{ $adminuser->card_build_at ? $adminuser->card_build_at->addYears(543)->format('d/m/Y') : null }}</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> วันที่บัตรหมดอายุ </div>
+                                <div class="profile-info-value">
+                                    <span>{{ $adminuser->card_expire_at ? $adminuser->card_expire_at->addYears(543)->format('d/m/Y') : null }}</span>
+                                </div>
+                            </div>
+
+                            <div class="profile-info-row">
+                                <div class="profile-info-name"> วันเกิด </div>
+                                <div class="profile-info-value">
+                                    <span>{{ $adminuser->birthday ? $adminuser->birthday->addYears(543)->format('d/m/Y') : null }}</span>
                                 </div>
                             </div>
 
@@ -67,9 +88,9 @@
                             </div>
 
                             <div class="profile-info-row">
-                                <div class="profile-info-name"> วันเกิด </div>
+                                <div class="profile-info-name"> เบอร์ติดต่อ </div>
                                 <div class="profile-info-value">
-                                    <span>{{ $adminuser->birthday ? $adminuser->birthday->addYears(543)->format('d/m/Y') : null }}</span>
+                                    <span>{{ $adminuser->tel }}</span>
                                 </div>
                             </div>
 
