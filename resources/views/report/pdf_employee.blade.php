@@ -26,7 +26,7 @@
     @if( $employees )
     @foreach( $employees as $employee )
     <tr>
-        <td>{{ $employee->name }}</td>
+        <td>{{ $employee->title }}{{ $employee->firstname }} {{ $employee->lastname }}</td>
         <td>{{ $employee->email }}</td>
         <td class="center">{{ $employee->tel }}</td>
         <td class="center">{{ $employee->role->detail }}</td>
