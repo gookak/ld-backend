@@ -47,13 +47,18 @@ Route::resource('category', 'CategoryController');
 
 Route::resource('product', 'ProductController');
 
-Route::resource('purchaseorder', 'PurchaseOrderController');
+Route::get('product/{id}/addreceive', 'ProductController@addreceive');
 
-Route::get('purchaseorder/{id}/pdf', 'PurchaseOrderController@pdf');
+Route::get('productoutofstock', 'ProductController@outofstock');
 
-Route::resource('seller', 'SellerController');
 
 Route::resource('productreceive', 'ProductReceiveController');
+
+// Route::resource('purchaseorder', 'PurchaseOrderController');
+
+// Route::get('purchaseorder/{id}/pdf', 'PurchaseOrderController@pdf');
+
+// Route::resource('seller', 'SellerController');
 
 // // Route::get('/show', 'FileuploadController@show');
 

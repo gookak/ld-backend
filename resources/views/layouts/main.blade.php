@@ -184,6 +184,14 @@
           <b class="arrow"></b>
         </li>
         <li class="">
+          <a href="/productoutofstock">
+            <i class="menu-icon fa fa-users"></i>
+            <span class="menu-text"> ข้อมูลสินค้าขาดสต๊อก </span>
+          </a>
+
+          <b class="arrow"></b>
+        </li>
+        <li class="">
           <a href="/order">
             <i class="menu-icon fa fa-shopping-cart"></i>
             <span class="menu-text"> ข้อมูลรายการขาย </span>
@@ -199,7 +207,8 @@
 
           <b class="arrow"></b>
         </li>
-        <li class="">
+        
+        {{-- <li class="">
           <a href="/seller">
             <i class="menu-icon fa fa-male"></i>
             <span class="menu-text"> ข้อมูลคู่ค้า </span>
@@ -218,11 +227,11 @@
         <li class="">
           <a href="/productreceive">
             <i class="menu-icon fa fa-truck"></i>
-            <span class="menu-text"> ข้อมูลการรับสินค้า </span>
+            <span class="menu-text"> ข้อมูลการรับของ </span>
           </a>
 
           <b class="arrow"></b>
-        </li>
+        </li> --}}
         <li class="">
           <a href="/report">
             <i class="menu-icon fa fa-file-text"></i>

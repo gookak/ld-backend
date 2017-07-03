@@ -68,7 +68,8 @@ class ProductController extends Controller
                 'code' => $this->GeraHash(10),
                 'name' => $p['name'],
                 'price' => $p['price'],
-                'balance' => $p['balance'],
+                // 'balance' => $p['balance'],
+                'balance_check' => $p['balance_check'],
                 'detail' => $p['detail']
                 ]);
             if(count($pis)){
@@ -113,7 +114,8 @@ class ProductController extends Controller
      */
     public function show(product $product)
     {
-        //
+        $header_text='ข้อมูลสินค้า';
+        return view('product.show', compact('product', 'header_text'));
     }
 
     /**
@@ -151,7 +153,8 @@ class ProductController extends Controller
             $rsp = $product->category_id = $p['category_id'];
             $product->name = $p['name'];
             $product->price = $p['price'];
-            $product->balance = $p['balance'];
+            // $product->balance = $p['balance'];
+            $product->balance_check = $p['balance_check'];
             $product->detail = $p['detail'];
             $product->save();
 
@@ -215,6 +218,40 @@ class ProductController extends Controller
         }
         $data = ['status' => $status, 'msgerror' => $msgerror];
         return Response::json($data);
+    }
+
+    public function addreceive($id)
+    {
+        $header_text = 'เพิ่มรายการรับสินค้า';
+        $form_action = '/productreceive';
+
+        $product = Product::find($id);
+        return view('product.receiveform', compact('product', 'header_text', 'form_action'));
+    }
+
+    public function outofstock()
+    {
+        // $products = Product::where('balance', '<=', 'balance_check')
+        // ->orderBy('balance','asc')
+        // ->get();
+
+        // $products = DB::table('product as p')
+        // ->where('p.balance', '<=', 'p.balance_check')
+        // ->join('category as c', 'p.category_id', '=', 'c.id')
+        // ->orderBy('p.balance','asc')
+        // ->get();
+
+        $products = Product::orderBy('category_id','asc')
+        ->orderBy('balance','asc')
+        ->get();
+
+        foreach ($products as $key => $product) {
+            if($product->balance > $product->balance_check){
+                unset($products[$key]);
+            }
+        }
+
+        return view('product.outofstock', compact('products'));
     }
 
     public function GeraHash($qtd){ 
