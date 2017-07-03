@@ -45,59 +45,59 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
 
-        if ($this->isHttpException($exception)) {
+        // if ($this->isHttpException($exception)) {
 
-            switch ($exception->getStatusCode()) {
+        //     switch ($exception->getStatusCode()) {
 
-            // // not authorized
-            //     case '403':
-            //     return \Response::view('errors.403',array(),403);
-            //     break;
+        //     // // not authorized
+        //     //     case '403':
+        //     //     return \Response::view('errors.403',array(),403);
+        //     //     break;
 
-            // not found
-                case '404':
-                // return \Response::view('errors.404',array(),404);
-                return redirect('/error404');
-                break;
+        //     // not found
+        //         case '404':
+        //         // return \Response::view('errors.404',array(),404);
+        //         return redirect('/error404');
+        //         break;
 
-            // // internal error
-            //     case '500':
-            //     // return \Response::view('errors.500',array(),500);
-            //     return redirect('/error500');
-            //     break;
+        //     // // internal error
+        //     //     case '500':
+        //     //     // return \Response::view('errors.500',array(),500);
+        //     //     return redirect('/error500');
+        //     //     break;
 
-                // default:
-                // return $this->renderHttpException($exception);
-                // break;
-            }
-        } 
-        // else {
+        //         // default:
+        //         // return $this->renderHttpException($exception);
+        //         // break;
+        //     }
+        // } 
+        // // else {
+        // //     return parent::render($request, $exception);
+        // // }
+
+
+        // // return parent::render($request, $exception);
+
+        // //check if exception is an instance of ModelNotFoundException.
+        // if ($exception instanceof ModelNotFoundException) {
+        //     // ajax 404 json feedback
+        //     if ($request->ajax()) {
+        //         return response()->json(['error' => 'Not Found'], 404);
+        //     }
+
+        //     // normal 404 view page feedback
+        //     // return response()->view('errors.missing', [], 404);
+        //     return redirect('/error404');
+        // }
+
+        // if ($exception instanceof \ErrorException) {
+        //     // return response()->view('errors.500', [], 500);
+        //     return redirect('/error500');
+        // } else {
         //     return parent::render($request, $exception);
         // }
 
-
-        // return parent::render($request, $exception);
-
-        //check if exception is an instance of ModelNotFoundException.
-        if ($exception instanceof ModelNotFoundException) {
-            // ajax 404 json feedback
-            if ($request->ajax()) {
-                return response()->json(['error' => 'Not Found'], 404);
-            }
-
-            // normal 404 view page feedback
-            // return response()->view('errors.missing', [], 404);
-            return redirect('/error404');
-        }
-
-        if ($exception instanceof \ErrorException) {
-            // return response()->view('errors.500', [], 500);
-            return redirect('/error500');
-        } else {
-            return parent::render($request, $exception);
-        }
-
-        // return parent::render($request, $exception);
+        return parent::render($request, $exception);
     }
 
     /**
