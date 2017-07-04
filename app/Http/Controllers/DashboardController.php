@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use App\User;
+use App\Product;
 use Carbon\Carbon;
 use App\Mylibs\Mylibs;
 use DB;
@@ -45,8 +46,19 @@ class DashboardController extends Controller
         ->join('product', 'order_detail.product_id', '=', 'product.id')
         ->whereDate('order.created_at', '=', date('Y-m-d'))
         ->groupBy('product.code', 'product.name', 'product.price')
-        ->orderBy('number', 'desc')->limit(5)
+        ->orderBy('number', 'desc')
+        ->limit(5)
         ->get();
+
+        $products = Product::orderBy('category_id','asc')
+        ->orderBy('balance','asc')
+        ->limit(5)
+        ->get();
+        foreach ($products as $key => $product) {
+            if($product->balance > $product->balance_check){
+                unset($products[$key]);
+            }
+        }
 
         // $sumPriceByCategorys= Order::select('category.id', 'category.name', DB::raw('sum(order_detail.number * order_detail.price) as sale'))     //, DB::raw('sum(order_detail.number) AS number')
         // ->join('order_detail', 'order.id', '=', 'order_detail.order_id')
@@ -63,7 +75,7 @@ class DashboardController extends Controller
         // foreach ($sumPriceByCategorys  as $key => $sumPriceByCategory) {
         //     $sumPriceByCategory['percent'] = number_format(($sumPriceByCategory->sale * 100) / $totalSale);
         // }
-        return view('dashboard.index', compact('countOrder', 'sumNumber', 'sumTotalPrice', 'countUser', 'orderLasts', 'productBases'));
+        return view('dashboard.index', compact('countOrder', 'sumNumber', 'sumTotalPrice', 'countUser', 'orderLasts', 'productBases', 'products'));
     }
 
     // public function admin(){

@@ -46,8 +46,8 @@
 
         <div class="clearfix">
             <div class="pull-left tableTools-container">
-                <a class="btn btn-sm btn-primary" href="#">
-                    <i class="ace-icon fa fa-plus align-top bigger-125"></i>
+                <a class="btn btn-sm btn-primary" target="_blank" href="/productoutofstock/pdf">
+                    <i class="ace-icon fa fa-check align-top bigger-125"></i>
                     พิมพ์
                 </a>
             </div>
@@ -67,6 +67,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @if( $products )
                     @foreach($products as $product)
                     <tr>      
                         <td>{{ $product->category->name }}</td>                 
@@ -76,6 +77,7 @@
                         <td class="center">{{ $product->balance }}</td>
                     </tr>
                     @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>

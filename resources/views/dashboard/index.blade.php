@@ -149,6 +149,45 @@
     </div>
 </div>
 
+<div class="hr hr32 hr-dotted"></div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h3 class="header smaller lighter blue">รายการสินค้าขาดสต๊อก</h3>
+        <table class="table table-bordered table-striped">
+            <thead class="thin-border-bottom">
+                <tr>
+                    <th><i class="ace-icon fa fa-caret-right blue">ประเภทสินค้า</th>
+                    <th><i class="ace-icon fa fa-caret-right blue">รหัสสินค้า</th>
+                    <th><i class="ace-icon fa fa-caret-right blue">ชื่อ</th>
+                    <th><i class="ace-icon fa fa-caret-right blue">จำนวนคงเหลือ (แจ้งเตือน)</th>
+                    <th><i class="ace-icon fa fa-caret-right blue">จำนวนคงเหลือ</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if( $products )
+                @foreach($products as $product)
+                <tr>      
+                    <td>{{ $product->category->name }}</td>
+                    <td>{{ $product->code }}</td>
+                    <td>{{ $product->name }}</td>
+                    <td class="center">{{ $product->balance_check }}</td>
+                    <td class="center">{{ $product->balance }}</td>
+                </tr>
+                @endforeach
+                @endif
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <a class="btn btn-xs btn-primary" href="/productoutofstock" target="_blank">ดูทั้งหมด</a>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
 {{-- <div class="hr hr32 hr-dotted"></div>
 
 <div class="row">

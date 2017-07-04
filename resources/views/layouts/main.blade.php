@@ -185,7 +185,7 @@
         </li>
         <li class="">
           <a href="/productoutofstock">
-            <i class="menu-icon fa fa-users"></i>
+            <i class="menu-icon fa fa-truck"></i>
             <span class="menu-text"> ข้อมูลสินค้าขาดสต๊อก </span>
           </a>
 

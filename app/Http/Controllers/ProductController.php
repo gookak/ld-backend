@@ -8,6 +8,10 @@ use App\Category;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use mPDF;
+use Auth;
+use App\Mylibs\Mylibs;
+use Carbon\Carbon;
 //use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Storage;
 
@@ -252,6 +256,45 @@ class ProductController extends Controller
         }
 
         return view('product.outofstock', compact('products'));
+    }
+
+    public function pdf_productoutofstock()
+    {
+        $products = Product::orderBy('category_id','asc')
+        ->orderBy('balance','asc')
+        ->get();
+        foreach ($products as $key => $product) {
+            if($product->balance > $product->balance_check){
+                unset($products[$key]);
+            }
+        }
+
+        $categorys = Product::select('category.id', 'category.name', 'product.balance', 'product.balance_check')
+        ->join('category', 'product.category_id', '=', 'category.id')
+        ->orderBy('category.id', 'asc')
+        ->distinct()
+        ->get();
+        foreach ($categorys as $key => $category) {
+            if($category->balance > $category->balance_check){
+                unset($categorys[$key]);
+            }
+        }
+
+        $reportname = 'รายงานสินค้าขาดสต๊อก';
+        $filename = $reportname.'.pdf';
+        $html = view('product.pdf_productoutofstock', compact('products','categorys', 'reportname'))->render();
+        $mpdf = new mPDF('th', 'A4-L');
+        $mpdf->SetFooter($reportname
+            .'|{PAGENO}/{nbpg}|'
+            .' พิมพ์โดย '.Auth::user()->firstname.' '.Auth::user()->lastname
+            .'<br>'
+            .'วันที่พิมพ์ '.Carbon::now('asia/bangkok')->addYears(543)->format('d/m/Y H:i'));
+        $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
+        $mpdf->WriteHTML($html,2);
+        $mpdf->SetTitle($filename);
+        $mpdf->Output();
+
+        // return view('product.pdf_productoutofstock', compact('products'));
     }
 
     public function GeraHash($qtd){ 

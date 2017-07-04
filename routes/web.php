@@ -51,6 +51,7 @@ Route::get('product/{id}/addreceive', 'ProductController@addreceive');
 
 Route::get('productoutofstock', 'ProductController@outofstock');
 
+Route::get('productoutofstock/pdf', 'ProductController@pdf_productoutofstock');
 
 Route::resource('productreceive', 'ProductReceiveController');
 
