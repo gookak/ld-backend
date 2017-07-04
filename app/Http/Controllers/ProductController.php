@@ -8,6 +8,10 @@ use App\Category;
 use Illuminate\Http\Request;
 use Response;
 use DB;
+use mPDF;
+use Auth;
+use App\Mylibs\Mylibs;
+use Carbon\Carbon;
 //use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Storage;
 
@@ -68,7 +72,8 @@ class ProductController extends Controller
                 'code' => $this->GeraHash(10),
                 'name' => $p['name'],
                 'price' => $p['price'],
-                'balance' => $p['balance'],
+                // 'balance' => $p['balance'],
+                'balance_check' => $p['balance_check'],
                 'detail' => $p['detail']
                 ]);
             if(count($pis)){
@@ -113,7 +118,8 @@ class ProductController extends Controller
      */
     public function show(product $product)
     {
-        //
+        $header_text='ข้อมูลสินค้า';
+        return view('product.show', compact('product', 'header_text'));
     }
 
     /**
@@ -151,7 +157,8 @@ class ProductController extends Controller
             $rsp = $product->category_id = $p['category_id'];
             $product->name = $p['name'];
             $product->price = $p['price'];
-            $product->balance = $p['balance'];
+            // $product->balance = $p['balance'];
+            $product->balance_check = $p['balance_check'];
             $product->detail = $p['detail'];
             $product->save();
 
@@ -215,6 +222,79 @@ class ProductController extends Controller
         }
         $data = ['status' => $status, 'msgerror' => $msgerror];
         return Response::json($data);
+    }
+
+    public function addreceive($id)
+    {
+        $header_text = 'เพิ่มรายการรับสินค้า';
+        $form_action = '/productreceive';
+
+        $product = Product::find($id);
+        return view('product.receiveform', compact('product', 'header_text', 'form_action'));
+    }
+
+    public function outofstock()
+    {
+        // $products = Product::where('balance', '<=', 'balance_check')
+        // ->orderBy('balance','asc')
+        // ->get();
+
+        // $products = DB::table('product as p')
+        // ->where('p.balance', '<=', 'p.balance_check')
+        // ->join('category as c', 'p.category_id', '=', 'c.id')
+        // ->orderBy('p.balance','asc')
+        // ->get();
+
+        $products = Product::orderBy('category_id','asc')
+        ->orderBy('balance','asc')
+        ->get();
+
+        foreach ($products as $key => $product) {
+            if($product->balance > $product->balance_check){
+                unset($products[$key]);
+            }
+        }
+
+        return view('product.outofstock', compact('products'));
+    }
+
+    public function pdf_productoutofstock()
+    {
+        $products = Product::orderBy('category_id','asc')
+        ->orderBy('balance','asc')
+        ->get();
+        foreach ($products as $key => $product) {
+            if($product->balance > $product->balance_check){
+                unset($products[$key]);
+            }
+        }
+
+        $categorys = Product::select('category.id', 'category.name', 'product.balance', 'product.balance_check')
+        ->join('category', 'product.category_id', '=', 'category.id')
+        ->orderBy('category.id', 'asc')
+        ->distinct()
+        ->get();
+        foreach ($categorys as $key => $category) {
+            if($category->balance > $category->balance_check){
+                unset($categorys[$key]);
+            }
+        }
+
+        $reportname = 'รายงานสินค้าขาดสต๊อก';
+        $filename = $reportname.'.pdf';
+        $html = view('product.pdf_productoutofstock', compact('products','categorys', 'reportname'))->render();
+        $mpdf = new mPDF('th', 'A4-L');
+        $mpdf->SetFooter($reportname
+            .'|{PAGENO}/{nbpg}|'
+            .' พิมพ์โดย '.Auth::user()->firstname.' '.Auth::user()->lastname
+            .'<br>'
+            .'วันที่พิมพ์ '.Carbon::now('asia/bangkok')->addYears(543)->format('d/m/Y H:i'));
+        $mpdf->WriteHTML(file_get_contents('css/pdf.css'),1);
+        $mpdf->WriteHTML($html,2);
+        $mpdf->SetTitle($filename);
+        $mpdf->Output();
+
+        // return view('product.pdf_productoutofstock', compact('products'));
     }
 
     public function GeraHash($qtd){ 

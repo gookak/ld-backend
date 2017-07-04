@@ -44,15 +44,6 @@
             </div>
         </div>
 
-        <div class="clearfix">
-            <div class="pull-left tableTools-container">
-                <a class="btn btn-sm btn-primary" href="/product/create">
-                    <i class="ace-icon fa fa-plus align-top bigger-125"></i>
-                    เพิ่ม
-                </a>
-            </div>
-        </div>
-
         <!-- div.dataTables_borderWrap -->
         <div class="table-responsive">
             <table id="tb-product" class="table table-striped table-bordered table-hover">
@@ -78,12 +69,6 @@
                                 </a>
                                 <a class="btn btn-xs btn-warning" href="/product/{{ $product->id }}/edit" >
                                     <i class="ace-icon fa fa-pencil bigger-120"></i>
-                                </a>
-                                <a class="btn btn-xs btn-success" href="/product/{{ $product->id }}/addreceive" >
-                                    <i class="ace-icon fa fa-truck bigger-120"></i>
-                                </a>
-                                <a class="btn btn-xs btn-info" href="/product/{{ $product->id }}" >
-                                    <i class="ace-icon fa fa-search-plus bigger-120"></i>
                                 </a>
                             </div>
                         </td>                        

@@ -47,6 +47,14 @@ Route::resource('category', 'CategoryController');
 
 Route::resource('product', 'ProductController');
 
+Route::get('product/{id}/addreceive', 'ProductController@addreceive');
+
+Route::get('productoutofstock', 'ProductController@outofstock');
+
+Route::get('productoutofstock/pdf', 'ProductController@pdf_productoutofstock');
+
+Route::resource('productreceive', 'ProductReceiveController');
+
 // Route::resource('purchaseorder', 'PurchaseOrderController');
 
 // Route::get('purchaseorder/{id}/pdf', 'PurchaseOrderController@pdf');

@@ -48,10 +48,17 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label class="col-sm-2 control-label">จำนวน</label>
                 <div class="col-sm-5">
                     <input type="text" class="form-control" name="balance" placeholder="" value="{{ $product->balance }}" />
+                </div>
+            </div> --}}
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">จำนวน (แจ้งเตือน)</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="balance_check" placeholder="" value="{{ $product->balance_check }}" />
                 </div>
             </div>
 
@@ -194,7 +201,7 @@
                         }
                     }
                 },
-                balance: {
+                balance_check: {
                     validators: {
                         notEmpty: true,
                         integer:true

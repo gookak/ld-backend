@@ -21,6 +21,7 @@ class CreateProductTable extends Migration
             // $table->string('image', 200)->nullable()->comment('รูปที่ใช้แสดง');
             $table->decimal('price', 10, 2)->comment('ราคา');
             $table->integer('balance')->comment('จำนวนคงเหลือ');
+            $table->integer('balance_check')->comment('เช็คจำนวนคงเหลือ');
             $table->text('detail')->nullable()->comment('รายละเอียด');
             $table->text('html')->nullable()->comment('เอาไว้เก็บ tag html');
             $table->timestamps();

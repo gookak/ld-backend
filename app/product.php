@@ -7,9 +7,9 @@ class Product extends Model
 	protected $table = 'product';
 
 	protected $dates = [
-    'created_at',
-    'updated_at'
-    ];
+	'created_at',
+	'updated_at'
+	];
 
 	public function category() {
 		return $this->belongsTo(Category::class);
@@ -20,6 +20,10 @@ class Product extends Model
 	}
 
 	public function orderdetail() {
-        return $this->hasMany(OrderDetail::class);
-    }
+		return $this->hasMany(OrderDetail::class);
+	}
+
+	public function productreceive() {
+		return $this->hasMany(ProductReceive::class);
+	}
 }
