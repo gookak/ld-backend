@@ -30,7 +30,8 @@
     @if( $products->count() > 0 )
     @foreach( $categorys as $category )
     <tr>
-        <td colspan="3" class="color-bg-01"><b>{{ $category->name}}</b></td>
+        <td colspan="2" class="color-bg-01"><b>{{ $category->name}}</b></td>
+        <td class="color-bg-01 center"><b>{{ $category->sumbalance}}</b></td>
     </tr>
     @foreach( $products as $product )
     @if($category->id == $product->category_id)
