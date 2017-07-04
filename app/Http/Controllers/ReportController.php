@@ -171,7 +171,7 @@ class ReportController extends Controller
 
         // $categorys = category::all();
 
-        $categorys = Order::select('category.id', 'category.name')
+        $categorys = Order::select('category.id', 'category.name', DB::raw('sum(order_detail.number) AS sumnumber'), DB::raw('sum(order_detail.number * order_detail.price) AS sumprice') )
         ->join('order_detail', 'order.id', '=', 'order_detail.order_id')
         ->join('product', 'order_detail.product_id', '=', 'product.id')
         ->join('category', 'product.category_id', '=', 'category.id')
@@ -186,11 +186,10 @@ class ReportController extends Controller
                 $categorys = $categorys->whereBetween( 'order.created_at', [ Mylibs::dateSelectToDB( $val['start_date'] ) , Mylibs::dateSelectToDB( $val['end_date'] ) ] );
             }
         }
-        $categorys = $categorys->orderBy('category.id', 'asc')
-        ->distinct()
+        $categorys = $categorys->groupBy('category.id', 'category.name')
+        ->orderBy('category.id', 'asc')
+        // ->distinct()
         ->get();
-
-
 
 
         $totalprice = 0;
@@ -229,10 +228,11 @@ class ReportController extends Controller
         ->orderBy('balance', 'asc')
         ->get();
 
-        $categorys = Product::select('category.id', 'category.name')
+        $categorys = Product::select('category.id', 'category.name', DB::raw('sum(product.balance) AS sumbalance'))
         ->join('category', 'product.category_id', '=', 'category.id')
-        ->orderBy('category_id', 'asc')
-        ->distinct()
+        ->groupBy('category.id', 'category.name')
+        ->orderBy('category.id', 'asc')
+        //->distinct()
         ->get();
         
 

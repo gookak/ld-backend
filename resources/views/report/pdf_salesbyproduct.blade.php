@@ -35,7 +35,9 @@
         @if( $orders->count() > 0 )
         @foreach( $categorys as $category )
         <tr>
-            <td colspan="5" class="color-bg-01"><b>{{ $category->name}}</b></td>
+            <td colspan="2" class="color-bg-01"><b>{{ $category->name}}</b></td>
+            <td colspan="2" class="color-bg-01 center"><b>{{ $category->sumnumber}}</b></td>
+            <td class="color-bg-01 center"><b>{{ number_format( $category->sumprice , 2 ) }}</b></td>
         </tr>
         @foreach( $orders as $order )
         @if($category->id == $order->category_id)
